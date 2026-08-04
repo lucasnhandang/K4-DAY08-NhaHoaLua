@@ -32,6 +32,7 @@ def convert_legal_docs():
     output_dir.mkdir(parents=True, exist_ok=True)
 
     md = MarkItDown()
+    count = 0
 
     for filepath in legal_dir.iterdir():
         if filepath.suffix.lower() in (".pdf", ".docx", ".doc"):
@@ -40,9 +41,12 @@ def convert_legal_docs():
                 result = md.convert(str(filepath))
                 output_path = output_dir / f"{filepath.stem}.md"
                 output_path.write_text(result.text_content, encoding="utf-8")
-                print(f"  ✓ Saved: {output_path} ({len(result.text_content)} chars)")
+                print(f"  [OK] Saved: {output_path} ({len(result.text_content)} chars)")
+                count += 1
             except Exception as e:
-                print(f"  ✗ Lỗi: {e}")
+                print(f"  [ERROR] {e}")
+
+    return count
 
 
 def convert_news_articles():
@@ -50,9 +54,10 @@ def convert_news_articles():
     news_dir = LANDING_DIR / "news"
     output_dir = OUTPUT_DIR / "news"
     output_dir.mkdir(parents=True, exist_ok=True)
+    count = 0
 
     for filepath in news_dir.iterdir():
-        if filepath.suffix.lower() == ".json":
+        if filepath.suffix.lower() == ".json" and filepath.name != "sources.json":
             print(f"Converting: {filepath.name}")
             try:
                 data = json.loads(filepath.read_text(encoding="utf-8"))
@@ -60,14 +65,21 @@ def convert_news_articles():
 
                 # Thêm metadata header
                 header = f"# {data.get('title', 'Unknown')}\n\n"
+                header += f"**doc_id:** {data.get('doc_id', 'N/A')}\n"
+                header += f"**customer_role:** {data.get('customer_role', 'N/A')}\n"
+                header += f"**category:** {data.get('category', 'N/A')}\n"
+                header += f"**platform:** {data.get('platform', 'N/A')}\n"
                 header += f"**Source:** {data.get('url', 'N/A')}\n"
                 header += f"**Crawled:** {data.get('date_crawled', 'N/A')}\n\n---\n\n"
 
                 content = header + data.get("content_markdown", "")
                 output_path.write_text(content, encoding="utf-8")
-                print(f"  ✓ Saved: {output_path} ({len(content)} chars)")
+                print(f"  [OK] Saved: {output_path} ({len(content)} chars)")
+                count += 1
             except Exception as e:
-                print(f"  ✗ Lỗi: {e}")
+                print(f"  [ERROR] {e}")
+
+    return count
 
 
 def convert_all():
@@ -76,26 +88,24 @@ def convert_all():
     print("Task 3: Convert to Markdown (MarkItDown)")
     print("=" * 50)
 
+    total = 0
+
     try:
         print("\n--- Legal Documents ---")
-        convert_legal_docs()
+        total += convert_legal_docs()
     except Exception as e:
-        print(f"  ✗ Lỗi convert legal docs: {e}")
+        print(f"  [ERROR] Legal docs: {e}")
 
     try:
         print("\n--- News Articles ---")
-        convert_news_articles()
+        total += convert_news_articles()
     except Exception as e:
-        print(f"  ✗ Lỗi convert news articles: {e}")
+        print(f"  [ERROR] News articles: {e}")
 
-    # Tổng kết
+    # Tong ket
     print("\n" + "=" * 50)
-    if OUTPUT_DIR.exists():
-        count = sum(1 for _ in OUTPUT_DIR.rglob("*.md"))
-        print(f"✓ Hoàn thành! Đã convert {count} files")
-        print(f"Output tại: {OUTPUT_DIR}")
-    else:
-        print("⚠ Không có file output nào")
+    print(f"[DONE] Converted {total} files")
+    print(f"Output: {OUTPUT_DIR}")
 
 
 if __name__ == "__main__":

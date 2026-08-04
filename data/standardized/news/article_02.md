@@ -4,10 +4,6 @@
 **customer_role:** buyer
 **category:** order-management
 **platform:** shopee-vn
-**doc_id:** shopee-cancel-order
-**customer_role:** buyer
-**category:** order-management
-**platform:** shopee-vn
 **Source:** https://help.shopee.vn/portal/4/article/79182
 **Crawled:** 2026-08-04T11:34:36.725099+07:00
 
