@@ -14,7 +14,7 @@ bất kể nội dung đó có thật sự liên quan đến câu hỏi hay khô
 quyết định fallback ở Task 9 — xem ghi chú ở đó.
 """
 
-from typing import Optional
+from typing import Hashable
 
 
 def rerank_cross_encoder(
@@ -126,28 +126,52 @@ def rerank_rrf(
     Returns:
         List of top_k candidates sorted by RRF score descending.
     """
-    # TODO: Implement RRF
-    #
-    # rrf_scores = {}  # content -> score
-    # content_map = {}  # content -> full dict
-    #
-    # for ranked_list in ranked_lists:
-    #     for rank, item in enumerate(ranked_list, 1):
-    #         key = item["content"]
-    #         rrf_scores[key] = rrf_scores.get(key, 0) + 1 / (k + rank)
-    #         content_map[key] = item
-    #
-    # # Sort by RRF score
-    # sorted_items = sorted(rrf_scores.items(), key=lambda x: x[1], reverse=True)
-    #
-    # results = []
-    # for content, score in sorted_items[:top_k]:
-    #     item = content_map[content].copy()
-    #     item["score"] = score
-    #     results.append(item)
-    #
-    # return results
-    raise NotImplementedError("Implement rerank_rrf")
+    if top_k <= 0 or not ranked_lists:
+        return []
+    if k < 0:
+        raise ValueError("k must be non-negative")
+
+    def identity(item: dict) -> Hashable:
+        metadata = item.get("metadata") or {}
+        return (
+            metadata.get("source"),
+            metadata.get("chunk_index"),
+            item.get("content", ""),
+        )
+
+    rrf_scores: dict[Hashable, float] = {}
+    content_map: dict[Hashable, dict] = {}
+    first_seen: dict[Hashable, int] = {}
+    seen_counter = 0
+
+    for ranked_list in ranked_lists:
+        seen_in_list: set[Hashable] = set()
+        for rank, item in enumerate(ranked_list, 1):
+            key = identity(item)
+            if key in seen_in_list:
+                continue
+            seen_in_list.add(key)
+
+            if key not in content_map:
+                content_map[key] = {
+                    **item,
+                    "metadata": dict(item.get("metadata") or {}),
+                }
+                first_seen[key] = seen_counter
+                seen_counter += 1
+            rrf_scores[key] = rrf_scores.get(key, 0.0) + 1.0 / (k + rank)
+
+    sorted_keys = sorted(
+        rrf_scores,
+        key=lambda key: (-rrf_scores[key], first_seen[key]),
+    )
+    results = []
+    for key in sorted_keys[:top_k]:
+        result = content_map[key].copy()
+        result["metadata"] = dict(content_map[key].get("metadata") or {})
+        result["score"] = rrf_scores[key]
+        results.append(result)
+    return results
 
 
 # =============================================================================
@@ -178,19 +202,26 @@ def rerank(
         # Cần query_embedding - embed query trước
         raise NotImplementedError("Call rerank_mmr with query_embedding")
     elif method == "rrf":
-        # RRF cần nhiều ranked lists - gọi riêng
-        raise NotImplementedError("Call rerank_rrf with ranked_lists")
+        # Backwards-compatible single-list mode required by the starter API.
+        # Hybrid retrieval should call rerank_rrf([dense, sparse]) directly.
+        return rerank_rrf([candidates], top_k=top_k)
     else:
         raise ValueError(f"Unknown rerank method: {method}")
 
 
 if __name__ == "__main__":
-    # Test with dummy data
-    dummy_candidates = [
-        {"content": "Chính sách trả hàng và hoàn tiền Shopee trong 15 ngày", "score": 0.8, "metadata": {}},
-        {"content": "Các phương thức thanh toán hỗ trợ trên Shopee Vietnam", "score": 0.6, "metadata": {}},
-        {"content": "Quy định đăng bán sản phẩm dành cho người bán", "score": 0.5, "metadata": {}},
+    import sys
+
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    semantic_results = [
+        {"content": "Chính sách trả hàng trong 15 ngày", "score": 0.91, "metadata": {"source": "returns.md", "chunk_index": 0}},
+        {"content": "Phương thức thanh toán Shopee", "score": 0.72, "metadata": {"source": "payments.md", "chunk_index": 0}},
     ]
-    results = rerank("chính sách trả hàng shopee", dummy_candidates, top_k=2)
+    bm25_results = [
+        {"content": "Phương thức thanh toán Shopee", "score": 12.4, "metadata": {"source": "payments.md", "chunk_index": 0}},
+        {"content": "Mã voucher SPP123", "score": 8.1, "metadata": {"source": "vouchers.md", "chunk_index": 0}},
+    ]
+    results = rerank_rrf([semantic_results, bm25_results], top_k=3)
     for r in results:
         print(f"[{r['score']:.3f}] {r['content']}")
