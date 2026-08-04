@@ -1,0 +1,8 @@
+# Theme lấy từ design/stitch_streamlit_ui_enhancement/DESIGN.md
+[theme]
+base = "dark"
+primaryColor = "#8083ff"
+backgroundColor = "#0b1326"
+secondaryBackgroundColor = "#171f33"
+textColor = "#dae2fd"
+font = "sans serif"
