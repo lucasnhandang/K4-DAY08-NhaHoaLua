@@ -30,6 +30,7 @@ chroma_db/ cũ trước khi reindex — nếu không, chunk cũ và mới sẽ t
 trong cùng collection, retrieval sẽ trả về kết quả rác từ dữ liệu cũ.
 """
 
+import json
 import re
 from pathlib import Path
 
@@ -104,14 +105,31 @@ def _parse_metadata(content: str) -> dict[str, str]:
     return metadata
 
 
+def _load_sources_index() -> dict[str, dict]:
+    """
+    Đọc sources.json để map file_path -> metadata đầy đủ.
+    Returns: dict keyed by article filename (vd "article_01.json" -> {...})
+    """
+    sources_file = Path(__file__).parent.parent / "data" / "landing" / "news" / "sources.json"
+    if not sources_file.exists():
+        return {}
+    sources = json.loads(sources_file.read_text(encoding="utf-8"))
+    # Map by file_path basename
+    return {Path(s["file_path"]).name: s for s in sources}
+
+
 def load_documents() -> list[dict]:
     """
     Đọc toàn bộ markdown files từ data/standardized/.
+    Với news articles: giữ đầy đủ metadata từ sources.json (title, url, category...).
+    Với legal docs: giữ metadata cơ bản (source, type).
 
     Returns:
         List of {'content': str, 'metadata': dict}. Metadata gồm tối thiểu:
         source, type, doc_id, customer_role, category, platform.
     """
+    sources_index = _load_sources_index()
+
     documents = []
     for md_file in sorted(STANDARDIZED_DIR.rglob("*.md")):
         content = md_file.read_text(encoding="utf-8")
@@ -119,7 +137,7 @@ def load_documents() -> list[dict]:
         doc_type = "legal" if md_file.parent.name == "legal" else "news"
         parsed = _parse_metadata(content)
         customer_role = parsed.get("customer_role", "").lower()
-        if customer_role not in VALID_CUSTOMER_ROLES:
+        if customer_role and customer_role not in VALID_CUSTOMER_ROLES:
             raise ValueError(
                 f"{md_file}: customer_role phải là buyer/seller/both, "
                 f"nhận được {customer_role!r}"
@@ -129,7 +147,7 @@ def load_documents() -> list[dict]:
             "source": md_file.name,
             "type": doc_type,
             "doc_id": parsed.get("doc_id", md_file.stem),
-            "customer_role": customer_role,
+            "customer_role": customer_role if customer_role else "unknown",
             "category": parsed.get("category", "uncategorized"),
             "platform": parsed.get("platform", "unknown"),
         }
