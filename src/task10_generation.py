@@ -149,6 +149,9 @@ def generate_with_citation(
     query: str,
     top_k: int = TOP_K,
     chat_history: list[dict] | None = None,
+    retrieval_mode: str = "hybrid",
+    use_reranking: bool = True,
+    use_fallback: bool = True,
 ) -> dict:
     """
     End-to-end RAG generation có citation.
@@ -179,7 +182,13 @@ def generate_with_citation(
     if top_k <= 0:
         raise ValueError("top_k phải lớn hơn 0")
 
-    chunks = retrieve(query, top_k=top_k)
+    chunks = retrieve(
+        query,
+        top_k=top_k,
+        retrieval_mode=retrieval_mode,
+        use_reranking=use_reranking,
+        use_fallback=use_fallback,
+    )
     if not chunks:
         return {
             "answer": "Tôi không thể xác minh thông tin này từ nguồn hiện có",
