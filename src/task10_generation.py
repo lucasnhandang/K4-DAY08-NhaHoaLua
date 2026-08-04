@@ -37,8 +37,12 @@ TOP_P = 0.9
 # Chọn 0.3 vì: RAG cần factual, ít sáng tạo
 TEMPERATURE = 0.3
 
-# TODO: Chọn LLM model (OpenRouter model ID)
-LLM_MODEL = "openai/gpt-4o-mini"  # hoặc model ":free" nếu chưa có credit
+# Model OpenRouter ":free" — không tốn credit, phù hợp khi nhóm chưa có API trả phí
+LLM_MODEL = "inclusionai/ling-3.0-flash:free"
+
+# Số lượt hỏi-đáp trước đó đưa vào context khi có chat_history (multi-turn)
+# Giới hạn để tránh prompt quá dài / tốn quota free tier
+MAX_HISTORY_TURNS = 3
 
 
 # =============================================================================
@@ -53,7 +57,8 @@ Quy tắc bắt buộc:
 2. Mỗi khẳng định phải có trích dẫn ngay sau, ví dụ: [Returns Policy, 2026]
 3. Nếu context không đủ thông tin → trả lời: "Tôi không thể xác minh thông tin này từ nguồn hiện có"
 4. Trả lời bằng tiếng Việt, có cấu trúc rõ ràng theo đoạn văn
-5. Không suy luận hay mở rộng ngoài những gì được nêu trong context"""
+5. Không suy luận hay mở rộng ngoài những gì được nêu trong context
+6. Nếu câu hỏi hiện tại tham chiếu tới hội thoại trước đó (VD: "còn cái kia thì sao?"), dùng lịch sử hội thoại để hiểu ý — nhưng vẫn chỉ trích dẫn từ context của câu hỏi hiện tại"""
 
 
 # =============================================================================
@@ -77,15 +82,12 @@ def reorder_for_llm(chunks: list[dict]) -> list[dict]:
     Returns:
         List reordered để maximize LLM attention.
     """
-    # TODO: Implement reordering
-    #
-    # if len(chunks) <= 2:
-    #     return chunks
-    #
-    # front = chunks[::2]   # index 0, 2, 4 -> đặt ở đầu
-    # back = chunks[1::2]   # index 1, 3    -> đặt ở cuối (reversed)
-    # return front + back[::-1]
-    raise NotImplementedError("Implement reorder_for_llm")
+    if len(chunks) <= 2:
+        return chunks
+
+    front = chunks[::2]   # index 0, 2, 4 -> đặt ở đầu
+    back = chunks[1::2]   # index 1, 3    -> đặt ở cuối (reversed)
+    return front + back[::-1]
 
 
 # =============================================================================
@@ -103,25 +105,26 @@ def format_context(chunks: list[dict]) -> str:
     Returns:
         Formatted context string.
     """
-    # TODO: Implement context formatting
-    #
-    # context_parts = []
-    # for i, chunk in enumerate(chunks, 1):
-    #     source = chunk.get("metadata", {}).get("source", f"Source {i}")
-    #     doc_type = chunk.get("metadata", {}).get("type", "unknown")
-    #     context_parts.append(
-    #         f"[Document {i} | Source: {source} | Type: {doc_type}]\n"
-    #         f"{chunk['content']}\n"
-    #     )
-    # return "\n---\n".join(context_parts)
-    raise NotImplementedError("Implement format_context")
+    context_parts = []
+    for i, chunk in enumerate(chunks, 1):
+        source = chunk.get("metadata", {}).get("source", f"Source {i}")
+        doc_type = chunk.get("metadata", {}).get("type", "unknown")
+        context_parts.append(
+            f"[Document {i} | Source: {source} | Type: {doc_type}]\n"
+            f"{chunk['content']}\n"
+        )
+    return "\n---\n".join(context_parts)
 
 
 # =============================================================================
 # GENERATION
 # =============================================================================
 
-def generate_with_citation(query: str, top_k: int = TOP_K) -> dict:
+def generate_with_citation(
+    query: str,
+    top_k: int = TOP_K,
+    chat_history: list[dict] | None = None,
+) -> dict:
     """
     End-to-end RAG generation có citation.
 
@@ -129,12 +132,17 @@ def generate_with_citation(query: str, top_k: int = TOP_K) -> dict:
         1. Retrieve relevant chunks
         2. Reorder để tránh lost in the middle
         3. Format context với source labels
-        4. Build prompt (system + context + query)
+        4. Build prompt (system + lịch sử hội thoại + context + query)
         5. Call LLM
         6. Return answer + sources
 
     Args:
         query: Câu hỏi của user
+        chat_history: Lịch sử hội thoại trước đó (tuỳ chọn), dạng
+            [{'role': 'user'|'assistant', 'content': str}, ...] — cho phép
+            LLM hiểu câu hỏi follow-up dựa trên ngữ cảnh hội thoại trước.
+            Chỉ MAX_HISTORY_TURNS lượt gần nhất được đưa vào để tránh prompt
+            quá dài.
 
     Returns:
         {
@@ -143,44 +151,43 @@ def generate_with_citation(query: str, top_k: int = TOP_K) -> dict:
             'retrieval_source': str  # 'hybrid' hoặc 'pageindex'
         }
     """
-    # TODO: Implement generation pipeline
-    #
-    # # Step 1: Retrieve
-    # chunks = retrieve(query, top_k=top_k)
-    #
-    # # Step 2: Reorder
-    # reordered = reorder_for_llm(chunks)
-    #
-    # # Step 3: Format context
-    # context = format_context(reordered)
-    #
-    # # Step 4: Build prompt
-    # user_message = f"""Context:\n{context}\n\n---\n\nQuestion: {query}"""
-    #
-    # # Step 5: Call LLM (OpenRouter — OpenAI-compatible API)
-    # from openai import OpenAI
-    # api_key = os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY")
-    # client = OpenAI(api_key=api_key, base_url="https://openrouter.ai/api/v1")
-    #
-    # response = client.chat.completions.create(
-    #     model=LLM_MODEL,
-    #     messages=[
-    #         {"role": "system", "content": SYSTEM_PROMPT},
-    #         {"role": "user", "content": user_message}
-    #     ],
-    #     temperature=TEMPERATURE,
-    #     top_p=TOP_P,
-    # )
-    #
-    # answer = response.choices[0].message.content
-    #
-    # # Step 6: Return
-    # return {
-    #     "answer": answer,
-    #     "sources": chunks,
-    #     "retrieval_source": chunks[0].get("source", "hybrid") if chunks else "none"
-    # }
-    raise NotImplementedError("Implement generate_with_citation")
+    # Step 1: Retrieve
+    chunks = retrieve(query, top_k=top_k)
+
+    # Step 2: Reorder
+    reordered = reorder_for_llm(chunks)
+
+    # Step 3: Format context
+    context = format_context(reordered)
+
+    # Step 4: Build prompt (system + lịch sử hội thoại + context/câu hỏi hiện tại)
+    user_message = f"""Context:\n{context}\n\n---\n\nQuestion: {query}"""
+
+    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+    if chat_history:
+        messages.extend(chat_history[-MAX_HISTORY_TURNS * 2:])
+    messages.append({"role": "user", "content": user_message})
+
+    # Step 5: Call LLM (OpenRouter — OpenAI-compatible API)
+    from openai import OpenAI
+    api_key = os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY")
+    client = OpenAI(api_key=api_key, base_url="https://openrouter.ai/api/v1")
+
+    response = client.chat.completions.create(
+        model=LLM_MODEL,
+        messages=messages,
+        temperature=TEMPERATURE,
+        top_p=TOP_P,
+    )
+
+    answer = response.choices[0].message.content
+
+    # Step 6: Return
+    return {
+        "answer": answer,
+        "sources": chunks,
+        "retrieval_source": chunks[0].get("source", "hybrid") if chunks else "none"
+    }
 
 
 if __name__ == "__main__":
