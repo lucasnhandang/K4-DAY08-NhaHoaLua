@@ -11,7 +11,7 @@ Reciprocal Rank Fusion (RRF), PageIndex fallback và LLM generation có citation
 - Hợp nhất thứ hạng bằng RRF; có thể rerank bằng Jina nếu API key hợp lệ.
 - PageIndex vectorless fallback khi cosine similarity tốt nhất nhỏ hơn `0.48`.
 - Sinh câu trả lời tiếng Việt có citation và hiển thị các source chunks đã dùng.
-- Reorder context để giảm hiện tượng "lost in the middle".
+- Reorder context để giảm hiện tượng “lost in the middle”.
 - Golden dataset 15 câu và pipeline RAGAS với 4 metrics, so sánh A/B hai cấu hình.
 
 ## Kiến trúc hệ thống

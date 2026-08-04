@@ -37,7 +37,12 @@ TOP_P = 0.9
 # Chọn 0.3 vì: RAG cần factual, ít sáng tạo
 TEMPERATURE = 0.3
 
-LLM_MODEL = "openai/gpt-4o-mini"
+# Chỉ gửi 3 lượt hội thoại gần nhất để giữ ngữ cảnh follow-up mà không làm
+# prompt tăng không giới hạn. Một lượt gồm tối đa một user message và một
+# assistant message.
+MAX_HISTORY_TURNS = 3
+
+LLM_MODEL = "openai/gpt-4o-mini"  # hoặc model ":free" nếu chưa có credit
 
 
 # =============================================================================
@@ -52,7 +57,9 @@ Quy tắc bắt buộc:
 2. Mỗi khẳng định phải có trích dẫn ngay sau, ví dụ: [Returns Policy, 2026]
 3. Nếu context không đủ thông tin → trả lời: "Tôi không thể xác minh thông tin này từ nguồn hiện có"
 4. Trả lời bằng tiếng Việt, có cấu trúc rõ ràng theo đoạn văn
-5. Không suy luận hay mở rộng ngoài những gì được nêu trong context"""
+5. Không suy luận hay mở rộng ngoài những gì được nêu trong context
+6. Lịch sử hội thoại chỉ dùng để hiểu câu hỏi nối tiếp; mọi thông tin trong câu
+   trả lời hiện tại vẫn phải được kiểm chứng bằng context mới được cung cấp"""
 
 
 # =============================================================================
@@ -115,7 +122,37 @@ def format_context(chunks: list[dict]) -> str:
 # GENERATION
 # =============================================================================
 
-def generate_with_citation(query: str, top_k: int = TOP_K) -> dict:
+def prepare_chat_history(
+    chat_history: list[dict] | None,
+    max_turns: int = MAX_HISTORY_TURNS,
+) -> list[dict]:
+    """Chuẩn hoá và giới hạn lịch sử trước khi gửi tới LLM."""
+    if not chat_history or max_turns <= 0:
+        return []
+
+    valid_messages = []
+    for message in chat_history:
+        if not isinstance(message, dict):
+            continue
+        role = message.get("role")
+        content = message.get("content")
+        if role not in {"user", "assistant"} or not isinstance(content, str):
+            continue
+        content = content.strip()
+        if content:
+            valid_messages.append({"role": role, "content": content})
+
+    return valid_messages[-max_turns * 2:]
+
+
+def generate_with_citation(
+    query: str,
+    top_k: int = TOP_K,
+    chat_history: list[dict] | None = None,
+    retrieval_mode: str = "hybrid",
+    use_reranking: bool = True,
+    use_fallback: bool = True,
+) -> dict:
     """
     End-to-end RAG generation có citation.
 
@@ -129,6 +166,9 @@ def generate_with_citation(query: str, top_k: int = TOP_K) -> dict:
 
     Args:
         query: Câu hỏi của user
+        top_k: Số chunks retrieval đưa vào context
+        chat_history: Lịch sử user/assistant trước câu hỏi hiện tại. Chỉ
+            ``MAX_HISTORY_TURNS`` lượt gần nhất được gửi tới LLM.
 
     Returns:
         {
@@ -142,7 +182,13 @@ def generate_with_citation(query: str, top_k: int = TOP_K) -> dict:
     if top_k <= 0:
         raise ValueError("top_k phải lớn hơn 0")
 
-    chunks = retrieve(query, top_k=top_k)
+    chunks = retrieve(
+        query,
+        top_k=top_k,
+        retrieval_mode=retrieval_mode,
+        use_reranking=use_reranking,
+        use_fallback=use_fallback,
+    )
     if not chunks:
         return {
             "answer": "Tôi không thể xác minh thông tin này từ nguồn hiện có",
@@ -168,15 +214,16 @@ def generate_with_citation(query: str, top_k: int = TOP_K) -> dict:
         api_key=api_key,
         base_url="https://openrouter.ai/api/v1",
     )
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        *prepare_chat_history(chat_history),
+        {"role": "user", "content": user_message},
+    ]
     response = client.chat.completions.create(
         model=LLM_MODEL,
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_message},
-        ],
+        messages=messages,
         temperature=TEMPERATURE,
         top_p=TOP_P,
-        max_tokens=2000,
     )
     answer = response.choices[0].message.content
     if not answer:

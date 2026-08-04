@@ -37,6 +37,37 @@ METRIC_LABELS = {
 }
 
 
+class SentenceTransformerRagasEmbeddings:
+    """Minimal RAGAS-compatible adapter for a SentenceTransformer model.
+
+    RAGAS 0.1.21's bundled ``HuggingfaceEmbeddings`` incorrectly calls
+    ``bool()`` on a NumPy array with recent Transformers versions.  This small
+    adapter implements the same two embedding methods without that dependency.
+    """
+
+    def __init__(self, model_name: str) -> None:
+        from sentence_transformers import SentenceTransformer
+
+        # Evaluation should reuse the model already cached for semantic search.
+        # This prevents a metadata request to Hugging Face on every run.
+        self.model = SentenceTransformer(model_name, local_files_only=True)
+
+    def embed_documents(self, texts: list[str]) -> list[list[float]]:
+        vectors = self.model.encode(
+            texts,
+            normalize_embeddings=True,
+            show_progress_bar=False,
+        )
+        return vectors.tolist()
+
+    def embed_query(self, text: str) -> list[float]:
+        return self.embed_documents([text])[0]
+
+    def set_run_config(self, run_config: Any) -> None:
+        """Match the hook invoked by RAGAS before metric evaluation."""
+        self.run_config = run_config
+
+
 def load_golden_dataset(path: Path = GOLDEN_DATASET_PATH) -> list[dict]:
     """Load and validate the golden Q&A dataset."""
     try:
@@ -163,7 +194,6 @@ def _build_ragas_judges() -> tuple[Any, Any]:
         raise RuntimeError("Missing OPENROUTER_API_KEY or OPENAI_API_KEY for RAGAS judging")
 
     from langchain_openai import ChatOpenAI
-    from ragas.embeddings import HuggingfaceEmbeddings
     from ragas.llms import LangchainLLMWrapper
 
     is_openrouter = bool(os.getenv("OPENROUTER_API_KEY"))
@@ -173,8 +203,8 @@ def _build_ragas_judges() -> tuple[Any, Any]:
         base_url="https://openrouter.ai/api/v1" if is_openrouter else None,
         temperature=0,
     )
-    embeddings = HuggingfaceEmbeddings(
-        model_name=os.getenv("RAGAS_EMBEDDING_MODEL", "BAAI/bge-m3")
+    embeddings = SentenceTransformerRagasEmbeddings(
+        os.getenv("RAGAS_EMBEDDING_MODEL", "BAAI/bge-m3")
     )
     return LangchainLLMWrapper(chat_model), embeddings
 

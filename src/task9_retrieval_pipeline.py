@@ -48,6 +48,8 @@ def retrieve(
     top_k: int = DEFAULT_TOP_K,
     score_threshold: float = SCORE_THRESHOLD,
     use_reranking: bool = True,
+    retrieval_mode: str = "hybrid",
+    use_fallback: bool = True,
 ) -> list[dict]:
     """
     Retrieval pipeline hoàn chỉnh với fallback logic.
@@ -84,34 +86,29 @@ def retrieve(
 
     # Giữ hai danh sách riêng biệt: cosine gốc dùng cho fallback,
     # còn thứ hạng của cả dense/BM25 dùng cho RRF.
-    dense_results = semantic_search(query, top_k=candidate_count)
-    sparse_results = lexical_search(query, top_k=candidate_count)
+    retrieval_mode = retrieval_mode.lower().strip()
+    if retrieval_mode not in {"hybrid", "dense", "sparse"}:
+        raise ValueError("retrieval_mode must be 'hybrid', 'dense', or 'sparse'")
 
-    # Tạo lookup cosine score TRƯỚC khi rerank_rrf ghi đè score bằng RRF.
-    # Key giống identity() trong task7_reranking.py: (source, chunk_index, content).
-    _dense_lookup = {
-        (
-            r.get("metadata", {}).get("source"),
-            r.get("metadata", {}).get("chunk_index"),
-            r.get("content", ""),
-        ): r["score"]
-        for r in dense_results
-    }
-
-    merged = rerank_rrf(
-        [dense_results, sparse_results],
-        top_k=candidate_count,
+    # Only invoke the retrievers used by this configuration. This makes the
+    # dense-only evaluation baseline independent from BM25 and RRF.
+    dense_results = (
+        semantic_search(query, top_k=candidate_count)
+        if retrieval_mode in {"hybrid", "dense"} else []
     )
+    sparse_results = (
+        lexical_search(query, top_k=candidate_count)
+        if retrieval_mode in {"hybrid", "sparse"} else []
+    )
+
+    if retrieval_mode == "hybrid":
+        merged = rerank_rrf([dense_results, sparse_results], top_k=candidate_count)
+    elif retrieval_mode == "dense":
+        merged = [dict(item) for item in dense_results]
+    else:
+        merged = [dict(item) for item in sparse_results]
     for item in merged:
-        item["source"] = "hybrid"
-        # Gắn cosine score gốc vào metadata để hiển thị,
-        # vì rerank_rrf đã ghi đè field "score" bằng RRF score.
-        key = (
-            item.get("metadata", {}).get("source"),
-            item.get("metadata", {}).get("chunk_index"),
-            item.get("content", ""),
-        )
-        item["metadata"]["cosine_score"] = _dense_lookup.get(key, 0.0)
+        item["source"] = retrieval_mode
 
     if use_reranking and merged:
         final_results = rerank(
@@ -126,7 +123,7 @@ def retrieve(
     # Không dùng RRF score ở `merged`: thang điểm đó không đo độ
     # liên quan tuyệt đối. Fallback chỉ dựa trên cosine similarity gốc.
     best_dense_score = dense_results[0]["score"] if dense_results else 0.0
-    if best_dense_score < score_threshold:
+    if use_fallback and retrieval_mode != "sparse" and best_dense_score < score_threshold:
         try:
             fallback_results = pageindex_search(query, top_k=top_k)
         except (RuntimeError, TimeoutError):
@@ -152,5 +149,4 @@ if __name__ == "__main__":
         print("-" * 60)
         results = retrieve(q, top_k=3)
         for i, r in enumerate(results, 1):
-            cosine = r.get("metadata", {}).get("cosine_score", 0.0)
-            print(f"  {i}. [cosine={cosine:.3f}] [{r['source']}] {r['content'][:80]}...")
+            print(f"  {i}. [{r['score']:.3f}] [{r['source']}] {r['content'][:80]}...")

@@ -321,11 +321,13 @@ with title_col:
     st.title("🛒 E-commerce Support RAG Chatbot")
     st.caption("Hệ thống hỏi đáp chính sách e-commerce và trợ giúp khách hàng")
 with status_col:
-    api_ready = bool(os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY"))
+    # Task 10 hiện gọi OpenRouter trực tiếp, vì vậy OPENAI_API_KEY không đủ để
+    # đánh dấu pipeline generation là sẵn sàng.
+    api_ready = bool(os.getenv("OPENROUTER_API_KEY", "").strip())
     if api_ready:
         st.markdown('<div class="status-pill status-ready">🟢 SẴN SÀNG</div>', unsafe_allow_html=True)
     else:
-        st.markdown('<div class="status-pill status-warn">🟡 CHƯA CÓ API KEY</div>', unsafe_allow_html=True)
+        st.markdown('<div class="status-pill status-warn">🟡 CHƯA CÓ OPENROUTER KEY</div>', unsafe_allow_html=True)
 
 # Hiển thị lịch sử chat
 for msg in st.session_state.messages:
@@ -352,7 +354,9 @@ if query:
 
     # Lịch sử hội thoại trước đó (chưa gồm câu hỏi vừa hỏi) để truyền cho Task 10 làm chat_history
     chat_history = [
-        {"role": m["role"], "content": m["content"]} for m in st.session_state.messages
+        {"role": m["role"], "content": m["content"]}
+        for m in st.session_state.messages
+        if not m.get("is_error")
     ]
 
     # Hiển thị câu hỏi của user
@@ -364,13 +368,6 @@ if query:
     with st.chat_message("assistant"):
         with st.spinner("Đang tìm kiếm tài liệu và tổng hợp câu trả lời..."):
             try:
-                # TODO (Học viên): Tích hợp hàm sinh câu trả lời từ Task 10
-                # Ví dụ:
-                # from src.task10_generation import generate_with_citation
-                # response = generate_with_citation(query, top_k=top_k)
-                # answer = response["answer"]
-                # sources = response.get("sources", [])
-
                 from src.task10_generation import generate_with_citation
                 response = generate_with_citation(query, top_k=top_k, chat_history=chat_history)
                 answer = response.get("answer", "Chưa thể trả lời.")

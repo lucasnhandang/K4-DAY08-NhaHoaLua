@@ -2,181 +2,115 @@
 
 ## Framework sử dụng
 
-> **RAGAS 0.1.21** — Framework evaluation chuẩn cho RAG pipelines.
-> Đánh giá 4 metrics: Faithfulness, Answer Relevance, Context Recall, Context Precision.
->
-> **Lưu ý:** Do hạn chế credits OpenRouter, đánh giá RAGAS tự động chưa chạy được.
-> Kết quả dưới đây là **đánh giá thủ công** dựa trên golden dataset.
+Nhóm sử dụng **RAGAS 0.1.21** để đánh giá pipeline RAG trên 4 trục:
 
----
+- **Faithfulness:** câu trả lời có bám sát context được truy xuất hay không.
+- **Answer Relevance:** câu trả lời có trực tiếp giải quyết câu hỏi hay không.
+- **Context Recall:** context có bao phủ đủ thông tin trong đáp án chuẩn hay không.
+- **Context Precision:** các context được đưa vào có thực sự liên quan hay không.
+
+Bộ kiểm thử hiện tại gồm **15 câu hỏi** trong `golden_dataset.json`. LLM judge dùng
+`openai/gpt-4o-mini` qua OpenRouter; embedding judge dùng `BAAI/bge-m3` chạy local.
+
+## Cấu hình A/B
+
+| Cấu hình | Retrieval | Reranking | PageIndex fallback |
+|---|---|---|---|
+| `hybrid_rerank` | Semantic + BM25, hợp nhất bằng RRF | Bật | Bật khi cosine gốc `< 0.48` |
+| `dense_only` | Chỉ semantic search | Tắt | Tắt |
+
+Hai cấu hình sử dụng cùng golden dataset, cùng model generation và cùng bộ RAGAS
+metrics để bảo đảm phép so sánh nhất quán.
 
 ## Overall Scores
 
-### Đánh giá thủ công (20 câu hỏi)
+| Metric | `hybrid_rerank` | `dense_only` | Δ (Hybrid − Dense) |
+|---|---:|---:|---:|
+| Faithfulness | 0.893 | 0.887 | +0.006 |
+| Answer Relevance | 0.700 | 0.706 | -0.006 |
+| Context Recall | 1.000 | 1.000 | 0.000 |
+| Context Precision | 0.987 | 0.987 | 0.000 |
+| **Average** | **0.895** | **0.895** | **0.000** |
 
-| Metric | Config A (Hybrid + Rerank) | Config B (Dense-only) | Δ |
-|--------|---------------------------|----------------------|---|
-| Answer Accuracy (câu trả lời đúng) | 90% (18/20) | ~70% (ước tính) | +20% |
-| Context Precision (nguồn đúng) | 95% (19/20) | ~75% (ước tính) | +20% |
-| Source Coverage (trích dẫn đầy đủ) | 85% (17/20) | ~60% (ước tính) | +25% |
-| **Average** | **90%** | **~68%** | **+22%** |
+## Phân tích A/B
 
-> **Note:** Config B (dense-only) là ước tính vì chưa chạy A/B comparison tự động.
-> Config A là pipeline hiện tại: Semantic Search + BM25 + RRF + Cross-encoder Rerank.
+Hai cấu hình **hòa nhau ở điểm trung bình sau khi làm tròn 3 chữ số**. Vì vậy
+không có đủ chênh lệch để kết luận một cấu hình thắng tuyệt đối.
 
----
+`hybrid_rerank` có Faithfulness cao hơn khoảng 0.006, cho thấy việc kết hợp semantic
+với BM25/RRF có thể giúp câu trả lời bám evidence tốt hơn một chút. Ngược lại,
+`dense_only` có Answer Relevance cao hơn khoảng 0.006. Context Recall và Context
+Precision gần như tối đa và không khác nhau, nên điểm nghẽn chính nằm ở bước
+generation/answer formulation, không phải khả năng tìm thấy evidence.
 
-## A/B Comparison Analysis
+## Worst Performers (Bottom 3 của `hybrid_rerank`)
 
-**Config A: Hybrid + Rerank (pipeline hiện tại)**
-> - Semantic Search (Jina embeddings) + BM25 (TF-IDF lexical)
-> - RRF fusion (k=60) gộp kết quả từ cả hai ranker
-> - Cross-encoder rerank (Jina API) → fallback RRF nếu API fail
-> - Fallback PageIndex khi cosine score < 0.48
+| # | Question | Faithfulness | Relevance | Recall | Precision | Failure stage | Root-cause hypothesis |
+|---:|---|---:|---:|---:|---:|---|---|
+| 1 | Khi tự sắp xếp trả hàng cho sản phẩm Shopee Mall, người mua nhận lại phí vận chuyển thế nào? | 0.000 | 0.725 | 1.000 | 1.000 | Generation | Context đã chứa đủ evidence nhưng câu trả lời có chi tiết không được context hỗ trợ hoặc diễn giải sai cơ chế hoàn vào Số dư Tài khoản Shopee trong 3–5 ngày làm việc. |
+| 2 | Tiền hoàn của đơn thanh toán bằng thẻ tín dụng hoặc ghi nợ được trả về đâu và mất bao lâu? | 1.000 | 0.000 | 1.000 | 1.000 | Answer formulation | Câu trả lời bám context nhưng không trả lời trực tiếp đủ hai ý bắt buộc: hoàn về đúng thẻ và thời gian 7–14 ngày làm việc. |
+| 3 | Thực phẩm tươi sống hoặc hàng cần bảo quản đặc biệt nên giao bằng hình thức nào? | 1.000 | 0.000 | 1.000 | 1.000 | Answer formulation | Evidence được truy xuất đầy đủ nhưng câu trả lời có thể không nêu trực tiếp “Hỏa Tốc” hoặc bị judge đánh giá lệch trọng tâm câu hỏi. |
 
-**Config B: Dense-only (baseline)**
-> - Chỉ dùng Semantic Search (Jina embeddings)
-> - Không có lexical search, không rerank, không fallback
-
-**Kết luận:**
-> Config A (Hybrid) tốt hơn rõ rệt vì:
-> 1. BM25 bắt được keyword chính xác (số tiền, thuật ngữ chuyên ngành) mà semantic search có thể miss
-> 2. RRF fusion tận dụng strengths của cả hai phương pháp
-> 3. Reranking sắp xếp lại kết quả tốt hơn so với chỉ dùng cosine score
-
----
-
-## Chi tiết kết quả 20 câu hỏi
-
-### ✅ Câu trả lời ĐÚNG (18/20)
-
-| # | Question | Answer Match | Source Correct |
-|---|----------|-------------|----------------|
-| 1 | Shopee hỗ trợ các phương thức thanh toán nào? | ✅ 10/10 methods | ✅ article_01.md |
-| 2 | Giá trị tối thiểu để thanh toán thẻ tín dụng? | ✅ 10,000 VNĐ | ✅ article_01.md |
-| 3 | Apple Pay áp dụng cho đơn hàng giá trị nào? | ✅ 10K-25M VNĐ | ✅ article_01.md |
-| 4 | Hủy đơn ở trạng thái Chờ lấy hàng? | ✅ Đúng quy trình | ✅ article_02.md |
-| 5 | Hủy đơn bao nhiêu lần? | ✅ Chỉ 1 lần | ✅ article_02.md |
-| 6 | Bằng chứng khi yêu cầu trả hàng? | ✅ Ảnh + video | ✅ article_03.md |
-| 7 | Thời gian xử lý trả hàng/hoàn tiền? | ✅ 3-5 ngày | ✅ article_03.md |
-| 8 | Thời hạn yêu cầu trả hàng? | ✅ 15 ngày / 24h tươi sống | ✅ article_06.md |
-| 9 | Điều kiện hoàn tiền COD? | ✅ Liên kết ngân hàng | ✅ article_06.md |
-| 10 | Hoàn tiền thẻ tín dụng mất bao lâu? | ✅ 7-14 ngày | ✅ article_04.md |
-| 11 | Phí vận chuyển trả hàng Shopee Mall? | ✅ Hoàn vào Số dư | ✅ article_06.md |
-| 12 | Đơn > 50 triệu hỗ trợ vận chuyển? | ✅ Không hỗ trợ | ✅ article_05.md |
-| 13 | Thực phẩm tươi sống giao bằng gì? | ✅ Hỏa Tốc | ✅ article_05.md |
-| 14 | Công thức khối lượng quy đổi? | ✅ RxCxC/6000 | ✅ article_05.md |
-| 15 | Ảnh sản phẩm tối thiểu? | ✅ 40% diện tích | ✅ seller-listing-rules |
-| 16 | Tên sản phẩm yêu cầu? | ⚠️ Trích dẫn luật, thiếu thực tế | ✅ seller-listing-rules |
-| 17 | Hạn sử dụng sản phẩm? | ✅ 30% + 30 ngày | ✅ seller-listing-rules |
-| 18 | Phí xử lý giao dịch? | ✅ 6% | ✅ seller-responsibilities |
-| 19 | Xử lý đơn hàng ảo? | ✅ Đầy đủ biện pháp | ✅ seller-antifraud |
-| 20 | Vi phạm cấm sản phẩm? | ✅ Đầy đủ chế tài | ✅ prohibited-products |
-
-### ⚠️ Câu trả lời CẦN CẢI THIỆN (2/20)
-
-| # | Question | Issue | Root Cause |
-|---|----------|-------|------------|
-| 16 | Tên sản phẩm phải tuân thủ yêu cầu nào? | Trích dẫn luật thay vì giải thích thực tế | Context trả về đoạn luật, không phải hướng dẫn thực hành |
-| 7 | Thời gian xử lý trả hàng? | Thiếu chi tiết về trường hợp ngoại lệ | Context chỉ có thông tin chung |
-
----
-
-## Worst Performers (Bottom 3)
-
-| # | Question | Issue | Failure Stage | Root Cause |
-|---|----------|-------|---------------|------------|
-| 16 | Tên sản phẩm đăng bán trên Shopee? | Answer trích dẫn luật, thiếu practical guidance | Generation | Context retrieved đúng nhưng LLM paraphrase quá sát luật |
-| 7 | Thời gian xử lý trả hàng/hoàn tiền? | Answer ngắn, thiếu context về edge cases | Retrieval | Chỉ 1 chunk relevant, không đủ context |
-| 4 | Hủy đơn Chờ lấy hàng | Answer hơi dài, có redundant steps | Generation | Multi-step process cần summarize tốt hơn |
-
----
-
-## Retrieval Analysis
-
-### retrieval_source distribution
-
-| Source | Count | Percentage |
-|--------|-------|------------|
-| hybrid (Semantic + BM25 + RRF) | 20 | 100% |
-| pageindex (fallback) | 0 | 0% |
-
-> **Nhận xét:** Tất cả 20 câu đều trả lời tốt bằng hybrid search, không cần fallback PageIndex.
-> Điều này cho thấy threshold 0.48 đã calibrate phù hợp cho corpus này.
-
-### Cosine Score Distribution
-
-| Range | Count | Interpretation |
-|-------|-------|----------------|
-| > 0.7 | 12 | High confidence |
-| 0.5 - 0.7 | 6 | Medium confidence |
-| < 0.5 | 2 | Low (gần threshold) |
-
----
+Các root cause trên là giả thuyết dựa trên pattern metric. Muốn xác nhận hoàn toàn cần
+lưu thêm answer và contexts của từng case vào artifact đánh giá.
 
 ## Recommendations
 
-### Cải tiến 1: Thêm Multi-hop Retrieval
-**Action:** Với câu hỏi phức tạp (như #16 về tên sản phẩm), implement query expansion hoặc multi-hop retrieval để lấy thêm context liên quan.
-**Expected impact:** +5-10% Answer Accuracy cho câu hỏi cần nhiều nguồn.
+### 1. Siết prompt cho câu hỏi nhiều ý
 
-### Cải tiến 2: Cải thiện Context Window
-**Action:** Tăng top_k từ 5 lên 7-8 cho câu hỏi cần nhiều chi tiết, hoặc implement adaptive top_k dựa trên query complexity.
-**Expected impact:** +5% Context Recall cho câu trả lời cần nhiều evidence.
+**Action:** yêu cầu model tách từng điều kiện trong câu hỏi và trả lời đủ từng ý trước
+khi kết thúc; đặc biệt với các câu hỏi dạng “ở đâu và bao lâu”.
 
-### Cải tiến 3: Fine-tune Reranker Threshold
-**Action:** Chạy evaluation trên 50+ câu hỏi để calibrate lại SCORE_THRESHOLD và RRF k parameter.
-**Expected impact:** +3-5% overall accuracy.
+**Expected impact:** tăng Answer Relevance mà không làm giảm Faithfulness.
 
----
+### 2. Kiểm tra grounding trước khi trả lời
+
+**Action:** thêm bước tự kiểm tra rằng mọi con số, thời hạn và kênh hoàn tiền đều xuất
+hiện trong context; nếu thiếu thì trả lời không thể xác minh.
+
+**Expected impact:** giảm lỗi hallucination ở case Shopee Mall và tăng Faithfulness.
+
+### 3. Lưu artifact theo từng test case
+
+**Action:** xuất question, generated answer, retrieved contexts, retrieval source và 4
+metric scores ra JSON/CSV bên cạnh báo cáo Markdown.
+
+**Expected impact:** giúp phân biệt lỗi retrieval với lỗi generation và làm cho kết quả
+có thể audit/reproduce.
+
+### 4. Hiệu chỉnh reranker API
+
+**Action:** thay `JINA_API_KEY` đang trả HTTP 403 hoặc để trống key để dùng RRF local
+một cách rõ ràng.
+
+**Expected impact:** tránh 20 request thất bại và giảm đáng kể thời gian chạy benchmark.
+
+## Hạn chế và trạng thái tái chạy
+
+- Dataset hiện có 15 câu, không phải 20 câu như mô tả cũ.
+- RAGAS dùng LLM judge nên điểm có thể dao động nhẹ giữa các lần chạy.
+- Lần tái chạy gần nhất không được dùng để thay thế bảng điểm trên vì bị dừng ở cấu
+  hình `dense_only` do OpenRouter trả HTTP 402 (không đủ credit/max-token budget).
+- Jina Reranker trả HTTP 403 trong lần tái chạy; pipeline đã tự fallback về RRF.
+- Các giá trị trong bảng được giữ ở độ chính xác 3 chữ số; delta được tính từ các giá
+  trị đang hiển thị.
 
 ## Reproduction
 
+Chạy thử ít case trước để kiểm tra key và quota:
+
 ```powershell
-# 1. Upload documents to PageIndex (nếu chưa có)
-.venv\Scripts\python.exe -m src.task8_pageindex_vectorless
-
-# 2. Chạy evaluation
-.venv\Scripts\python.exe -c "
-import json
-from pathlib import Path
-from src.task10_generation import generate_with_citation
-
-golden = json.loads(Path('group_project/evaluation/golden_dataset.json').read_text(encoding='utf-8'))
-results = []
-for item in golden:
-    result = generate_with_citation(item['question'], top_k=5)
-    results.append({
-        'question': item['question'],
-        'expected_answer': item['expected_answer'],
-        'answer': result['answer'],
-        'sources': result.get('sources', []),
-        'retrieval_source': result.get('retrieval_source', 'hybrid'),
-    })
-Path('group_project/evaluation/results.json').write_text(
-    json.dumps(results, ensure_ascii=False, indent=2), encoding='utf-8'
-)
-"
-
-# 3. Chạy RAGAS evaluation (nếu có credits)
-# .venv\Scripts\python.exe -m group_project.evaluation.eval_pipeline
+$env:PYTHONIOENCODING="utf-8"
+$env:JINA_API_KEY=""
+.\.venv\Scripts\python.exe -m group_project.evaluation.eval_pipeline --limit 2
 ```
 
----
+Chạy toàn bộ 15 câu cho hai cấu hình A/B:
 
-## Tech Stack
+```powershell
+$env:PYTHONIOENCODING="utf-8"
+$env:JINA_API_KEY=""
+.\.venv\Scripts\python.exe -m group_project.evaluation.eval_pipeline
+```
 
-| Component | Technology |
-|-----------|------------|
-| Embeddings | Jina AI (jina-embeddings-v3) |
-| Vector Search | ChromaDB |
-| Lexical Search | BM25 (rank_bm25) |
-| Reranking | Jina Reranker v2 → RRF fallback |
-| Fallback | PageIndex Vectorless RAG |
-| Generation | GPT-4o-mini (OpenRouter) |
-| Evaluation | RAGAS 0.1.21 (planned) |
-
----
-
-*Báo cáo được tạo ngày 2026-08-04*
-*Pipeline: Hybrid Search (Semantic + BM25 + RRF) → Rerank → PageIndex Fallback → LLM Generation*
+Khi hoàn tất, script sẽ tự ghi lại báo cáo này từ kết quả RAGAS mới.
