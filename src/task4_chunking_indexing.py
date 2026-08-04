@@ -30,6 +30,7 @@ chroma_db/ cũ trước khi reindex — nếu không, chunk cũ và mới sẽ t
 trong cùng collection, retrieval sẽ trả về kết quả rác từ dữ liệu cũ.
 """
 
+import re
 from pathlib import Path
 
 STANDARDIZED_DIR = Path(__file__).parent.parent / "data" / "standardized"
@@ -44,9 +45,8 @@ CHROMA_DIR = Path(__file__).parent.parent / "chroma_db"
 #   - An toàn, phổ biến nhất, hoạt động tốt với mọi loại document
 #   - Thử tách theo paragraph → heading → câu → từ (từ rộng đến hẹp)
 #   - Phù hợp vì corpus có cả legal (đoạn dài, formal) lẫn news (đoạn ngắn, tự nhiên)
-CHUNK_SIZE = 500        # ~500 chars: vừa đủ cho 1 chunk chứa ngữ cảnh liên quan,
-                        #   không quá ngắn (mất context) hay quá dài (phá embedding)
-CHUNK_OVERLAP = 50      # ~10% overlap: giữ liên tục ngữ cảnh ở ranh giới chunk
+CHUNK_SIZE = 800        # ~800 chars: đủ ngữ cảnh cho một ý/điều khoản hoàn chỉnh
+CHUNK_OVERLAP = 100     # Giữ ngữ cảnh khi câu/điều khoản nằm sát ranh giới chunk
 CHUNKING_METHOD = "recursive"  # "recursive" | "markdown_header" | "semantic"
 
 # Embedding model: BAAI/bge-m3
@@ -65,21 +65,79 @@ COLLECTION_NAME = "ecommerce_support_docs"
 # IMPLEMENTATION
 # =============================================================================
 
+VALID_CUSTOMER_ROLES = {"buyer", "seller", "both"}
+
+# Hai nguồn dữ liệu hiện dùng hai kiểu metadata:
+#   **customer_role:** buyer   (news)
+#   Customer role: seller     (legal)
+METADATA_KEY_MAP = {
+    "doc id": "doc_id",
+    "customer role": "customer_role",
+    "category": "category",
+    "platform": "platform",
+    "source": "source_url",
+    "source url": "source_url",
+    "crawled": "crawled_at",
+    "retrieved at": "retrieved_at",
+    "document version": "document_version",
+}
+
+
+def _parse_metadata(content: str) -> dict[str, str]:
+    """Đọc metadata ở phần đầu Markdown và chuẩn hóa tên trường."""
+    metadata = {}
+    # Metadata của corpus đều nằm trước heading nội dung thứ hai / 30 dòng đầu.
+    for raw_line in content.splitlines()[:30]:
+        line = raw_line.strip()
+        match = re.match(r"^(?:\*\*)?([^:*]+?)(?:\*\*)?\s*:\s*(.*)$", line)
+        if not match:
+            continue
+
+        raw_key = match.group(1).strip().lower().replace("_", " ")
+        key = METADATA_KEY_MAP.get(raw_key)
+        if not key:
+            continue
+
+        value = match.group(2).strip().strip("*").strip()
+        if value:
+            metadata[key] = value
+    return metadata
+
+
 def load_documents() -> list[dict]:
     """
     Đọc toàn bộ markdown files từ data/standardized/.
 
     Returns:
-        List of {'content': str, 'metadata': {'source': str, 'type': str}}
+        List of {'content': str, 'metadata': dict}. Metadata gồm tối thiểu:
+        source, type, doc_id, customer_role, category, platform.
     """
     documents = []
-    for md_file in STANDARDIZED_DIR.rglob("*.md"):
+    for md_file in sorted(STANDARDIZED_DIR.rglob("*.md")):
         content = md_file.read_text(encoding="utf-8")
         # Xác định loại document dựa trên cấu trúc thư mục
-        doc_type = "legal" if "legal" in str(md_file) else "news"
+        doc_type = "legal" if md_file.parent.name == "legal" else "news"
+        parsed = _parse_metadata(content)
+        customer_role = parsed.get("customer_role", "").lower()
+        if customer_role not in VALID_CUSTOMER_ROLES:
+            raise ValueError(
+                f"{md_file}: customer_role phải là buyer/seller/both, "
+                f"nhận được {customer_role!r}"
+            )
+
+        metadata = {
+            "source": md_file.name,
+            "type": doc_type,
+            "doc_id": parsed.get("doc_id", md_file.stem),
+            "customer_role": customer_role,
+            "category": parsed.get("category", "uncategorized"),
+            "platform": parsed.get("platform", "unknown"),
+        }
+        # Chroma chỉ nhận metadata scalar; các giá trị parse ở đây đều là string.
+        metadata.update({k: v for k, v in parsed.items() if k not in metadata})
         documents.append({
             "content": content,
-            "metadata": {"source": md_file.name, "type": doc_type}
+            "metadata": metadata,
         })
     return documents
 
@@ -95,9 +153,9 @@ def chunk_documents(documents: list[dict]) -> list[dict]:
 
     # RecursiveCharacterTextSplitter: an toàn, phổ biến nhất.
     # Thử tách theo "\n\n" trước (paragraph), rồi "\n" (heading), ". " (câu), " " (từ).
-    # chunk_size=500: vừa đủ cho 1 chunk chứa ngữ cảnh liên quan,
+    # chunk_size=800: vừa đủ cho 1 chunk chứa ngữ cảnh liên quan,
     #   không quá ngắn (mất context) cũng không quá dài (phá cấu trúc embedding).
-    # chunk_overlap=50: overlap nhỏ giúp giữ liên tục ngữ cảnh ở ranh giới chunk.
+    # chunk_overlap=100: giữ liên tục ngữ cảnh ở ranh giới chunk.
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=CHUNK_SIZE,
         chunk_overlap=CHUNK_OVERLAP,
@@ -154,9 +212,9 @@ def index_to_vectorstore(chunks: list[dict]):
         metadata={"hnsw:space": "cosine"},
     )
 
-    # Tạo ID duy nhất cho mỗi chunk: source_file_chunk_X
+    # Tạo ID ổn định cho mỗi chunk từ doc_id đã chuẩn hóa.
     ids = [
-        f"{c['metadata']['source']}_chunk_{c['metadata']['chunk_index']}"
+        f"{c['metadata']['doc_id']}_chunk_{c['metadata']['chunk_index']}"
         for c in chunks
     ]
     collection.upsert(
