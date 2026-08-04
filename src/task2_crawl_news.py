@@ -22,10 +22,13 @@ tiêu đề mà không có nội dung, đổi sang bài viết khác cùng domai
 
 import asyncio
 import json
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 DATA_DIR = Path(__file__).parent.parent / "data" / "landing" / "news"
+
+# Múi giờ Việt Nam (UTC+7)
+VN_TZ = timezone(timedelta(hours=7))
 
 
 def setup_directory():
@@ -33,6 +36,7 @@ def setup_directory():
     DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 
+# Danh sách URL bài viết từ Shopee Vietnam Help Center
 ARTICLE_URLS = [
     # Buyer support articles
     "https://help.shopee.vn/portal/4/article/79198",   # Phương thức thanh toán
@@ -95,7 +99,7 @@ async def crawl_article(url: str) -> dict:
     return {
         "url": url,
         "title": title,
-        "date_crawled": datetime.now().astimezone().isoformat(),
+        "date_crawled": datetime.now(VN_TZ).isoformat(),
         "content_markdown": content_markdown,
     }
 
@@ -104,18 +108,42 @@ async def crawl_all():
     """Crawl toàn bộ bài viết trong ARTICLE_URLS."""
     setup_directory()
 
-    for i, url in enumerate(ARTICLE_URLS, 1):
-        print(f"[{i}/{len(ARTICLE_URLS)}] Crawling: {url}")
-        article = await crawl_article(url)
+    print(f"Bắt đầu crawl {len(ARTICLE_URLS)} bài viết từ Shopee Help Center...")
+    print("-" * 60)
 
-        # Lưu file JSON
-        filename = f"article_{i:02d}.json"
-        filepath = DATA_DIR / filename
-        filepath.write_text(
-            json.dumps(article, ensure_ascii=False, indent=2),
-            encoding="utf-8",
-        )
-        print(f"  ✓ Saved: {filepath}")
+    success_count = 0
+    fail_count = 0
+
+    for i, url in enumerate(ARTICLE_URLS, 1):
+        print(f"\n[{i}/{len(ARTICLE_URLS)}] Crawling: {url}")
+        try:
+            article = await crawl_article(url)
+
+            # Kiểm tra có nội dung không (tránh SPA render rỗng)
+            if not article["content_markdown"] or len(article["content_markdown"].strip()) < 50:
+                print(f"  ⚠ Cảnh báo: Nội dung quá ngắn, có thể trang dùng JS render")
+                print(f"    Title: {article['title']}")
+
+            # Lưu file JSON
+            filename = f"article_{i:02d}.json"
+            filepath = DATA_DIR / filename
+            filepath.write_text(
+                json.dumps(article, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
+            print(f"  ✓ Saved: {filepath}")
+            print(f"    Title: {article['title']}")
+            print(f"    Content length: {len(article['content_markdown'])} chars")
+            success_count += 1
+
+        except Exception as e:
+            print(f"  ✗ Lỗi: {e}")
+            fail_count += 1
+
+    # Tổng kết
+    print("\n" + "=" * 60)
+    print(f"Hoàn thành! Thành công: {success_count}, Thất bại: {fail_count}")
+    print(f"Thư mục output: {DATA_DIR}")
 
 
 if __name__ == "__main__":
