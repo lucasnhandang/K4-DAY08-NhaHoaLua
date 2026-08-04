@@ -33,10 +33,16 @@ def setup_directory():
     DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 
-# TODO: Điền danh sách URL bài viết cần crawl
 ARTICLE_URLS = [
-    # Ví dụ (trang công khai Shopee Vietnam):
-    # "https://help.shopee.vn/portal/4/article/...",
+    # Buyer support articles
+    "https://help.shopee.vn/portal/4/article/79198",   # Phương thức thanh toán
+    "https://help.shopee.vn/portal/4/article/79182",   # Hủy đơn hàng
+    "https://help.shopee.vn/portal/4/article/79233",   # Gửi yêu cầu trả hàng/hoàn tiền
+    "https://help.shopee.vn/portal/4/article/189473",  # Thời gian nhận tiền hoàn
+
+    # Supporting policy articles
+    "https://help.shopee.vn/portal/4/article/77250",   # Chính sách vận chuyển
+    "https://help.shopee.vn/portal/4/article/77251",   # Chính sách trả hàng/hoàn tiền
 ]
 
 
@@ -54,16 +60,44 @@ async def crawl_article(url: str) -> dict:
     """
     from crawl4ai import AsyncWebCrawler
 
-    # TODO: Implement crawling logic
-    # async with AsyncWebCrawler() as crawler:
-    #     result = await crawler.arun(url=url)
-    #     return {
-    #         "url": url,
-    #         "title": result.metadata.get("title", "Unknown"),
-    #         "date_crawled": datetime.now().isoformat(),
-    #         "content_markdown": result.markdown,
-    #     }
-    raise NotImplementedError("Implement crawl_article")
+    async with AsyncWebCrawler() as crawler:
+        result = await crawler.arun(url=url)
+
+    if not getattr(result, "success", True):
+        error = getattr(result, "error_message", "Unknown crawl error")
+        raise RuntimeError(f"Không thể crawl {url}: {error}")
+
+    # Crawl4AI bản cũ trả markdown là str; bản mới trả
+    # MarkdownGenerationResult chứa raw_markdown/fit_markdown.
+    markdown_result = getattr(result, "markdown", "")
+    if isinstance(markdown_result, str):
+        content_markdown = markdown_result
+    elif isinstance(markdown_result, dict):
+        content_markdown = (
+            markdown_result.get("raw_markdown")
+            or markdown_result.get("fit_markdown")
+            or ""
+        )
+    else:
+        content_markdown = (
+            getattr(markdown_result, "raw_markdown", None)
+            or getattr(markdown_result, "fit_markdown", None)
+            or str(markdown_result or "")
+        )
+
+    content_markdown = content_markdown.strip()
+    if not content_markdown:
+        raise RuntimeError(f"Crawl thành công nhưng không lấy được nội dung từ {url}")
+
+    metadata = getattr(result, "metadata", None) or {}
+    title = metadata.get("title") or metadata.get("og:title") or "Unknown"
+
+    return {
+        "url": url,
+        "title": title,
+        "date_crawled": datetime.now().astimezone().isoformat(),
+        "content_markdown": content_markdown,
+    }
 
 
 async def crawl_all():
@@ -77,7 +111,10 @@ async def crawl_all():
         # Lưu file JSON
         filename = f"article_{i:02d}.json"
         filepath = DATA_DIR / filename
-        filepath.write_text(json.dumps(article, ensure_ascii=False, indent=2))
+        filepath.write_text(
+            json.dumps(article, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
         print(f"  ✓ Saved: {filepath}")
 
 

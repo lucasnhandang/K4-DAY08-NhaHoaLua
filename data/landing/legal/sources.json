@@ -1,0 +1,46 @@
+[
+  {
+    "doc_id": "shopee-seller-listing-rules",
+    "title": "Quy định đăng bán sản phẩm",
+    "source_url": "https://help.shopee.vn/portal/4/article/77246",
+    "retrieved_at": "2026-08-03",
+    "document_version": "2024-08-14",
+    "customer_role": "seller",
+    "category": "listing-policy",
+    "platform": "shopee-vn",
+    "file_path": "data/landing/legal/seller-listing-rules-shopee.pdf"
+  },
+  {
+    "doc_id": "shopee-seller-prohibited-products",
+    "title": "Chính sách cấm/hạn chế sản phẩm",
+    "source_url": "https://help.shopee.vn/portal/4/article/77247",
+    "retrieved_at": "2026-08-03",
+    "document_version": "2025-04-28",
+    "customer_role": "seller",
+    "category": "prohibited-products",
+    "platform": "shopee-vn",
+    "file_path": "data/landing/legal/prohibited-products-policy-shopee.pdf"
+  },
+  {
+    "doc_id": "shopee-seller-antifraud",
+    "title": "Chính sách chống hành vi gian lận",
+    "source_url": "https://help.shopee.vn/portal/4/article/140097",
+    "retrieved_at": "2026-08-03",
+    "document_version": "2023-12-28",
+    "customer_role": "seller",
+    "category": "seller-compliance",
+    "platform": "shopee-vn",
+    "file_path": "data/landing/legal/seller-antifraud-policy-shopee.pdf"
+  },
+  {
+    "doc_id": "shopee-seller-responsibilities-fees",
+    "title": "Trách nhiệm và phí của người bán",
+    "source_url": "https://help.shopee.vn/portal/4/article/77243",
+    "retrieved_at": "2026-08-03",
+    "document_version": "2026-05-01",
+    "customer_role": "seller",
+    "category": "seller-responsibilities-fees",
+    "platform": "shopee-vn",
+    "file_path": "data/landing/legal/seller-responsibilities-fees-shopee.pdf"
+  }
+]
