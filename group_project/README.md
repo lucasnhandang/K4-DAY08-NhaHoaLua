@@ -1,105 +1,235 @@
-# Bài Tập Nhóm — E-commerce Support RAG Chatbot
+# E-commerce Support RAG Chatbot
 
-## Mục Tiêu
+Sản phẩm nhóm xây dựng chatbot hỏi đáp bằng tiếng Việt về chính sách thương mại
+điện tử và hỗ trợ khách hàng Shopee. Hệ thống kết hợp Semantic Search, BM25,
+Reciprocal Rank Fusion (RRF), PageIndex fallback và LLM generation có citation.
 
-Sau khi hoàn thành bài cá nhân, nhóm ngồi lại để xây dựng **1 trong 2 sản phẩm**:
+## Tính năng chính
 
----
+- Giao diện chat Streamlit, hỗ trợ lịch sử hội thoại và câu hỏi nối tiếp.
+- Hybrid retrieval: semantic search bằng `BAAI/bge-m3` kết hợp BM25.
+- Hợp nhất thứ hạng bằng RRF; có thể rerank bằng Jina nếu API key hợp lệ.
+- PageIndex vectorless fallback khi cosine similarity tốt nhất nhỏ hơn `0.48`.
+- Sinh câu trả lời tiếng Việt có citation và hiển thị các source chunks đã dùng.
+- Reorder context để giảm hiện tượng "lost in the middle".
+- Golden dataset 15 câu và pipeline RAGAS với 4 metrics, so sánh A/B hai cấu hình.
 
-## Yêu cầu 1: Sản phẩm nhóm RAG Chatbot
+## Kiến trúc hệ thống
 
-Xây dựng chatbot trả lời câu hỏi về chính sách thương mại điện tử và hỗ trợ khách hàng liên quan.
+```mermaid
+flowchart TD
+    A[PDF chính sách và bài viết hỗ trợ] --> B[Convert sang Markdown chuẩn hóa]
+    B --> C[Chunking 800 ký tự, overlap 100]
+    C --> D[(ChromaDB + BGE-M3)]
+    C --> E[BM25 Index]
+    B --> F[PDF tạm và PageIndex tree]
 
-**Yêu cầu:**
-- Giao diện chat (Streamlit / Gradio / Chainlit)
-- Trả lời có citation (dựa trên Task 10)
-- Hỗ trợ follow-up questions (conversation memory)
-- Hiển thị source documents đã dùng
-
-**Stack gợi ý:**
-```
-Chainlit/Streamlit → Retrieval (Task 9) → Generation (Task 10) → Display
-```
-
----
-
-## Yêu cầu 2: RAG Evaluation Pipeline
-
-Sử dụng **1 trong 3 framework** sau để evaluate pipeline RAG của nhóm:
-
-### Framework lựa chọn
-
-| Framework | Cài đặt | Đặc điểm |
-|-----------|---------|-----------|
-| [DeepEval](https://github.com/confident-ai/deepeval) | `pip install deepeval` | Nhiều metric built-in, dễ integrate với pytest |
-| [RAGAS](https://github.com/explodinggradients/ragas) | `pip install ragas` | Chuẩn industry cho RAG eval, 3 trục chính |
-| [TruLens](https://github.com/truera/trulens) | `pip install trulens` | Dashboard UI, feedback functions mạnh |
-
-### Yêu cầu Evaluation
-
-1. **Tạo Golden Dataset** — tối thiểu 15 cặp Q&A (question, expected_answer, expected_context)
-2. **Chạy evaluation** trên toàn bộ golden dataset với các metrics sau:
-   - **Faithfulness** — câu trả lời có bám đúng context không?
-   - **Answer Relevance** — câu trả lời có đúng câu hỏi không?
-   - **Context Recall** — retriever có lấy đủ evidence không?
-   - **Context Precision** — trong context lấy về, bao nhiêu % thực sự hữu ích?
-3. **So sánh A/B** — chạy eval trên ít nhất 2 config khác nhau (ví dụ: có reranking vs không reranking, hoặc hybrid vs dense-only)
-4. **Báo cáo** — bảng điểm + phân tích worst performers + đề xuất cải tiến
-
-Xem code mẫu (DeepEval/RAGAS/TruLens) chi tiết trong `README.md` gốc mục "Yêu cầu 2".
-
-### Deliverable Evaluation
-
-- [ ] File `group_project/evaluation/golden_dataset.json` — 15+ cặp Q&A
-- [ ] File `group_project/evaluation/eval_pipeline.py` — script chạy evaluation
-- [ ] File `group_project/evaluation/results.md` — bảng điểm + phân tích
-- [ ] So sánh A/B ít nhất 2 configs
-
----
-
-## Yêu Cầu Chung
-
-1. **Tích hợp pipeline** từ bài cá nhân của các thành viên
-2. **Demo hoạt động được** trong buổi trình bày (chạy local hoặc deploy)
-3. **Evaluation pipeline** chạy được và có báo cáo kết quả
-4. **Code push lên repository** chung của nhóm
-5. **README** mô tả kiến trúc và phân công (điền bên dưới)
-
----
-
-## Kiến Trúc Hệ Thống
-
-```
-[Vẽ diagram kiến trúc ở đây]
+    Q[Câu hỏi người dùng] --> G[Semantic Search]
+    Q --> H[BM25 Search]
+    D --> G
+    E --> H
+    G --> I[RRF Fusion]
+    H --> I
+    I --> J[Jina reranker hoặc RRF local]
+    G --> K{Best cosine < 0.48?}
+    K -- Không --> J
+    K -- Có --> L[PageIndex fallback]
+    F --> L
+    J --> M[Reorder + Context Prompt]
+    L --> M
+    M --> N[OpenRouter LLM]
+    N --> O[Answer + Citation + Sources]
+    O --> P[Streamlit UI]
 ```
 
----
+Điều kiện fallback luôn sử dụng **cosine score gốc** từ semantic search, không sử
+dụng RRF score (`~0.016`) vì RRF chỉ phản ánh thứ hạng, không phản ánh độ liên quan
+tuyệt đối.
 
-## Phân Công Công Việc
+## Cấu trúc quan trọng
+
+```text
+app.py                                  Streamlit chatbot
+src/task4_chunking_indexing.py          Load, chunk và index ChromaDB
+src/task5_semantic_search.py            Dense retrieval và HyDE
+src/task6_lexical_search.py             BM25 retrieval
+src/task7_reranking.py                  RRF, Jina reranker và MMR interface
+src/task8_pageindex_vectorless.py       Upload/query PageIndex
+src/task9_retrieval_pipeline.py         Pipeline retrieval hoàn chỉnh
+src/task10_generation.py                Generation, memory và citation
+group_project/evaluation/
+  golden_dataset.json                   15 câu hỏi và đáp án chuẩn
+  eval_pipeline.py                      RAGAS evaluation + A/B comparison
+  results.md                            Báo cáo điểm và phân tích
+```
+
+## Công nghệ
+
+| Thành phần | Công nghệ |
+|---|---|
+| UI | Streamlit |
+| Embedding | Sentence Transformers `BAAI/bge-m3` |
+| Vector store | ChromaDB, cosine distance |
+| Sparse retrieval | `rank-bm25` |
+| Fusion/reranking | RRF (`k=60`), Jina Reranker tùy chọn |
+| Vectorless fallback | PageIndex Python SDK |
+| Generation | OpenAI-compatible SDK qua OpenRouter |
+| Evaluation | RAGAS 0.1.21, Datasets, LangChain OpenAI |
+
+## Cài đặt
+
+Yêu cầu Python 3.10+; khuyến nghị dùng virtual environment riêng cho dự án.
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+Nếu môi trường từng cài package `fpdf` 1.7.2, cần thay bằng `fpdf2`:
+
+```powershell
+python -m pip uninstall --yes fpdf
+python -m pip install --force-reinstall --upgrade fpdf2
+```
+
+Tạo `.env` từ file mẫu:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Các biến môi trường:
+
+| Biến | Bắt buộc | Mục đích |
+|---|---:|---|
+| `OPENROUTER_API_KEY` | Có | Generation và LLM judge của RAGAS |
+| `PAGEINDEX_API_KEY` | Không | PageIndex fallback |
+| `JINA_API_KEY` | Không | Cross-encoder reranking; thiếu key sẽ dùng RRF |
+| `HF_TOKEN` | Không | Tăng rate limit khi tải model từ Hugging Face |
+| `RAGAS_LLM_MODEL` | Không | Override model judge, mặc định `openai/gpt-4o-mini` |
+| `RAGAS_EMBEDDING_MODEL` | Không | Override embedding judge, mặc định `BAAI/bge-m3` |
+
+Không commit file `.env` hoặc API key lên repository.
+
+## Chuẩn bị dữ liệu
+
+Nếu ChromaDB chưa được tạo hoặc corpus đã thay đổi, chạy:
+
+```powershell
+python -m src.task4_chunking_indexing
+```
+
+PageIndex là tùy chọn. Để kích hoạt fallback thật sự, upload/index tài liệu một lần:
+
+```powershell
+python -m src.task8_pageindex_vectorless
+```
+
+Lệnh này chuyển Markdown sang PDF Unicode, upload tài liệu, chờ trạng thái
+`retrieval_ready` và tạo cache `pageindex_doc_ids.json`. Có API key nhưng chưa có
+cache này thì Task 9 chưa thể trả kết quả PageIndex.
+
+## Chạy chatbot
+
+Từ thư mục gốc repository:
+
+```powershell
+$env:PYTHONIOENCODING="utf-8"
+streamlit run app.py
+```
+
+Mở URL Streamlit hiển thị trong terminal, thường là `http://localhost:8501`.
+
+## Chạy kiểm thử
+
+```powershell
+python -m pytest tests -v
+```
+
+Một số test tích hợp cần ChromaDB/model đã sẵn sàng; test PageIndex có thể cần API
+key và cache tài liệu.
+
+## RAG Evaluation
+
+Nhóm chọn **RAGAS 0.1.21** và đánh giá bốn metrics:
+
+1. Faithfulness
+2. Answer Relevance
+3. Context Recall
+4. Context Precision
+
+Hai cấu hình A/B:
+
+| Cấu hình | Retrieval | Reranking | Fallback |
+|---|---|---|---|
+| `hybrid_rerank` | Semantic + BM25 + RRF | Bật | PageIndex bật |
+| `dense_only` | Semantic only | Tắt | Tắt |
+
+Chạy thử hai câu để kiểm tra dependency và API quota:
+
+```powershell
+$env:PYTHONIOENCODING="utf-8"
+$env:JINA_API_KEY=""
+python -m group_project.evaluation.eval_pipeline --limit 2
+```
+
+Chạy đủ 15 câu cho cả hai cấu hình:
+
+```powershell
+$env:PYTHONIOENCODING="utf-8"
+$env:JINA_API_KEY=""
+python -m group_project.evaluation.eval_pipeline
+```
+
+Để dùng Jina thay vì RRF local, bỏ dòng đặt `JINA_API_KEY` rỗng và bảo đảm key hợp
+lệ. Full evaluation phát sinh nhiều request tới LLM; cần kiểm tra OpenRouter quota
+trước khi chạy. Báo cáo được ghi vào [evaluation/results.md](evaluation/results.md).
+
+### Kết quả hiện có
+
+| Metric | `hybrid_rerank` | `dense_only` |
+|---|---:|---:|
+| Faithfulness | 0.893 | 0.887 |
+| Answer Relevance | 0.700 | 0.706 |
+| Context Recall | 1.000 | 1.000 |
+| Context Precision | 0.987 | 0.987 |
+| Average | 0.895 | 0.895 |
+
+Hai cấu hình hòa nhau ở average sau khi làm tròn ba chữ số. Xem báo cáo để biết
+phân tích worst performers, giới hạn của lần chạy và đề xuất cải tiến.
+
+## Deliverables
+
+- [x] `evaluation/golden_dataset.json` — 15 cặp question/expected answer/context.
+- [x] `evaluation/eval_pipeline.py` — pipeline RAGAS bốn metrics.
+- [x] So sánh A/B `hybrid_rerank` và `dense_only`.
+- [x] `evaluation/results.md` — bảng điểm, worst performers và recommendations.
+- [x] Streamlit chatbot có citation, source display và conversation memory.
+- [ ] Xác nhận lại full RAGAS run sau khi bảo đảm OpenRouter quota.
+- [ ] Xác nhận PageIndex upload/query end-to-end với cache tài liệu hiện hành.
+
+## Phân công công việc
 
 | Thành viên | MSSV | Nhiệm vụ | Trạng thái |
-|-----------|------|----------|------------|
-| | | | |
-| | | | |
-| | | | |
-| | | | |
+|---|---|---|---|
+| Đặng Văn Nhân | 2A202601050 | Quản lý chung, tích hợp pipeline và Task 9 | Đã tích hợp |
+| Nguyễn Trần Gia Phụng | 2A202601286 | Task 1–3, Task 4, Task 5 và HyDE | Đã tích hợp |
+| Giáp Hoàng Thịnh | 2A202601492 | Task 6, Task 7 và Task 8 | Đã tích hợp |
+| Trần Bá Lợi | 2A202601316 | Streamlit `app.py` và Task 10 | Đã tích hợp |
+| Nguyễn Trương Ngọc Mai | 2A202601652 | Golden dataset, RAGAS và báo cáo A/B | Đã tích hợp; full rerun phụ thuộc API quota |
 
----
+## Lưu ý vận hành
 
-## Hướng Dẫn Chạy
+- Nếu Jina trả HTTP 401/403/402/429, xóa hoặc để trống `JINA_API_KEY`; pipeline sẽ
+  tự fallback về RRF.
+- Trên Windows nên đặt `PYTHONIOENCODING=utf-8` để tránh lỗi CP1252 khi in tiếng Việt
+  hoặc biểu tượng cảnh báo.
+- PageIndex dùng Retrieval API legacy của SDK hiện tại; `submit_document`, `get_tree`,
+  `submit_query` và `get_retrieval` cần đồng bộ với phiên bản SDK được cài.
+- Không dùng RRF score để quyết định PageIndex fallback; điều kiện đúng là cosine gốc
+  từ `dense_results[0]["score"] < 0.48`.
 
-```bash
-# Cài đặt dependencies
-pip install -r requirements.txt
-
-# Chạy app
-streamlit run app.py
-# hoặc
-chainlit run app.py
-```
-
----
-
-## Lưu ý
-
-Hãy giữ lại repo này nếu như bạn học track 3 giai đoạn 2, chúng ta sẽ phát triển tiếp dự án lên knowledge graph để khắc phục các câu hỏi hóc búa khi có các câu hỏi khó.
+Repo có thể tiếp tục được mở rộng ở giai đoạn sau bằng query expansion, reranker ổn
+định hơn, evaluation artifact theo từng case và knowledge graph retrieval.

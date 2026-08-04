@@ -37,7 +37,7 @@ TOP_P = 0.9
 # Chọn 0.3 vì: RAG cần factual, ít sáng tạo
 TEMPERATURE = 0.3
 
-LLM_MODEL = "openai/gpt-4o-mini"  # hoặc model ":free" nếu chưa có credit
+LLM_MODEL = "openai/gpt-4o-mini"
 
 
 # =============================================================================
@@ -176,6 +176,7 @@ def generate_with_citation(query: str, top_k: int = TOP_K) -> dict:
         ],
         temperature=TEMPERATURE,
         top_p=TOP_P,
+        max_tokens=2000,
     )
     answer = response.choices[0].message.content
     if not answer:

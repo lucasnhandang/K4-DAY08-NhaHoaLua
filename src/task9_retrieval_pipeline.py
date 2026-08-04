@@ -87,12 +87,31 @@ def retrieve(
     dense_results = semantic_search(query, top_k=candidate_count)
     sparse_results = lexical_search(query, top_k=candidate_count)
 
+    # Tạo lookup cosine score TRƯỚC khi rerank_rrf ghi đè score bằng RRF.
+    # Key giống identity() trong task7_reranking.py: (source, chunk_index, content).
+    _dense_lookup = {
+        (
+            r.get("metadata", {}).get("source"),
+            r.get("metadata", {}).get("chunk_index"),
+            r.get("content", ""),
+        ): r["score"]
+        for r in dense_results
+    }
+
     merged = rerank_rrf(
         [dense_results, sparse_results],
         top_k=candidate_count,
     )
     for item in merged:
         item["source"] = "hybrid"
+        # Gắn cosine score gốc vào metadata để hiển thị,
+        # vì rerank_rrf đã ghi đè field "score" bằng RRF score.
+        key = (
+            item.get("metadata", {}).get("source"),
+            item.get("metadata", {}).get("chunk_index"),
+            item.get("content", ""),
+        )
+        item["metadata"]["cosine_score"] = _dense_lookup.get(key, 0.0)
 
     if use_reranking and merged:
         final_results = rerank(
@@ -133,4 +152,5 @@ if __name__ == "__main__":
         print("-" * 60)
         results = retrieve(q, top_k=3)
         for i, r in enumerate(results, 1):
-            print(f"  {i}. [{r['score']:.3f}] [{r['source']}] {r['content'][:80]}...")
+            cosine = r.get("metadata", {}).get("cosine_score", 0.0)
+            print(f"  {i}. [cosine={cosine:.3f}] [{r['source']}] {r['content'][:80]}...")

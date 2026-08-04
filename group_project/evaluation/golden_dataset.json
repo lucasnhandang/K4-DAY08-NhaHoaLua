@@ -1,17 +1,102 @@
 [
   {
-    "question": "Người mua có thể yêu cầu trả hàng/hoàn tiền trong thời hạn bao lâu sau khi nhận hàng?",
-    "expected_answer": "Trong vòng 15 ngày kể từ khi giao hàng thành công (24 giờ đối với thực phẩm tươi sống/đông lạnh).",
-    "expected_context": "Trang Returns and Refunds Policy, mục Return/Refund Eligibility"
+    "question": "Shopee hỗ trợ các phương thức thanh toán nào?",
+    "expected_answer": "Shopee hỗ trợ Ví ShopeePay, thẻ tín dụng hoặc ghi nợ, trả góp bằng thẻ tín dụng, thanh toán QR, ứng dụng ngân hàng, thẻ nội địa NAPAS, Apple Pay, Google Pay, COD và SPayLater.",
+    "expected_context": "article_01.md — Danh sách phương thức thanh toán"
   },
   {
-    "question": "Shopee hỗ trợ những phương thức thanh toán nào?",
-    "expected_answer": "ShopeePay Wallet, thẻ tín dụng/ghi nợ, trả góp qua thẻ, QR Code, chuyển khoản qua app ngân hàng, thẻ NAPAS, Apple Pay, Google Pay, và COD.",
-    "expected_context": "Trang Payment Methods Overview"
+    "question": "Đơn hàng phải có giá trị tối thiểu bao nhiêu để thanh toán bằng thẻ tín dụng hoặc thẻ ghi nợ?",
+    "expected_answer": "Giá trị thanh toán của đơn, gồm phí vận chuyển và các chi phí phát sinh khác, phải từ 10.000 VNĐ trở lên.",
+    "expected_context": "article_01.md — Mục Thẻ Tín dụng/Ghi nợ"
   },
   {
-    "question": "Người bán không được đăng bán những sản phẩm nào?",
-    "expected_answer": "Hàng giả/nhái, sản phẩm bất hợp pháp, vi phạm sở hữu trí tuệ, và các mặt hàng nằm trong danh sách cấm của sàn.",
-    "expected_context": "Trang Product Listing Regulations, mục Prohibited Content"
+    "question": "Apple Pay được áp dụng cho đơn hàng có giá trị trong khoảng nào?",
+    "expected_answer": "Đơn hàng phải có giá trị thanh toán cuối cùng từ 10.000 VNĐ đến 25.000.000 VNĐ, đã gồm phí vận chuyển và chi phí phát sinh nếu có.",
+    "expected_context": "article_01.md — Mục Apple Pay"
+  },
+  {
+    "question": "Khi đơn ở trạng thái Chờ lấy hàng, người mua hủy đơn như thế nào?",
+    "expected_answer": "Người mua gửi yêu cầu và chờ phản hồi của Người bán. Nếu Người bán chấp nhận thì đơn được hủy ngay; nếu từ chối thì đơn tiếp tục được giao.",
+    "expected_context": "article_02.md — Bảng trạng thái đơn hàng và hủy đơn"
+  },
+  {
+    "question": "Một người mua có thể yêu cầu hủy cùng một đơn hàng bao nhiêu lần?",
+    "expected_answer": "Người mua chỉ có thể yêu cầu hủy một lần cho mỗi đơn hàng. Nếu yêu cầu bị từ chối thì không thể tiếp tục gửi yêu cầu hủy cho đơn đó.",
+    "expected_context": "article_02.md — Phần Lưu ý"
+  },
+  {
+    "question": "Khi gửi yêu cầu Trả hàng/Hoàn tiền, người mua cần nộp những bằng chứng gì?",
+    "expected_answer": "Người mua cần mô tả tình trạng hàng hóa, cung cấp bằng chứng như ảnh sản phẩm hoặc video mở hộp, và điền email liên hệ.",
+    "expected_context": "article_03.md — Hướng dẫn gửi yêu cầu, bước 7"
+  },
+  {
+    "question": "Yêu cầu Trả hàng/Hoàn tiền thường được xử lý trong bao lâu?",
+    "expected_answer": "Yêu cầu thường được xử lý trong khoảng 3 đến 5 ngày làm việc.",
+    "expected_context": "article_03.md — Mục Lưu ý, thời gian xử lý"
+  },
+  {
+    "question": "Người mua có bao lâu để yêu cầu trả hàng hoặc hoàn tiền sau khi đơn giao thành công?",
+    "expected_answer": "Thời hạn thông thường là 15 ngày kể từ khi đơn được cập nhật giao thành công. Với thực phẩm tươi sống hoặc đông lạnh, thời hạn là 24 giờ.",
+    "expected_context": "article_06.md — Điều 3.2 Chính sách Trả hàng và Hoàn tiền"
+  },
+  {
+    "question": "Điều kiện nhận hoàn tiền đối với đơn thanh toán COD hoặc chuyển khoản ngân hàng là gì?",
+    "expected_answer": "Trước khi gửi yêu cầu, tài khoản Shopee của Người mua phải liên kết thành công một phương thức nhận hoàn tiền hợp lệ, như tài khoản ngân hàng hoặc Ví ShopeePay.",
+    "expected_context": "article_06.md — Điều 3.3 Chính sách Trả hàng và Hoàn tiền"
+  },
+  {
+    "question": "Tiền hoàn của đơn thanh toán bằng thẻ tín dụng hoặc ghi nợ được trả về đâu và mất bao lâu?",
+    "expected_answer": "Tiền được hoàn về đúng thẻ tín dụng hoặc ghi nợ đã dùng để thanh toán; thời gian là 7 đến 14 ngày làm việc tùy ngân hàng.",
+    "expected_context": "article_04.md — Bảng phương thức và thời gian hoàn tiền"
+  },
+  {
+    "question": "Khi tự sắp xếp trả hàng cho sản phẩm Shopee Mall, người mua nhận lại phí vận chuyển thế nào?",
+    "expected_answer": "Người mua thanh toán trước phí gửi trả. Khi yêu cầu được chấp nhận, Shopee hoàn số tiền phí vận chuyển đã trả vào Số dư Tài khoản Shopee trong 3 đến 5 ngày làm việc kể từ ngày gửi hàng cho đơn vị vận chuyển.",
+    "expected_context": "article_06.md — Điều 8.1 chi phí vận chuyển hoàn trả Shopee Mall"
+  },
+  {
+    "question": "Đơn hàng có giá trị hàng hóa lớn hơn 50 triệu đồng có được Shopee hỗ trợ vận chuyển không?",
+    "expected_answer": "Không. Đơn hàng có tổng giá trị hàng hóa lớn hơn 50.000.000 VNĐ thuộc nhóm không được hỗ trợ vận chuyển; giá trị này không gồm mã giảm giá, Shopee Xu và phí vận chuyển.",
+    "expected_context": "article_05.md — Mục hàng hóa không hỗ trợ vận chuyển"
+  },
+  {
+    "question": "Thực phẩm tươi sống hoặc hàng cần bảo quản đặc biệt nên giao bằng hình thức nào?",
+    "expected_answer": "Người bán chỉ nên kích hoạt và giao qua đơn vị vận chuyển Hỏa Tốc. Nếu chọn kênh khác, Người bán chịu trách nhiệm khi hàng bị hư hỏng hoặc tổn thất.",
+    "expected_context": "article_05.md — Mục hàng hóa vận chuyển có điều kiện"
+  },
+  {
+    "question": "Khối lượng quy đổi để tính phí vận chuyển được tính theo công thức nào?",
+    "expected_answer": "Khối lượng quy đổi bằng chiều rộng nhân chiều dài nhân chiều cao rồi chia cho 6.000, đơn vị kg. Phí được tính theo giá trị lớn hơn giữa cân nặng thực tế và khối lượng quy đổi.",
+    "expected_context": "article_05.md — Quy định về khối lượng và kích thước đóng gói"
+  },
+  {
+    "question": "Ảnh sản phẩm do người bán tự chụp phải đáp ứng yêu cầu tối thiểu nào?",
+    "expected_answer": "Tin đăng phải có ít nhất một ảnh thật do chính Người bán tự chụp, trong đó sản phẩm thật chiếm ít nhất 40% diện tích toàn ảnh.",
+    "expected_context": "seller-listing-rules-shopee.md — Mục Hình ảnh sản phẩm"
+  },
+  {
+    "question": "Tên sản phẩm đăng bán trên Shopee phải tuân thủ những yêu cầu cơ bản nào?",
+    "expected_answer": "Tên sản phẩm phải mô tả đúng hàng hóa hoặc dịch vụ, viết bằng tiếng Việt có dấu, đủ ký tự và rõ nghĩa; không dùng ký tự đặc biệt hoặc viết tắt.",
+    "expected_context": "seller-listing-rules-shopee.md — Mục Tên sản phẩm"
+  },
+  {
+    "question": "Sản phẩm có hạn sử dụng phải còn bao lâu mới được phép giao bán?",
+    "expected_answer": "Khi giao đi, sản phẩm phải còn ít nhất 30% thời hạn sử dụng và còn ít nhất 30 ngày tính từ thời điểm hiện tại đến ngày hết hạn.",
+    "expected_context": "seller-listing-rules-shopee.md — Quy định hạn sử dụng của sản phẩm chính"
+  },
+  {
+    "question": "Phí Xử lý Giao dịch của Người bán là bao nhiêu cho các phương thức thanh toán được liệt kê?",
+    "expected_answer": "Mức Phí Xử lý Giao dịch được liệt kê là 6% cho các phương thức thanh toán trong bảng, gồm thẻ, COD, NAPAS hoặc Internet Banking, SPayLater, ShopeePay, Apple Pay, Google Pay và chuyển khoản ngân hàng.",
+    "expected_context": "seller-responsibilities-fees-shopee.md — Điều 16.3 Phí Xử lý Giao dịch"
+  },
+  {
+    "question": "Shopee có thể xử lý Người bán tạo đơn hàng ảo để tăng lượt bán như thế nào?",
+    "expected_answer": "Shopee có thể cảnh báo, hủy đơn vi phạm, tạm khóa số dư, thu hồi tiền hoặc lợi ích liên quan, ngừng hỗ trợ ưu đãi, khóa tài khoản vĩnh viễn hoặc báo cơ quan chức năng. Mỗi đơn vi phạm có thể phải bồi thường đến 10.000.000 VNĐ.",
+    "expected_context": "seller-antifraud-policy-shopee.md — Hành vi gian lận và biện pháp xử lý"
+  },
+  {
+    "question": "Người bán vi phạm Chính sách Cấm/Hạn chế Sản phẩm có thể chịu những chế tài nào?",
+    "expected_answer": "Sản phẩm có thể bị xóa; tài khoản có thể bị giới hạn, đình chỉ hoặc xóa; số dư có thể bị cấn trừ và quyền rút tiền bị phong tỏa. Người bán cũng có thể chịu chế tài theo chính sách hoặc pháp luật, như phạt hành chính, xử lý hình sự hoặc bồi thường thiệt hại.",
+    "expected_context": "prohibited-products-policy-shopee.md — Hành vi vi phạm và biện pháp xử lý"
   }
 ]

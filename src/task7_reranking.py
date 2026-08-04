@@ -120,6 +120,16 @@ def _rerank_jina_api(
         return rerank_rrf([candidates], top_k=top_k)
 
 
+def _cosine_similarity(a: list[float], b: list[float]) -> float:
+    """Tính cosine similarity giữa hai vectors."""
+    dot_product = sum(x * y for x, y in zip(a, b))
+    norm_a = sum(x * x for x in a) ** 0.5
+    norm_b = sum(x * x for x in b) ** 0.5
+    if norm_a == 0 or norm_b == 0:
+        return 0.0
+    return dot_product / (norm_a * norm_b)
+
+
 def rerank_mmr(
     query_embedding: list[float],
     candidates: list[dict],
@@ -140,37 +150,44 @@ def rerank_mmr(
     Returns:
         List of top_k candidates selected by MMR.
     """
-    # TODO: Implement MMR
-    #
-    # selected = []
-    # remaining = list(range(len(candidates)))
-    #
-    # for _ in range(min(top_k, len(candidates))):
-    #     best_idx = None
-    #     best_score = float('-inf')
-    #
-    #     for idx in remaining:
-    #         # Relevance to query
-    #         relevance = cosine_sim(query_embedding, candidates[idx]["embedding"])
-    #
-    #         # Max similarity to already selected
-    #         max_sim_to_selected = 0
-    #         for sel_idx in selected:
-    #             sim = cosine_sim(candidates[idx]["embedding"], candidates[sel_idx]["embedding"])
-    #             max_sim_to_selected = max(max_sim_to_selected, sim)
-    #
-    #         # MMR score
-    #         mmr_score = lambda_param * relevance - (1 - lambda_param) * max_sim_to_selected
-    #
-    #         if mmr_score > best_score:
-    #             best_score = mmr_score
-    #             best_idx = idx
-    #
-    #     selected.append(best_idx)
-    #     remaining.remove(best_idx)
-    #
-    # return [candidates[i] for i in selected]
-    raise NotImplementedError("Implement rerank_mmr")
+    if top_k <= 0 or not candidates:
+        return []
+
+    selected = []
+    remaining = list(range(len(candidates)))
+
+    for _ in range(min(top_k, len(candidates))):
+        best_idx = None
+        best_score = float("-inf")
+
+        for idx in remaining:
+            # Relevance to query
+            relevance = _cosine_similarity(query_embedding, candidates[idx]["embedding"])
+
+            # Max similarity to already selected
+            max_sim_to_selected = 0.0
+            for sel_idx in selected:
+                sim = _cosine_similarity(
+                    candidates[idx]["embedding"], candidates[sel_idx]["embedding"]
+                )
+                max_sim_to_selected = max(max_sim_to_selected, sim)
+
+            # MMR score
+            mmr_score = lambda_param * relevance - (1 - lambda_param) * max_sim_to_selected
+
+            if mmr_score > best_score:
+                best_score = mmr_score
+                best_idx = idx
+
+        if best_idx is None:
+            break
+        selected.append(best_idx)
+        remaining.remove(best_idx)
+
+    return [
+        {**candidates[i], "mmr_score": _cosine_similarity(query_embedding, candidates[i]["embedding"])}
+        for i in selected
+    ]
 
 
 def rerank_rrf(
@@ -262,8 +279,9 @@ def rerank(
     if method == "cross_encoder":
         return rerank_cross_encoder(query, candidates, top_k)
     elif method == "mmr":
-        # Cần query_embedding - embed query trước
-        raise NotImplementedError("Call rerank_mmr with query_embedding")
+        raise ValueError(
+            "MMR requires query_embedding. Call rerank_mmr() directly."
+        )
     elif method == "rrf":
         # Backwards-compatible single-list mode required by the starter API.
         # Hybrid retrieval should call rerank_rrf([dense, sparse]) directly.
