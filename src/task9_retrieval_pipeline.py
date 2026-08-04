@@ -40,7 +40,7 @@ from .task8_pageindex_vectorless import pageindex_search
 # giá trị mẫu, mỗi corpus/embedding model sẽ cho khoảng điểm khác nhau.
 SCORE_THRESHOLD = 0.48  # Nếu best score (cosine gốc) < threshold → fallback PageIndex
 DEFAULT_TOP_K = 5
-RERANK_METHOD = "rrf"  # "cross_encoder" | "mmr" | "rrf"
+RERANK_METHOD = "cross_encoder"  # "cross_encoder" (Jina API) | "mmr" | "rrf" (fallback)
 
 
 def retrieve(

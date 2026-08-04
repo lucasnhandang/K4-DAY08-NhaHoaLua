@@ -2,7 +2,7 @@
 Task 7 — Reranking Module.
 
 Chọn 1 trong các phương pháp:
-    - Cross-encoder reranker: Jina Reranker v2 (multilingual) hoặc Qwen3-Reranker
+    - Cross-encoder reranker: Jina Reranker v2 (multilingual) — cần JINA_API_KEY
     - MMR (Maximal Marginal Relevance): tự implement
     - RRF (Reciprocal Rank Fusion): tự implement — khuyến nghị vì không cần API key
 
@@ -14,7 +14,25 @@ bất kể nội dung đó có thật sự liên quan đến câu hỏi hay khô
 quyết định fallback ở Task 9 — xem ghi chú ở đó.
 """
 
+import os
+import unicodedata
 from typing import Hashable
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+def _normalize_vietnamese(text: str) -> str:
+    """
+    Bỏ dấu tiếng Việt để Jina model xử lý tốt hơn.
+
+    Jina Reranker v2 xử lý kém text có dấu tiếng Việt.
+    Bỏ dấu giúp model tập trung vào semantic thay vì diacritics.
+    """
+    # decompose -> remove combining marks -> recompose
+    nfkd = unicodedata.normalize("NFKD", text)
+    return "".join(ch for ch in nfkd if unicodedata.category(ch) != "Mn")
 
 
 def rerank_cross_encoder(
@@ -22,6 +40,10 @@ def rerank_cross_encoder(
 ) -> list[dict]:
     """
     Rerank candidates sử dụng cross-encoder model.
+
+    Strategy:
+        - Nếu có JINA_API_KEY → dùng Jina Reranker v2 API (nhanh, chính xác)
+        - Nếu không có → fallback về RRF (không cần API key)
 
     Args:
         query: Câu truy vấn
@@ -31,30 +53,71 @@ def rerank_cross_encoder(
     Returns:
         List of top_k candidates, re-scored và sorted by rerank_score descending.
     """
-    # TODO: Implement cross-encoder reranking
-    #
-    # Option A: Jina Reranker API
-    # import requests
-    # response = requests.post(
-    #     "https://api.jina.ai/v1/rerank",
-    #     headers={"Authorization": f"Bearer {JINA_API_KEY}"},
-    #     json={
-    #         "model": "jina-reranker-v2-base-multilingual",
-    #         "query": query,
-    #         "documents": [c["content"] for c in candidates],
-    #         "top_n": top_k
-    #     }
-    # )
-    # reranked = response.json()["results"]
-    # return [
-    #     {**candidates[r["index"]], "score": r["relevance_score"]}
-    #     for r in reranked
-    # ]
-    #
-    # Option B: Local model (Qwen3-Reranker)
-    # from transformers import AutoModelForSequenceClassification, AutoTokenizer
-    # ...
-    raise NotImplementedError("Implement rerank_cross_encoder")
+    jina_api_key = os.getenv("JINA_API_KEY")
+
+    if jina_api_key:
+        return _rerank_jina_api(query, candidates, top_k, jina_api_key)
+    else:
+        print("  ℹ No JINA_API_KEY found — falling back to RRF reranking")
+        return rerank_rrf([candidates], top_k=top_k)
+
+
+def _rerank_jina_api(
+    query: str, candidates: list[dict], top_k: int, api_key: str
+) -> list[dict]:
+    """
+    Jina Reranker v2 API — cross-encoder multilingual.
+
+    API docs: https://jina.ai/reranker
+    Model: jina-reranker-v2-base-multilingual (hỗ trợ 100+ ngôn ngữ)
+
+    Returns:
+        List of top_k candidates với relevance_score từ Jina.
+        Nếu API fail (402 insufficient balance, 429 rate limit, etc.) → fallback RRF.
+    """
+    import requests
+
+    try:
+        # Jina model xử lý kém Vietnamese có dấu → normalize trước khi gửi
+        normalized_query = _normalize_vietnamese(query)
+        normalized_docs = [_normalize_vietnamese(c["content"]) for c in candidates]
+
+        response = requests.post(
+            "https://api.jina.ai/v1/rerank",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": "jina-reranker-v2-base-multilingual",
+                "query": normalized_query,
+                "documents": normalized_docs,
+                "top_n": top_k,
+            },
+            timeout=30,
+        )
+        response.raise_for_status()
+
+        data = response.json()
+        reranked = data.get("results", [])
+
+        return [
+            {
+                **candidates[r["index"]],
+                "rerank_score": r["relevance_score"],
+                "score": r["relevance_score"],  # Override original score
+            }
+            for r in reranked
+        ]
+
+    except requests.exceptions.HTTPError as e:
+        # 402 (insufficient balance), 429 (rate limit), 401 (invalid key)
+        print(f"  ⚠ Jina API error: {e} — falling back to RRF")
+        return rerank_rrf([candidates], top_k=top_k)
+    except requests.exceptions.RequestException as e:
+        # Network error, timeout, etc.
+        print(f"  ⚠ Jina API unreachable: {e} — falling back to RRF")
+        return rerank_rrf([candidates], top_k=top_k)
 
 
 def rerank_mmr(
@@ -214,14 +277,30 @@ if __name__ == "__main__":
 
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
-    semantic_results = [
+
+    query = "chính sách trả hàng shopee"
+    candidates = [
         {"content": "Chính sách trả hàng trong 15 ngày", "score": 0.91, "metadata": {"source": "returns.md", "chunk_index": 0}},
         {"content": "Phương thức thanh toán Shopee", "score": 0.72, "metadata": {"source": "payments.md", "chunk_index": 0}},
+        {"content": "Mã voucher SPP123 giảm 50k", "score": 0.65, "metadata": {"source": "vouchers.md", "chunk_index": 0}},
+        {"content": "Quy trình đổi trả sản phẩm bị lỗi", "score": 0.88, "metadata": {"source": "returns.md", "chunk_index": 1}},
+        {"content": "Hướng dẫn sử dụng ví ShopeePay", "score": 0.45, "metadata": {"source": "payments.md", "chunk_index": 1}},
     ]
-    bm25_results = [
-        {"content": "Phương thức thanh toán Shopee", "score": 12.4, "metadata": {"source": "payments.md", "chunk_index": 0}},
-        {"content": "Mã voucher SPP123", "score": 8.1, "metadata": {"source": "vouchers.md", "chunk_index": 0}},
-    ]
-    results = rerank_rrf([semantic_results, bm25_results], top_k=3)
-    for r in results:
-        print(f"[{r['score']:.3f}] {r['content']}")
+
+    print("=" * 60)
+    print(f"Query: {query}")
+    print(f"JINA_API_KEY: {'✓ Set' if os.getenv('JINA_API_KEY') else '✗ Not set → RRF fallback'}")
+    print("=" * 60)
+
+    # Test unified rerank interface
+    results = rerank(query, candidates, top_k=3, method="cross_encoder")
+    print("\n[CROSS-ENCODER RERANK]")
+    for i, r in enumerate(results, 1):
+        score = r.get("rerank_score", r["score"])
+        print(f"  {i}. [{score:.3f}] {r['content'][:60]}...")
+
+    # Test RRF directly
+    print("\n[RRF DIRECT]")
+    rrf_results = rerank_rrf([candidates[:3], candidates[2:]], top_k=3)
+    for i, r in enumerate(rrf_results, 1):
+        print(f"  {i}. [{r['score']:.3f}] {r['content'][:60]}...")
