@@ -1,5 +1,9 @@
 # [Thành viên mới] Shopee hiện đang có những phương thức thanh toán nào? | Shopee Trung tâm trợ giúp
 
+**doc_id:** shopee-payment-methods
+**customer_role:** buyer
+**category:** payment
+**platform:** shopee-vn
 **Source:** https://help.shopee.vn/portal/4/article/79198
 **Crawled:** 2026-08-04T11:34:34.494687+07:00
 

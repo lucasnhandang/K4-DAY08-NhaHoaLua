@@ -1,5 +1,9 @@
 # CHÍNH SÁCH VẬN CHUYỂN SHOPEE | Shopee Trung tâm trợ giúp
 
+**doc_id:** shopee-shipping-policy
+**customer_role:** both
+**category:** shipping
+**platform:** shopee-vn
 **Source:** https://help.shopee.vn/portal/4/article/77250
 **Crawled:** 2026-08-04T11:34:43.435632+07:00
 

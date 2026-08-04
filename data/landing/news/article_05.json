@@ -1,5 +1,8 @@
 {
+  "doc_id": "shopee-shipping-policy",
   "customer_role": "both",
+  "category": "shipping",
+  "platform": "shopee-vn",
   "url": "https://help.shopee.vn/portal/4/article/77250",
   "title": "CHÍNH SÁCH VẬN CHUYỂN SHOPEE | Shopee Trung tâm trợ giúp",
   "date_crawled": "2026-08-04T11:34:43.435632+07:00",

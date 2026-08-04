@@ -1,5 +1,9 @@
 # [Trả hàng/ Hoàn tiền] Thời gian nhận tiền hoàn và cách kiểm tra tiền hoàn | Shopee Trung tâm trợ giúp
 
+**doc_id:** shopee-refund-timeline
+**customer_role:** buyer
+**category:** returns-refunds
+**platform:** shopee-vn
 **Source:** https://help.shopee.vn/portal/4/article/189473
 **Crawled:** 2026-08-04T11:34:41.144117+07:00
 

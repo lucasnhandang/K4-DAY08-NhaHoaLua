@@ -1,5 +1,9 @@
 # CHÍNH SÁCH TRẢ HÀNG VÀ HOÀN TIỀN | Shopee Trung tâm trợ giúp
 
+**doc_id:** shopee-return-refund-policy
+**customer_role:** both
+**category:** returns-refunds
+**platform:** shopee-vn
 **Source:** https://help.shopee.vn/portal/4/article/77251
 **Crawled:** 2026-08-04T11:34:45.733306+07:00
 

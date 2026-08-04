@@ -1,5 +1,9 @@
 # [Trả hàng/ Hoàn tiền] Hướng dẫn gửi yêu cầu Trả hàng/ Hoàn tiền | Shopee Trung tâm trợ giúp
 
+**doc_id:** shopee-return-refund-request
+**customer_role:** buyer
+**category:** returns-refunds
+**platform:** shopee-vn
 **Source:** https://help.shopee.vn/portal/4/article/79233
 **Crawled:** 2026-08-04T11:34:38.873658+07:00
 
