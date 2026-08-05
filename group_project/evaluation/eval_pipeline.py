@@ -27,6 +27,7 @@ load_dotenv()
 
 GOLDEN_DATASET_PATH = Path(__file__).with_name("golden_dataset.json")
 RESULTS_PATH = Path(__file__).with_name("results.md")
+RESULTS_JSON_PATH = Path(__file__).with_name("results.json")
 REQUIRED_FIELDS = {"question", "expected_answer", "expected_context"}
 METRICS = ("faithfulness", "answer_relevancy", "context_recall", "context_precision")
 METRIC_LABELS = {
@@ -185,28 +186,64 @@ def _normalise_ragas_result(result: Any, config_name: str) -> dict:
 def _build_ragas_judges() -> tuple[Any, Any]:
     """Create the LLM judge and local embedding model used by RAGAS.
 
-    The application already uses OpenRouter for generation, so the evaluator
-    uses the same key for its LLM calls. Answer relevancy also needs embeddings;
-    keeping those local makes the evaluation independent from an embedding API.
-    """
-    api_key = (os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY") or "").strip()
-    if not api_key:
-        raise RuntimeError("Missing OPENROUTER_API_KEY or OPENAI_API_KEY for RAGAS judging")
+    Provider priority:
+      1. RAGAS_LLM_PROVIDER env var (explicit override: "openai", "openrouter", or "gemini")
+      2. OpenAI direct (sk-...) if OPENAI_API_KEY is set
+      3. OpenRouter if OPENROUTER_API_KEY is set
+      4. Gemini via langchain-google-genai if GEMINI_API_KEY is set
 
+    Answer relevancy also needs embeddings; keeping those local makes the
+    evaluation independent from an embedding API.
+    """
     from langchain_openai import ChatOpenAI
     from ragas.llms import LangchainLLMWrapper
 
-    is_openrouter = bool(os.getenv("OPENROUTER_API_KEY"))
-    chat_model = ChatOpenAI(
-        model=os.getenv("RAGAS_LLM_MODEL", "openai/gpt-4o-mini"),
-        api_key=api_key,
-        base_url="https://openrouter.ai/api/v1" if is_openrouter else None,
-        temperature=0,
-    )
+    provider = os.getenv("RAGAS_LLM_PROVIDER", "").lower().strip()
+
+    def _make_openai_judge():
+        api_key = os.getenv("OPENAI_API_KEY", "").strip()
+        if not api_key:
+            return None
+        chat_model = ChatOpenAI(
+            model=os.getenv("RAGAS_LLM_MODEL", "gpt-4o-mini"),
+            api_key=api_key,
+            temperature=0,
+        )
+        return LangchainLLMWrapper(chat_model)
+
+    def _make_openrouter_judge():
+        api_key = os.getenv("OPENROUTER_API_KEY", "").strip()
+        if not api_key:
+            return None
+        chat_model = ChatOpenAI(
+            model=os.getenv("RAGAS_LLM_MODEL", "openai/gpt-4o-mini"),
+            api_key=api_key,
+            base_url="https://openrouter.ai/api/v1",
+            temperature=0,
+        )
+        return LangchainLLMWrapper(chat_model)
+
+    judge = None
+    if provider == "openai":
+        judge = _make_openai_judge()
+    elif provider == "openrouter":
+        judge = _make_openrouter_judge()
+    elif not provider:
+        # Auto-detect: prefer OpenAI, then OpenRouter
+        judge = _make_openai_judge() or _make_openrouter_judge()
+    else:
+        raise RuntimeError(f"Unknown RAGAS_LLM_PROVIDER: {provider}")
+
+    if judge is None:
+        raise RuntimeError(
+            "No API key found for RAGAS judge. "
+            "Set OPENAI_API_KEY or OPENROUTER_API_KEY in .env"
+        )
+
     embeddings = SentenceTransformerRagasEmbeddings(
         os.getenv("RAGAS_EMBEDDING_MODEL", "BAAI/bge-m3")
     )
-    return LangchainLLMWrapper(chat_model), embeddings
+    return judge, embeddings
 
 
 def evaluate_with_ragas(
@@ -306,18 +343,24 @@ def _worst_rows(result: dict, limit: int = 3) -> list[dict]:
     return sorted(rows, key=row_average)[:limit]
 
 
-def export_results(results: dict | None, comparison: dict[str, dict]) -> Path:
+def export_results(results: dict | None, comparison: dict[str, dict], num_questions: int | None = None) -> Path:
     """Write a reproducible Markdown report to ``results.md``."""
     if not comparison:
         if results is None:
             raise ValueError("No evaluation results to export")
         comparison = {results.get("config", "default"): results}
 
+    # Determine actual question count from results data
+    if num_questions is None:
+        first_result = next(iter(comparison.values()), {})
+        rows = first_result.get("rows", [])
+        num_questions = len(rows) if rows else 0
+
     names = list(comparison)
     first, second = names[0], names[1] if len(names) > 1 else None
     lines = [
         "# RAG Evaluation Results", "", "## Framework", "",
-        "RAGAS 0.1.21 với 20 câu hỏi trong `golden_dataset.json`.", "",
+        f"RAGAS 0.1.21 với {num_questions} câu hỏi trong `golden_dataset.json`.", "",
         "## Overall Scores", "",
         f"| Metric | {first} | {second or '-'} | Δ |",
         "|---|---:|---:|---:|",
@@ -369,6 +412,41 @@ def export_results(results: dict | None, comparison: dict[str, dict]) -> Path:
     return RESULTS_PATH
 
 
+def export_results_json(
+    comparison: dict[str, dict], golden_dataset: list[dict] | None = None
+) -> Path:
+    """Write a machine-readable JSON report to ``results.json``.
+
+    The JSON contains per-question rows for each configuration, overall
+    scores, and metadata useful for downstream analysis.
+    """
+    output: dict[str, Any] = {
+        "framework": "RAGAS",
+        "version": "0.1.21",
+        "configs": {},
+    }
+
+    for config_name, result in comparison.items():
+        config_data: dict[str, Any] = {
+            "overall": result.get("overall", {}),
+            "rows": result.get("rows", []),
+        }
+        output["configs"][config_name] = config_data
+
+    # Include golden dataset questions for reference
+    if golden_dataset:
+        output["golden_dataset"] = [
+            {"question": item["question"], "expected_answer": item["expected_answer"]}
+            for item in golden_dataset
+        ]
+
+    RESULTS_JSON_PATH.write_text(
+        json.dumps(output, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    return RESULTS_JSON_PATH
+
+
 def main(limit: int | None = None) -> int:
     golden_dataset = load_golden_dataset()
     if limit is not None:
@@ -380,8 +458,10 @@ def main(limit: int | None = None) -> int:
     from src.task10_generation import generate_with_citation
 
     comparison = compare_configs(generate_with_citation, golden_dataset)
-    report_path = export_results(None, comparison)
+    report_path = export_results(None, comparison, num_questions=len(golden_dataset))
     print(f"Report written to {report_path}")
+    json_path = export_results_json(comparison, golden_dataset)
+    print(f"JSON report written to {json_path}")
     return 0
 
 

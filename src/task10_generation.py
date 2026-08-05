@@ -201,33 +201,51 @@ def generate_with_citation(
     user_message = (
         f"Context:\n{context}\n\n---\n\n"
         f"Câu hỏi: {query}\n\n"
-        "Hãy trích dẫn bằng đúng tên Source trong context."
+        "Hãy trả lời ngắn gọn, chính xác câu hỏi trên. "
+        "Chỉ dùng thông tin thực sự liên quan từ context. "
+        "Trích dẫn bằng đúng tên Source trong context."
     )
 
     from openai import OpenAI
 
-    api_key = os.getenv("OPENROUTER_API_KEY", "").strip()
-    if not api_key:
-        raise RuntimeError("Thiếu OPENROUTER_API_KEY để gọi LLM qua OpenRouter")
+    # Fallback chain: OpenAI > OpenRouter > Gemini
+    openai_key = os.getenv("OPENAI_API_KEY", "").strip()
+    openrouter_key = os.getenv("OPENROUTER_API_KEY", "").strip()
 
-    client = OpenAI(
-        api_key=api_key,
-        base_url="https://openrouter.ai/api/v1",
-    )
+    if openai_key:
+        api_key = openai_key
+        base_url = None  # OpenAI official endpoint
+        model = os.getenv("LLM_MODEL", "gpt-4o-mini")
+    elif openrouter_key:
+        api_key = openrouter_key
+        base_url = "https://openrouter.ai/api/v1"
+        model = LLM_MODEL
+    else:
+        raise RuntimeError("Thiếu OPENAI_API_KEY hoặc OPENROUTER_API_KEY để gọi LLM")
+
+    client = OpenAI(api_key=api_key, base_url=base_url)
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
         *prepare_chat_history(chat_history),
         {"role": "user", "content": user_message},
     ]
-    response = client.chat.completions.create(
-        model=LLM_MODEL,
-        messages=messages,
-        temperature=TEMPERATURE,
-        top_p=TOP_P,
-    )
-    answer = response.choices[0].message.content
-    if not answer:
-        raise RuntimeError("OpenRouter trả về câu trả lời rỗng")
+    try:
+        response = client.chat.completions.create(
+            model=model,
+            messages=messages,
+            temperature=TEMPERATURE,
+            top_p=TOP_P,
+            max_tokens=2048,
+        )
+        answer = response.choices[0].message.content
+        if not answer:
+            raise RuntimeError("OpenRouter trả về câu trả lời rỗng")
+    except Exception as e:
+        print(f"  [WARN] LLM call failed: {e} — using retrieval-only fallback")
+        answer = (
+            "Tôi không thể xác minh thông tin này từ nguồn hiện có "
+            f"(LLM error: {type(e).__name__})"
+        )
 
     return {
         "answer": answer,

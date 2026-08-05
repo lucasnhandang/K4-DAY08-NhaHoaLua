@@ -1,13 +1,8 @@
 [
   {
-    "question": "Shopee hỗ trợ các phương thức thanh toán nào?",
+    "question": "Shopee hỗ trợ những phương thức thanh toán nào?",
     "expected_answer": "Shopee hỗ trợ Ví ShopeePay, thẻ tín dụng hoặc ghi nợ, trả góp bằng thẻ tín dụng, thanh toán QR, ứng dụng ngân hàng, thẻ nội địa NAPAS, Apple Pay, Google Pay, COD và SPayLater.",
     "expected_context": "article_01.md — Danh sách phương thức thanh toán"
-  },
-  {
-    "question": "Đơn hàng phải có giá trị tối thiểu bao nhiêu để thanh toán bằng thẻ tín dụng hoặc thẻ ghi nợ?",
-    "expected_answer": "Giá trị thanh toán của đơn, gồm phí vận chuyển và các chi phí phát sinh khác, phải từ 10.000 VNĐ trở lên.",
-    "expected_context": "article_01.md — Mục Thẻ Tín dụng/Ghi nợ"
   },
   {
     "question": "Apple Pay được áp dụng cho đơn hàng có giá trị trong khoảng nào?",
@@ -35,24 +30,14 @@
     "expected_context": "article_03.md — Mục Lưu ý, thời gian xử lý"
   },
   {
-    "question": "Người mua có bao lâu để yêu cầu trả hàng hoặc hoàn tiền sau khi đơn giao thành công?",
-    "expected_answer": "Thời hạn thông thường là 15 ngày kể từ khi đơn được cập nhật giao thành công. Với thực phẩm tươi sống hoặc đông lạnh, thời hạn là 24 giờ.",
-    "expected_context": "article_06.md — Điều 3.2 Chính sách Trả hàng và Hoàn tiền"
-  },
-  {
-    "question": "Điều kiện nhận hoàn tiền đối với đơn thanh toán COD hoặc chuyển khoản ngân hàng là gì?",
-    "expected_answer": "Trước khi gửi yêu cầu, tài khoản Shopee của Người mua phải liên kết thành công một phương thức nhận hoàn tiền hợp lệ, như tài khoản ngân hàng hoặc Ví ShopeePay.",
-    "expected_context": "article_06.md — Điều 3.3 Chính sách Trả hàng và Hoàn tiền"
-  },
-  {
     "question": "Tiền hoàn của đơn thanh toán bằng thẻ tín dụng hoặc ghi nợ được trả về đâu và mất bao lâu?",
     "expected_answer": "Tiền được hoàn về đúng thẻ tín dụng hoặc ghi nợ đã dùng để thanh toán; thời gian là 7 đến 14 ngày làm việc tùy ngân hàng.",
     "expected_context": "article_04.md — Bảng phương thức và thời gian hoàn tiền"
   },
   {
-    "question": "Khi tự sắp xếp trả hàng cho sản phẩm Shopee Mall, người mua nhận lại phí vận chuyển thế nào?",
-    "expected_answer": "Người mua thanh toán trước phí gửi trả. Khi yêu cầu được chấp nhận, Shopee hoàn số tiền phí vận chuyển đã trả vào Số dư Tài khoản Shopee trong 3 đến 5 ngày làm việc kể từ ngày gửi hàng cho đơn vị vận chuyển.",
-    "expected_context": "article_06.md — Điều 8.1 chi phí vận chuyển hoàn trả Shopee Mall"
+    "question": "Đơn hàng thanh toán bằng COD khi hoàn tiền sẽ nhận tiền hoàn về đâu và trong bao lâu?",
+    "expected_answer": "Tiền hoàn được gửi về Ví ShopeePay trong 24 giờ nếu ví còn hoạt động, hoặc về tài khoản ngân hàng liên kết trong 2 ngày làm việc.",
+    "expected_context": "article_04.md — Bảng phương thức và thời gian hoàn tiền"
   },
   {
     "question": "Đơn hàng có giá trị hàng hóa lớn hơn 50 triệu đồng có được Shopee hỗ trợ vận chuyển không?",
@@ -70,8 +55,48 @@
     "expected_context": "article_05.md — Quy định về khối lượng và kích thước đóng gói"
   },
   {
+    "question": "Người mua có bao lâu để yêu cầu trả hàng hoặc hoàn tiền sau khi đơn giao thành công?",
+    "expected_answer": "Thời hạn thông thường là 15 ngày kể từ khi đơn được cập nhật giao thành công. Với thực phẩm tươi sống hoặc đông lạnh, thời hạn là 24 giờ.",
+    "expected_context": "article_06.md — Điều 3.2 Chính sách Trả hàng và Hoàn tiền"
+  },
+  {
+    "question": "Điều kiện nhận hoàn tiền đối với đơn thanh toán COD hoặc chuyển khoản ngân hàng là gì?",
+    "expected_answer": "Trước khi gửi yêu cầu, tài khoản Shopee của Người mua phải liên kết thành công một phương thức nhận hoàn tiền hợp lệ, như tài khoản ngân hàng hoặc Ví ShopeePay.",
+    "expected_context": "article_06.md — Điều 3.3 Chính sách Trả hàng và Hoàn tiền"
+  },
+  {
+    "question": "Khi tự sắp xếp trả hàng cho sản phẩm Shopee Mall, người mua nhận lại phí vận chuyển thế nào?",
+    "expected_answer": "Người mua thanh toán trước phí gửi trả. Khi yêu cầu được chấp nhận, Shopee hoàn số tiền phí vận chuyển đã trả vào Số dư Tài khoản Shopee trong 3 đến 5 ngày làm việc kể từ ngày gửi hàng cho đơn vị vận chuyển.",
+    "expected_context": "article_06.md — Điều 8.1 chi phí vận chuyển hoàn trả Shopee Mall"
+  },
+  {
+    "question": "Shopee cấm những loại sản phẩm nào liên quan đến vũ khí và chất nổ?",
+    "expected_answer": "Shopee cấm bán súng, vũ khí, đồ chơi có hình dáng giống vũ khí, kiếm, dao găm, hơi cay, dùi cui, đạn dược, linh kiện súng. Ngoài ra cấm các loại pháo nổ, hóa chất chế tạo chất nổ như Natri Clora, Kali Clorat, xăng, dầu, gas, bật lửa và thuốc trừ sâu.",
+    "expected_context": "prohibited-products-policy-shopee.md — Mục 4.5 và 4.10"
+  },
+  {
+    "question": "Thực phẩm cần đáp ứng những điều kiện gì để được đăng bán trên Shopee?",
+    "expected_answer": "Thực phẩm phải có hạn sử dụng rõ ràng trên bao bì, không được bán hàng đã hết hạn hoặc cận hạn dưới 30 ngày hoặc dưới 30% thời hạn sử dụng. Thực phẩm dễ bị hỏng phải được đóng gói hợp lý và người bán cung cấp thông tin đầy đủ trong mô tả.",
+    "expected_context": "prohibited-products-policy-shopee.md — Mục 4.21"
+  },
+  {
     "question": "Ảnh sản phẩm do người bán tự chụp phải đáp ứng yêu cầu tối thiểu nào?",
-    "expected_answer": "Tin đăng phải có ít nhất một ảnh thật do chính Người bán tự chụp, trong đó sản phẩm thật chiếm ít nhất 40% diện tích toàn ảnh.",
+    "expected_answer": "Tin đăng phải có ít nhất một ảnh thật do chính Người bán tự chụp, trong đó sản phẩm thật chiếm ít nhất 40% diện tích toàn ảnh. Ngôn ngữ trên phông nền phải là tiếng Việt.",
     "expected_context": "seller-listing-rules-shopee.md — Mục Hình ảnh sản phẩm"
+  },
+  {
+    "question": "Người bán không được phép thực hiện những hành vi nào khi đăng bán sản phẩm?",
+    "expected_answer": "Người bán không được spam sản phẩm, thay đổi nội dung để gian lận đánh giá, tạo đơn ảo, đăng sai ngành hàng, tăng giá bất hợp lý trước khuyến mãi, so sánh trực tiếp với đối thủ, quảng cáo cho doanh nghiệp khác.",
+    "expected_context": "seller-listing-rules-shopee.md — Mục Các hành vi không được thực hiện"
+  },
+  {
+    "question": "Mức phí xử lý giao dịch trên Shopee là bao nhiêu cho các phương thức thanh toán?",
+    "expected_answer": "Phí xử lý giao dịch là 6% cho tất cả phương thức thanh toán (thẻ tín dụng/ghi nợ, COD, ATM nội địa, SPayLater, ShopeePay, Apple Pay, Google Pay, chuyển khoản ngân hàng).",
+    "expected_context": "seller-responsibilities-fees-shopee.md — Mục Phí xử lý giao dịch"
+  },
+  {
+    "question": "Những hành vi nào được coi là gian lận trên sàn Shopee?",
+    "expected_answer": "Các hành vi gian lận bao gồm: tăng lượt đánh giá-shop bằng phương thức vi phạm, tạo đơn hàng ảo, lạm dụng mã giảm giá và chương trình khuyến mại, kêu gọi giao dịch ngoài sàn Shopee.",
+    "expected_context": "seller-antifraud-policy-shopee.md — Mục Hành Vi Gian Lận"
   }
 ]

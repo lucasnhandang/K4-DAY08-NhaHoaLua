@@ -1,1910 +1,430 @@
-[
-  {
-    "question": "Shopee hỗ trợ các phương thức thanh toán nào?",
-    "expected_answer": "Shopee hỗ trợ Ví ShopeePay, thẻ tín dụng hoặc ghi nợ, trả góp bằng thẻ tín dụng, thanh toán QR, ứng dụng ngân hàng, thẻ nội địa NAPAS, Apple Pay, Google Pay, COD và SPayLater.",
-    "expected_context": "article_01.md — Danh sách phương thức thanh toán",
-    "answer": "Shopee Việt Nam hiện đang hỗ trợ 09 hình thức thanh toán, bao gồm:\n\n1. Ví ShopeePay  \n2. Thẻ Tín dụng/Ghi nợ  \n3. Trả góp bằng Thẻ tín dụng  \n4. Thanh toán QR  \n5. Ứng dụng ngân hàng  \n6. Thẻ nội địa NAPAS  \n7. Apple Pay  \n8. Google Pay  \n9. Thanh toán khi nhận hàng (COD)  \n10. SPayLater  \n\nThông tin này được trích dẫn từ tài liệu \"Shopee hiện đang có những phương thức thanh toán nào?\" [Shopee Trung tâm trợ giúp].",
-    "sources": [
-      {
-        "content": "# [Thành viên mới] Shopee hiện đang có những phương thức thanh toán nào? | Shopee Trung tâm trợ giúp\n\n**doc_id:** shopee-payment-methods\n**customer_role:** buyer\n**category:** payment\n**platform:** shopee-vn\n**Source:** https://help.shopee.vn/portal/4/article/79198\n**Crawled:** 2026-08-04T11:34:34.494687+07:00\n\n---\n\n# Xin chào, Shopee có thể giúp gì cho bạn?\n## [Thành viên mới] Shopee hiện đang có những phương thức thanh toán nào?\nHiện nay Shopee Việt Nam đang hỗ trợ 09 hình thức thanh toán, bao gồm:\n  1. Ví ShopeePay  \n\n  2. Thẻ Tín dụng/Ghi nợ  \n\n  3. Trả góp bằng Thẻ tín dụng  \n\n  4. Thanh toán QR\n  5. Ứng dụng ngân hàng  \n\n  6. Thẻ nội địa NAPAS  \n\n  7. Apple Pay  \n\n  8. Google Pay  \n\n  9. Thanh toán khi nhận hàng (COD)  \n\n  10. SPayLater",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "platform": "shopee-vn",
-          "doc_id": "shopee-payment-methods",
-          "chunk_index": 0,
-          "category": "payment",
-          "customer_role": "buyer",
-          "source": "article_01.md",
-          "source_url": "https://help.shopee.vn/portal/4/article/79198",
-          "type": "news",
-          "crawled_at": "2026-08-04T11:34:34.494687+07:00",
-          "cosine_score": 0.7683
-        },
-        "source": "hybrid"
+{
+  "framework": "RAGAS",
+  "version": "0.1.21",
+  "configs": {
+    "hybrid_rerank": {
+      "overall": {
+        "faithfulness": 0.878768115942029,
+        "answer_relevancy": 0.7169730634824946,
+        "context_recall": 1.0,
+        "context_precision": 0.9902083333130781,
+        "average": 0.8964873781844004
       },
-      {
-        "content": "8. Google Pay\nGoogle Pay (Google Wallet) là phương thức thanh toán cho đơn hàng mua trên ứng dụng Shopee, được hỗ trợ trên một số thiết bị sử dụng hệ điều hành Android tương thích (xem chi tiết[tại đây](https://support.google.com/wallet/answer/12059331?hl=vi&previousPage=other%20articles)). Để sử dụng được hình thức thanh toán này khi mua sắm trên ứng dụng Shopee, đơn hàng phải có giá trị thanh toán cuối cùng (đã bao gồm phí vận chuyển và các chi phí phát sinh khác - nếu có) từ 10.000 VNĐ đến 120.000.000 VNĐ.\n⚠️Lưu ý:",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "source_url": "https://help.shopee.vn/portal/4/article/79198",
-          "type": "news",
-          "category": "payment",
-          "crawled_at": "2026-08-04T11:34:34.494687+07:00",
-          "customer_role": "buyer",
-          "chunk_index": 9,
-          "doc_id": "shopee-payment-methods",
-          "source": "article_01.md",
-          "platform": "shopee-vn",
-          "cosine_score": 0.7252
+      "rows": [
+        {
+          "question": "Shopee hỗ trợ những phương thức thanh toán nào?",
+          "answer": "Shopee Việt Nam hiện đang hỗ trợ 09 hình thức thanh toán, bao gồm:\n\n1. Ví ShopeePay  \n2. Thẻ Tín dụng/Ghi nợ  \n3. Trả góp bằng Thẻ tín dụng  \n4. Thanh toán QR  \n5. Ứng dụng ngân hàng  \n6. Thẻ nội địa NAPAS  \n7. Apple Pay  \n8. Google Pay  \n9. Thanh toán khi nhận hàng (COD)  \n10. SPayLater [Shopee Trung tâm trợ giúp].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8516035070531428,
+          "context_recall": 1.0,
+          "context_precision": 0.999999999975
         },
-        "source": "hybrid"
+        {
+          "question": "Apple Pay được áp dụng cho đơn hàng có giá trị trong khoảng nào?",
+          "answer": "Apple Pay được áp dụng cho đơn hàng có giá trị thanh toán cuối cùng từ 10.000 VNĐ đến 25.000.000 VNĐ [Document 1].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.906239213856062,
+          "context_recall": 1.0,
+          "context_precision": 0.8041666666465626
+        },
+        {
+          "question": "Khi đơn ở trạng thái Chờ lấy hàng, người mua hủy đơn như thế nào?",
+          "answer": "Khi đơn hàng ở trạng thái Chờ lấy hàng, người mua có thể hủy đơn bằng cách vào mục Tôi, chọn mục Chờ lấy hàng, sau đó chọn đơn hàng muốn hủy. Tuy nhiên, cần chờ phản hồi từ Người bán: nếu Người bán chấp nhận, đơn hàng sẽ được hủy ngay; nếu từ chối, đơn hàng sẽ không hủy và sẽ tiếp tục giao đến Người mua [Document 1].",
+          "faithfulness": 0.6666666666666666,
+          "answer_relevancy": 0.0,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Một người mua có thể yêu cầu hủy cùng một đơn hàng bao nhiêu lần?",
+          "answer": "Một người mua chỉ có thể hủy đơn hàng duy nhất 1 lần cho mỗi đơn hàng [Document 5].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.9612904463319336,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Khi gửi yêu cầu Trả hàng/Hoàn tiền, người mua cần nộp những bằng chứng gì?",
+          "answer": "Khi gửi yêu cầu Trả hàng/Hoàn tiền, người mua cần nộp các bằng chứng như tình trạng bao bì gói hàng khi gửi, video và biên bản đồng kiểm với đơn vị vận chuyển ghi nhận tình trạng đơn hàng hoàn trả, cũng như thông tin đơn hàng (mã vận đơn, mã đơn hàng) [Document 3, 2026].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.7975190941930009,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Yêu cầu Trả hàng/Hoàn tiền thường được xử lý trong bao lâu?",
+          "answer": "Yêu cầu Trả hàng/Hoàn tiền thường được xử lý trong khoảng 3 - 5 ngày làm việc [Document 1].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8688648070831965,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Tiền hoàn của đơn thanh toán bằng thẻ tín dụng hoặc ghi nợ được trả về đâu và mất bao lâu?",
+          "answer": "Tiền hoàn của đơn thanh toán bằng thẻ tín dụng hoặc ghi nợ sẽ được hoàn về đúng tài khoản thẻ tín dụng hoặc ghi nợ đã sử dụng khi thanh toán đơn hàng. Thời gian hoàn tiền sẽ mất từ 7 đến 14 ngày làm việc, tùy theo ngân hàng [Document 1].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.0,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Đơn hàng thanh toán bằng COD khi hoàn tiền sẽ nhận tiền hoàn về đâu và trong bao lâu?",
+          "answer": "Đối với đơn hàng thanh toán bằng hình thức Thanh toán khi nhận hàng (COD), tiền hoàn sẽ được gửi qua tài khoản ngân hàng hoặc ví điện tử hợp lệ mà Người Mua đã liên kết với tài khoản Shopee. Thời gian nhận tiền hoàn là từ 1 - 14 ngày làm việc, tùy thuộc vào phương thức thanh toán [Document 2].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.792985999464622,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Đơn hàng có giá trị hàng hóa lớn hơn 50 triệu đồng có được Shopee hỗ trợ vận chuyển không?",
+          "answer": "Đơn hàng có giá trị hàng hóa lớn hơn 50 triệu đồng sẽ không được Shopee hỗ trợ vận chuyển. Cụ thể, đơn hàng này sẽ bị từ chối nếu tổng giá trị hàng hóa lớn hơn 50.000.000VNĐ, không bao gồm mã giảm giá của Shopee, mã giảm giá của Người Bán, xu và phí vận chuyển [Document 1].",
+          "faithfulness": 0.8,
+          "answer_relevancy": 0.8031545204260152,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Thực phẩm tươi sống hoặc hàng cần bảo quản đặc biệt nên giao bằng hình thức nào?",
+          "answer": "Thực phẩm tươi sống hoặc hàng cần bảo quản đặc biệt nên được giao bằng hình thức vận chuyển Hỏa Tốc để đảm bảo chất lượng sản phẩm và tránh hư hỏng. Nếu Người Bán lựa chọn các kênh vận chuyển khác không phải Hỏa Tốc, họ sẽ hoàn toàn chịu trách nhiệm nếu có hư hỏng, tổn thất khi vận chuyển [Document 5].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.0,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Khối lượng quy đổi để tính phí vận chuyển được tính theo công thức nào?",
+          "answer": "Khối lượng quy đổi để tính phí vận chuyển được tính theo công thức: Chiều rộng x Chiều dài x Chiều cao / 6.000 (kg) [Document 5].",
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.764618381433459,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Người mua có bao lâu để yêu cầu trả hàng hoặc hoàn tiền sau khi đơn giao thành công?",
+          "answer": "Người mua có thể gửi yêu cầu trả hàng/hoàn tiền trong vòng 15 ngày kể từ lúc đơn hàng được cập nhật giao hàng thành công. Đối với các sản phẩm thực phẩm tươi sống và đông lạnh, thời gian yêu cầu là 24 giờ kể từ lúc giao hàng thành công [Document 1].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.9292258140689639,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Điều kiện nhận hoàn tiền đối với đơn thanh toán COD hoặc chuyển khoản ngân hàng là gì?",
+          "answer": "Điều kiện nhận hoàn tiền đối với đơn thanh toán COD hoặc chuyển khoản ngân hàng là tài khoản Shopee của Người Mua phải liên kết với các phương thức nhận hoàn tiền hợp lệ như Tài Khoản Ngân Hàng hoặc các ví điện tử hợp lệ như Ví ShopeePay trước khi thực hiện yêu cầu Trả hàng/Hoàn tiền. Nếu tài khoản không liên kết thành công, Người Mua sẽ không thể thực hiện yêu cầu này [Document 1].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.7707620045858921,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Khi tự sắp xếp trả hàng cho sản phẩm Shopee Mall, người mua nhận lại phí vận chuyển thế nào?",
+          "answer": "Khi tự sắp xếp trả hàng cho sản phẩm Shopee Mall, người mua cần thanh toán trước chi phí vận chuyển cho việc trả hàng. Sau đó, Shopee sẽ hoàn lại số tiền bằng với chi phí vận chuyển mà người mua đã thanh toán thông qua “Số Dư Tài Khoản Shopee” trên Ứng Dụng Shopee trong thời hạn 03 – 05 ngày làm việc kể từ ngày người mua đã gửi sản phẩm hoàn trả cho đơn vị vận chuyển và yêu cầu trả hàng/hoàn tiền của người mua được chấp nhận [Document 2].",
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.7372806890545451,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Shopee cấm những loại sản phẩm nào liên quan đến vũ khí và chất nổ?",
+          "answer": "Shopee cấm các loại sản phẩm liên quan đến vũ khí và chất nổ như sau:\n\n1. Súng, vũ khí và các sản phẩm có hình dạng giống vũ khí, bao gồm cả đồ chơi có hình dáng giống như súng, lựu đạn, bom, mìn (trừ đồ chơi phun nước hoặc tạo bong bóng) [Document 1].\n2. Các phụ kiện súng bên ngoài như bộ giảm thanh, báng súng, khóa nòng, các bộ phận điều khiển hỏa lực và cò súng [Document 5].\n3. Dao và các sản phẩm có lưỡi dao khác, bao gồm dao bấm, dao bướm và bất kỳ vật nào có thể biến đổi thành dao hoặc vũ khí để gây thương tích [Document 5].\n4. Sản phẩm có khả năng gây cháy, nổ do áp suất cao hoặc do thành phần có chứa chất dễ cháy, nổ, như chất khí (bình gas, bình xịt), chất lỏng dễ cháy (sơn, xăng, dầu) và chất rắn dễ cháy [Document 2]. \n\nNhững sản phẩm này đều bị cấm theo quy định của Shopee.",
+          "faithfulness": 0.6086956521739131,
+          "answer_relevancy": 0.8649712568878515,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Thực phẩm cần đáp ứng những điều kiện gì để được đăng bán trên Shopee?",
+          "answer": "Thực phẩm cần đáp ứng các điều kiện sau để được đăng bán trên Shopee:\n\n1. Có nguồn gốc hợp pháp theo quy định ghi trong giấy phép bán lẻ.\n2. Đối với các sản phẩm có độ cồn trên 15 độ, cần tuân thủ các quy định về nhãn hàng hóa, mô tả sản phẩm, và cung cấp thông tin hàng hóa theo các quy định của pháp luật hiện hành, bao gồm Nghị định 43/2017/NĐ-CP và Nghị định số 52/2013/NĐ-CP [Document 1 | Source: seller-listing-rules-shopee.md].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8653143799612987,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Ảnh sản phẩm do người bán tự chụp phải đáp ứng yêu cầu tối thiểu nào?",
+          "answer": "Ảnh sản phẩm do người bán tự chụp phải có ít nhất một hình ảnh thật của sản phẩm, trong đó diện tích sản phẩm thật phải chiếm ít nhất 40% diện tích toàn ảnh [Document 1 | Source: seller-listing-rules-shopee.md].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8180466567195476,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Người bán không được phép thực hiện những hành vi nào khi đăng bán sản phẩm?",
+          "answer": "Người bán không được phép thực hiện các hành vi sau khi đăng bán sản phẩm:\n\n1. Đăng tải sản phẩm có nội dung phản động, chống phá, bài xích tôn giáo, khiêu dâm, bạo lực, đi ngược lại thuần phong mỹ tục, xâm phạm chủ quyền, toàn vẹn lãnh thổ, an ninh quốc gia của Việt Nam.\n2. Đăng thông tin rác, phá rối hay làm mất uy tín của các dịch vụ do Shopee cung cấp.\n3. Xúc phạm, khích bác đến người khác dưới bất kỳ hình thức nào.\n4. Tuyên truyền thông tin mà pháp luật nghiêm cấm như sử dụng heroin, thuốc lắc, giết người, cướp của, v.v. [Document 1 | Source: seller-listing-rules-shopee.md]",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8035424890037609,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Mức phí xử lý giao dịch trên Shopee là bao nhiêu cho các phương thức thanh toán?",
+          "answer": "Mức phí xử lý giao dịch trên Shopee cho các phương thức thanh toán là 6% cho tất cả các loại, bao gồm thẻ tín dụng/ghi nợ, thanh toán khi nhận hàng (COD), thẻ ATM nội địa, Internet Banking, SPayLater, ShopeePay, Apple Pay, Google Pay, và chuyển khoản ngân hàng [Document 1].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.9083047505112329,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Những hành vi nào được coi là gian lận trên sàn Shopee?",
+          "answer": "Những hành vi gian lận trên sàn Shopee bao gồm việc Người Bán thực hiện hoặc có dấu hiệu thực hiện các hành vi như tăng lượt đánh giá Shop bằng các phương thức vi phạm chính sách hiện hành của Shopee. Đây được coi là hành vi vi phạm nghiêm trọng đối với Điều khoản dịch vụ và các quy định khác của Shopee [Document 5].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8957372590153674,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        }
+      ]
+    },
+    "dense_only": {
+      "overall": {
+        "faithfulness": 0.9132142857142858,
+        "answer_relevancy": 0.7152118057402762,
+        "context_recall": 1.0,
+        "context_precision": 0.9902083333133281,
+        "average": 0.9046586061919726
       },
-      {
-        "content": "3. Trả góp bằng Thẻ tín dụng\nBên cạnh hình thức thanh toán toàn bộ giá trị đơn hàng, Shopee cũng hỗ trợ khách hàng[thanh toán thông qua hình thức trả góp](https://help.shopee.vn/vn/s/article/L%C3%A0m-th%E1%BA%BF-n%C3%A0o-%C4%91%E1%BB%83-tham-gia-ch%C6%B0%C6%A1ng-tr%C3%ACnh-Tr%E1%BA%A3-G%C3%B3p-L%C3%A3i-Su%E1%BA%A5t-0-c%E1%BB%A7a-Shopee-1542942919097?previousPage=other%20articles) khi sử dụng tính năng thanh toán bằng Thẻ tín dụng\n⚠️Lưu ý: Phương thức Trả góp bằng Thẻ tín dụng KHÔNG áp dụng cho đơn hàng Quốc tế\n4. Thanh toán QR\nLà hình thức thanh toán cho phép Người mua thanh toán bằng dịch vụ ngân hàng trực tuyến (internet banking)",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "platform": "shopee-vn",
-          "doc_id": "shopee-payment-methods",
-          "customer_role": "buyer",
-          "source": "article_01.md",
-          "chunk_index": 3,
-          "category": "payment",
-          "type": "news",
-          "crawled_at": "2026-08-04T11:34:34.494687+07:00",
-          "source_url": "https://help.shopee.vn/portal/4/article/79198",
-          "cosine_score": 0.7464
+      "rows": [
+        {
+          "question": "Shopee hỗ trợ những phương thức thanh toán nào?",
+          "answer": "Shopee Việt Nam hiện đang hỗ trợ 09 hình thức thanh toán, bao gồm:\n\n1. Ví ShopeePay  \n2. Thẻ Tín dụng/Ghi nợ  \n3. Trả góp bằng Thẻ tín dụng  \n4. Thanh toán QR  \n5. Ứng dụng ngân hàng  \n6. Thẻ nội địa NAPAS  \n7. Apple Pay  \n8. Google Pay  \n9. Thanh toán khi nhận hàng (COD)  \n10. SPayLater [Shopee Trung tâm trợ giúp, 2026].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8490525485451328,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
         },
-        "source": "hybrid"
-      },
-      {
-        "content": "7. Apple Pay\nBạn có thể sử dụng Apple Pay để thanh toán đơn hàng khi mua sắm trên ứng dụng Shopee. Để lựa chọn/sử dụng được hình thức thanh toán này, đơn hàng phải có giá trị thanh toán cuối cùng (đã bao gồm phí vận chuyển và các chi phí phát sinh khác - nếu có) từ 10.000 VNĐ đến 25.000.000 VNĐ\n⚠️Lưu ý: \n  * Phương thức thanh toán Apple Pay chỉ được hỗ trợ trên một số thiết bị theo quy định của Apple. Trên các thiết bị này, bạn cần thiết lập Apple Pay bằng cách thêm thẻ tín dụng/thẻ ghi nợ vào ứng dụng Ví (Wallet) để hoàn tất thiết lập thanh toán. Bạn có thể xem hướng dẫn Thiết lập Apple Pay[TẠI ĐÂY](https://support.apple.com/vi-vn/HT204506?previousPage=other%20articles)\n  * Phương thức thanh toán Apple Pay KHÔNG áp dụng cho các đơn hàng sau:",
-        "score": 0.015625,
-        "metadata": {
-          "doc_id": "shopee-payment-methods",
-          "category": "payment",
-          "chunk_index": 6,
-          "platform": "shopee-vn",
-          "source_url": "https://help.shopee.vn/portal/4/article/79198",
-          "source": "article_01.md",
-          "crawled_at": "2026-08-04T11:34:34.494687+07:00",
-          "customer_role": "buyer",
-          "type": "news",
-          "cosine_score": 0.7009
+        {
+          "question": "Apple Pay được áp dụng cho đơn hàng có giá trị trong khoảng nào?",
+          "answer": "Apple Pay được áp dụng cho đơn hàng có giá trị thanh toán cuối cùng từ 10.000 VNĐ đến 25.000.000 VNĐ [Document 1].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.906239213856062,
+          "context_recall": 1.0,
+          "context_precision": 0.8041666666465626
         },
-        "source": "hybrid"
-      },
-      {
-        "content": "9. Thanh toán khi nhận hàng (COD)\nBên cạnh những hình thức thanh toán trên, bạn cũng có thể lựa chọn hình thức[thanh toán khi nhận hàng](https://help.shopee.vn/vn/s/article/V%C3%AC-sao-t%C3%B4i-kh%C3%B4ng-th%E1%BB%83-l%E1%BB%B1a-ch%E1%BB%8Dn-h%C3%ACnh-th%E1%BB%A9c-thanh-to%C3%A1n-khi-nh%E1%BA%ADn-h%C3%A0ng-1542942315512?previousPage=other%20articles). Tuy nhiên, cần chú ý rằng không phải tất cả các Shop trên Shopee đều cho phép sử dụng hình thức thanh toán trên\n⚠️Lưu ý:\n  * Shopee tuyệt đối không hỗ trợ cho những giao dịch sử dụng các hình thức thanh toán khác không được liệt kê ở trên hoặc giao dịch ngoài Shopee, như chuyển khoản hoặc đặt cọc,..v..v. Shopee sẽ có biện pháp xử lý nếu phát hiện hành vi gian lận hoặc giao dịch ngoài làm ảnh hưởng đến quyền lợi Người dùng trên Shopee",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "customer_role": "buyer",
-          "category": "payment",
-          "platform": "shopee-vn",
-          "type": "news",
-          "source_url": "https://help.shopee.vn/portal/4/article/79198",
-          "doc_id": "shopee-payment-methods",
-          "crawled_at": "2026-08-04T11:34:34.494687+07:00",
-          "chunk_index": 11,
-          "source": "article_01.md",
-          "cosine_score": 0.7107
+        {
+          "question": "Khi đơn ở trạng thái Chờ lấy hàng, người mua hủy đơn như thế nào?",
+          "answer": "Khi đơn hàng ở trạng thái Chờ lấy hàng, người mua có thể hủy đơn bằng cách thực hiện các bước sau: Vào mục Tôi, chọn mục Chờ lấy hàng, sau đó chọn đơn hàng muốn hủy. Sau khi chọn đơn hàng, người mua bấm Hủy đơn hàng, chọn lý do hủy đơn và bấm Đồng ý [Document 5 | Source: article_02.md].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8328667959509367,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
         },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
+        {
+          "question": "Một người mua có thể yêu cầu hủy cùng một đơn hàng bao nhiêu lần?",
+          "answer": "Một người mua chỉ có thể hủy đơn hàng duy nhất 1 lần cho mỗi đơn hàng [Document 2].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.9179676131020762,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Khi gửi yêu cầu Trả hàng/Hoàn tiền, người mua cần nộp những bằng chứng gì?",
+          "answer": "Khi gửi yêu cầu Trả hàng/Hoàn tiền, người mua cần nộp các bằng chứng sau:\n\n1. Video và/hoặc ảnh chụp Sản Phẩm ngay khi nhận được và trong lúc đóng gói Sản Phẩm Hoàn Trả.\n2. Thông tin đơn hàng (mã vận đơn, mã đơn hàng).\n3. Ngoại quan 06 mặt, tình trạng sản phẩm bên trong và chi tiết thể hiện được lý do khiếu nại (nếu có) [Document 2 | Source: article_06.md]. \n\nNgoài ra, người bán cũng cần giữ lại vận đơn/hóa đơn vận chuyển để làm bằng chứng trong trường hợp có khiếu nại [Document 3 | Source: article_05.md].",
+          "faithfulness": 0.7142857142857143,
+          "answer_relevancy": 0.7684454729616262,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Yêu cầu Trả hàng/Hoàn tiền thường được xử lý trong bao lâu?",
+          "answer": "Yêu cầu Trả hàng/Hoàn tiền thường được xử lý trong khoảng 3 - 5 ngày làm việc [Document 1].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8666997505473107,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Tiền hoàn của đơn thanh toán bằng thẻ tín dụng hoặc ghi nợ được trả về đâu và mất bao lâu?",
+          "answer": "Tiền hoàn của đơn thanh toán bằng thẻ tín dụng hoặc ghi nợ sẽ được hoàn về đúng tài khoản tín dụng/ghi nợ đã sử dụng khi thanh toán đơn hàng. Thời gian nhận được tiền hoàn sau khi Shopee chấp nhận hoàn tiền là từ 1 đến 14 ngày làm việc, tùy thuộc vào phương thức thanh toán [Document 2].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.0,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Đơn hàng thanh toán bằng COD khi hoàn tiền sẽ nhận tiền hoàn về đâu và trong bao lâu?",
+          "answer": "Đối với đơn hàng thanh toán bằng hình thức Thanh toán khi nhận hàng (COD), tiền hoàn sẽ được gửi về tài khoản ngân hàng hoặc ví điện tử đã liên kết với tài khoản Shopee của người mua. Thời gian nhận tiền hoàn sau khi Shopee chấp nhận hoàn tiền là từ 1 đến 14 ngày làm việc, tùy thuộc vào phương thức thanh toán [Document 4 | Source: article_06.md].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.786520135747124,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Đơn hàng có giá trị hàng hóa lớn hơn 50 triệu đồng có được Shopee hỗ trợ vận chuyển không?",
+          "answer": "Đơn hàng có giá trị hàng hóa lớn hơn 50 triệu đồng sẽ không được Shopee hỗ trợ vận chuyển. Điều này được nêu rõ trong quy định rằng đơn hàng có giá trị hàng hóa lớn hơn 50.000.000VNĐ sẽ không được hỗ trợ vận chuyển [Document 1].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.7981988724717014,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Thực phẩm tươi sống hoặc hàng cần bảo quản đặc biệt nên giao bằng hình thức nào?",
+          "answer": "Thực phẩm tươi sống hoặc hàng hóa cần bảo quản đặc biệt nên được giao hàng qua đơn vị vận chuyển Hỏa Tốc để đảm bảo chất lượng sản phẩm và tránh hư hỏng. Nếu Người Bán chọn kênh vận chuyển khác không phải Hỏa Tốc, họ sẽ hoàn toàn chịu trách nhiệm nếu có hư hỏng hoặc tổn thất khi vận chuyển [Document 5].",
+          "faithfulness": 0.75,
+          "answer_relevancy": 0.0,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Khối lượng quy đổi để tính phí vận chuyển được tính theo công thức nào?",
+          "answer": "Khối lượng quy đổi để tính phí vận chuyển được tính theo công thức: Chiều rộng x Chiều dài x Chiều cao / 6.000 (kg) [Document 5].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.764618381433459,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Người mua có bao lâu để yêu cầu trả hàng hoặc hoàn tiền sau khi đơn giao thành công?",
+          "answer": "Người mua có thể gửi yêu cầu trả hàng/hoàn tiền trong vòng 15 ngày kể từ lúc đơn hàng được cập nhật giao hàng thành công. Đối với các sản phẩm thực phẩm tươi sống và đông lạnh, thời gian yêu cầu là 24 giờ kể từ lúc đơn hàng được cập nhật giao hàng thành công [Document 1].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8454833772121865,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Điều kiện nhận hoàn tiền đối với đơn thanh toán COD hoặc chuyển khoản ngân hàng là gì?",
+          "answer": "Điều kiện nhận hoàn tiền đối với đơn thanh toán COD hoặc chuyển khoản ngân hàng là tài khoản Shopee của Người Mua phải liên kết với các phương thức nhận hoàn tiền hợp lệ như Tài Khoản Ngân Hàng hoặc các ví điện tử hợp lệ như Ví ShopeePay. Nếu tài khoản không liên kết thành công, Người Mua sẽ không thể thực hiện yêu cầu Trả hàng/Hoàn tiền [Document 1].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.7499227803837929,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Khi tự sắp xếp trả hàng cho sản phẩm Shopee Mall, người mua nhận lại phí vận chuyển thế nào?",
+          "answer": "Khi tự sắp xếp trả hàng cho sản phẩm Shopee Mall, người mua không phải thanh toán bất cứ chi phí vận chuyển nào cho việc trả hàng. Tuy nhiên, thông tin về việc hoàn lại phí vận chuyển không được đề cập cho sản phẩm Shopee Mall trong context hiện có. Do đó, tôi không thể xác minh thông tin này từ nguồn hiện có.",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.0,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Shopee cấm những loại sản phẩm nào liên quan đến vũ khí và chất nổ?",
+          "answer": "Shopee cấm các loại sản phẩm liên quan đến vũ khí và chất nổ như sau:\n\n1. Súng, vũ khí và các sản phẩm có hình dạng giống vũ khí, bao gồm cả đồ chơi có hình dáng giống như súng, lựu đạn, bom, mìn (trừ đồ chơi phun nước hoặc tạo bong bóng) [Document 1].\n2. Các phụ kiện súng bên ngoài như bộ giảm thanh, báng súng, khóa nòng, các bộ phận điều khiển hỏa lực và cò súng [Document 5].\n3. Các chất cấm, chất kích thích, chất gây nghiện, ma túy và dụng cụ cho ma túy bất hợp pháp [Document 5].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8649712568878515,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Thực phẩm cần đáp ứng những điều kiện gì để được đăng bán trên Shopee?",
+          "answer": "Thực phẩm cần có chất lượng tốt và phải đúng như mô tả khi đăng bán trên Shopee. Người Bán cũng phải tuân thủ các quy định tại Điều 117, Điều 120.4, Điều 121 của Luật Thương Mại và các văn bản quy phạm pháp luật liên quan đến hoạt động trưng bày, giới thiệu hàng hóa, dịch vụ. Ngoài ra, thực phẩm cũng phải có hạn sử dụng ghi trên bao bì [Document 4 | Source: seller-listing-rules-shopee.md].",
+          "faithfulness": 0.8,
+          "answer_relevancy": 0.9389948842692856,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Ảnh sản phẩm do người bán tự chụp phải đáp ứng yêu cầu tối thiểu nào?",
+          "answer": "Ảnh sản phẩm do người bán tự chụp phải có ít nhất một hình ảnh thật của sản phẩm, trong đó diện tích sản phẩm thật phải chiếm ít nhất 40% diện tích toàn ảnh [Document 1 | Source: seller-listing-rules-shopee.md].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.7852867776088005,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Người bán không được phép thực hiện những hành vi nào khi đăng bán sản phẩm?",
+          "answer": "Người bán không được phép thực hiện những hành vi sau khi đăng bán sản phẩm:\n\n1. Đăng tải sản phẩm có nội dung phản động, chống phá, bài xích tôn giáo, khiêu dâm, bạo lực, đi ngược lại thuần phong mỹ tục, truyền thống và văn hóa Việt Nam, xâm phạm chủ quyền, toàn vẹn lãnh thổ, an ninh quốc gia của Việt Nam.\n2. Đăng thông tin rác, phá rối hay làm mất uy tín của các dịch vụ do Shopee cung cấp.\n3. Xúc phạm, khích bác đến người khác dưới bất kỳ hình thức nào.\n4. Tuyên truyền về những thông tin mà pháp luật nghiêm cấm như sử dụng heroin, thuốc lắc, giết người, cướp của, vv… [Document 1 | Source: seller-listing-rules-shopee.md].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8035424890037609,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Mức phí xử lý giao dịch trên Shopee là bao nhiêu cho các phương thức thanh toán?",
+          "answer": "Mức phí xử lý giao dịch trên Shopee cho tất cả các phương thức thanh toán là 6% [Document 1 | Source: seller-responsibilities-fees-shopee.md].",
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.929688505809049,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        },
+        {
+          "question": "Những hành vi nào được coi là gian lận trên sàn Shopee?",
+          "answer": "Những hành vi được coi là gian lận trên sàn Shopee bao gồm việc tăng lượt đánh giá Shop bằng các phương thức vi phạm chính sách hiện hành của Shopee. Đây là một trong những hành vi mà Người Bán có thể bị xem là vi phạm [Document 1].",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8957372590153674,
+          "context_recall": 1.0,
+          "context_precision": 0.99999999998
+        }
+      ]
+    }
   },
-  {
-    "question": "Đơn hàng phải có giá trị tối thiểu bao nhiêu để thanh toán bằng thẻ tín dụng hoặc thẻ ghi nợ?",
-    "expected_answer": "Giá trị thanh toán của đơn, gồm phí vận chuyển và các chi phí phát sinh khác, phải từ 10.000 VNĐ trở lên.",
-    "expected_context": "article_01.md — Mục Thẻ Tín dụng/Ghi nợ",
-    "answer": "Đơn hàng phải có giá trị thanh toán tối thiểu từ 10.000 VNĐ trở lên để có thể thanh toán bằng thẻ tín dụng hoặc thẻ ghi nợ [Document 1 | Source: article_01.md].",
-    "sources": [
-      {
-        "content": "2. Thẻ Tín dụng/Ghi nợ\nBạn có thể sử dụng Thẻ tín dụng hoặc Thẻ ghi nợ thuộc các hệ thống thẻ Visa, thẻ Mastercard, thẻ JCB, và thẻ American Express (AMEX)[khi thanh toán đơn hàng trên Shopee](https://help.shopee.vn/vn/s/article/T%E1%BA%A1i-sao-t%C3%B4i-kh%C3%B4ng-th%E1%BB%83-thanh-to%C3%A1n-b%E1%BA%B1ng-th%E1%BA%BB-T%C3%ADn-d%E1%BB%A5ng-Ghi-n%E1%BB%A3-1542942315517?previousPage=other%20articles)\n⚠️Lưu ý:chỉ áp dụng cho đơn hàng có giá trị thanh toán (bao gồm phí vận chuyển và các chi phí phát sinh khác) từ 10.000 VNĐ trở lên\n3. Trả góp bằng Thẻ tín dụng",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "source": "article_01.md",
-          "source_url": "https://help.shopee.vn/portal/4/article/79198",
-          "platform": "shopee-vn",
-          "category": "payment",
-          "crawled_at": "2026-08-04T11:34:34.494687+07:00",
-          "type": "news",
-          "customer_role": "buyer",
-          "doc_id": "shopee-payment-methods",
-          "chunk_index": 2,
-          "cosine_score": 0.6804
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "### Phí xử lý giao dịch theo phương thức thanh toán\n\n| Phương thức thanh toán | Mức phí xử lý giao dịch |\n| --- | ---: |\n| Thẻ tín dụng / ghi nợ hoặc Trả góp thẻ tín dụng | 6% |\n| Thanh toán khi nhận hàng (COD) | 6% |\n| Thẻ ATM nội địa / Internet Banking | 6% |\n| SPayLater | 6% |\n| ShopeePay | 6% |\n| Apple Pay | 6% |\n| Google Pay | 6% |\n| Chuyển khoản ngân hàng | 6% |\n| Khác | 6% |\n\nCách tính:\n\nPhí Xử lý Giao Dịch = (Giá sản phẩm trước Shopee trợ giá + Phí vận chuyển Người mua trả - Khuyến mãi\nNgười bán đã áp dụng - Khuyến mãi từ Ngân hàng (nếu có)) x Mức Phí Xử lý giao dịch (đã bao gồm thuế\nGTGT).\n\n16.4. Phí Cố Định",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "doc_id": "seller-responsibilities-fees-shopee",
-          "platform": "shopee-vn",
-          "source": "seller-responsibilities-fees-shopee.md",
-          "source_url": "https://help.shopee.vn/portal/4/article/77243",
-          "document_version": "2026-05-01",
-          "category": "seller-responsibilities-fees",
-          "type": "legal",
-          "retrieved_at": "2026-08-03",
-          "chunk_index": 7,
-          "customer_role": "seller",
-          "cosine_score": 0.6049
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "7. Apple Pay\nBạn có thể sử dụng Apple Pay để thanh toán đơn hàng khi mua sắm trên ứng dụng Shopee. Để lựa chọn/sử dụng được hình thức thanh toán này, đơn hàng phải có giá trị thanh toán cuối cùng (đã bao gồm phí vận chuyển và các chi phí phát sinh khác - nếu có) từ 10.000 VNĐ đến 25.000.000 VNĐ\n⚠️Lưu ý: \n  * Phương thức thanh toán Apple Pay chỉ được hỗ trợ trên một số thiết bị theo quy định của Apple. Trên các thiết bị này, bạn cần thiết lập Apple Pay bằng cách thêm thẻ tín dụng/thẻ ghi nợ vào ứng dụng Ví (Wallet) để hoàn tất thiết lập thanh toán. Bạn có thể xem hướng dẫn Thiết lập Apple Pay[TẠI ĐÂY](https://support.apple.com/vi-vn/HT204506?previousPage=other%20articles)\n  * Phương thức thanh toán Apple Pay KHÔNG áp dụng cho các đơn hàng sau:",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "customer_role": "buyer",
-          "chunk_index": 6,
-          "doc_id": "shopee-payment-methods",
-          "category": "payment",
-          "source_url": "https://help.shopee.vn/portal/4/article/79198",
-          "source": "article_01.md",
-          "type": "news",
-          "platform": "shopee-vn",
-          "crawled_at": "2026-08-04T11:34:34.494687+07:00",
-          "cosine_score": 0.5821
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "6. Thẻ nội địa NAPAS\nBạn có thể sử dụng thẻ nội địa NAPAS có đăng ký dịch vụ Internet Banking để thanh toán các đơn hàng. Xem[hướng dẫn thanh toán đơn hàng bằng thẻ nội địa NAPAS](https://help.shopee.vn/vn/s/article/H%C6%B0%E1%BB%9Bng-d%E1%BA%ABn-thanh-to%C3%A1n-b%E1%BA%B1ng-Ibanking-internet-banking?previousPage=other%20articles&previousPage=other%20articles)\n⚠️Lưu ý: Chỉ áp dụng cho đơn hàng có giá trị thanh toán cuối cùng (gồm phí vận chuyển và các chi phí phát sinh khác) từ 10.000 VNĐ trở lên (*)\n(*) đơn hàng không bao gồm các sản phẩm thuộc nhóm Nạp thẻ & Dịch vụ\nXem thêm: Danh sách các ngân hàng phát hành Thẻ nội địa Napas[TẠI ĐÂY](https://shopee.vn/m/Napas-ctkmt62024dsnh?previousPage=other%20articles)\n7. Apple Pay",
-        "score": 0.015625,
-        "metadata": {
-          "customer_role": "buyer",
-          "category": "payment",
-          "chunk_index": 5,
-          "type": "news",
-          "crawled_at": "2026-08-04T11:34:34.494687+07:00",
-          "source_url": "https://help.shopee.vn/portal/4/article/79198",
-          "source": "article_01.md",
-          "platform": "shopee-vn",
-          "doc_id": "shopee-payment-methods",
-          "cosine_score": 0.6052
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "3. Trả góp bằng Thẻ tín dụng\nBên cạnh hình thức thanh toán toàn bộ giá trị đơn hàng, Shopee cũng hỗ trợ khách hàng[thanh toán thông qua hình thức trả góp](https://help.shopee.vn/vn/s/article/L%C3%A0m-th%E1%BA%BF-n%C3%A0o-%C4%91%E1%BB%83-tham-gia-ch%C6%B0%C6%A1ng-tr%C3%ACnh-Tr%E1%BA%A3-G%C3%B3p-L%C3%A3i-Su%E1%BA%A5t-0-c%E1%BB%A7a-Shopee-1542942919097?previousPage=other%20articles) khi sử dụng tính năng thanh toán bằng Thẻ tín dụng\n⚠️Lưu ý: Phương thức Trả góp bằng Thẻ tín dụng KHÔNG áp dụng cho đơn hàng Quốc tế\n4. Thanh toán QR\nLà hình thức thanh toán cho phép Người mua thanh toán bằng dịch vụ ngân hàng trực tuyến (internet banking)",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "customer_role": "buyer",
-          "type": "news",
-          "doc_id": "shopee-payment-methods",
-          "crawled_at": "2026-08-04T11:34:34.494687+07:00",
-          "source_url": "https://help.shopee.vn/portal/4/article/79198",
-          "chunk_index": 3,
-          "source": "article_01.md",
-          "platform": "shopee-vn",
-          "category": "payment",
-          "cosine_score": 0.6026
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Apple Pay được áp dụng cho đơn hàng có giá trị trong khoảng nào?",
-    "expected_answer": "Đơn hàng phải có giá trị thanh toán cuối cùng từ 10.000 VNĐ đến 25.000.000 VNĐ, đã gồm phí vận chuyển và chi phí phát sinh nếu có.",
-    "expected_context": "article_01.md — Mục Apple Pay",
-    "answer": "Apple Pay được áp dụng cho đơn hàng có giá trị thanh toán cuối cùng (đã bao gồm phí vận chuyển và các chi phí phát sinh khác - nếu có) từ 10.000 VNĐ đến 25.000.000 VNĐ [Document 1 | Source: article_01.md].",
-    "sources": [
-      {
-        "content": "7. Apple Pay\nBạn có thể sử dụng Apple Pay để thanh toán đơn hàng khi mua sắm trên ứng dụng Shopee. Để lựa chọn/sử dụng được hình thức thanh toán này, đơn hàng phải có giá trị thanh toán cuối cùng (đã bao gồm phí vận chuyển và các chi phí phát sinh khác - nếu có) từ 10.000 VNĐ đến 25.000.000 VNĐ\n⚠️Lưu ý: \n  * Phương thức thanh toán Apple Pay chỉ được hỗ trợ trên một số thiết bị theo quy định của Apple. Trên các thiết bị này, bạn cần thiết lập Apple Pay bằng cách thêm thẻ tín dụng/thẻ ghi nợ vào ứng dụng Ví (Wallet) để hoàn tất thiết lập thanh toán. Bạn có thể xem hướng dẫn Thiết lập Apple Pay[TẠI ĐÂY](https://support.apple.com/vi-vn/HT204506?previousPage=other%20articles)\n  * Phương thức thanh toán Apple Pay KHÔNG áp dụng cho các đơn hàng sau:",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "type": "news",
-          "crawled_at": "2026-08-04T11:34:34.494687+07:00",
-          "source_url": "https://help.shopee.vn/portal/4/article/79198",
-          "chunk_index": 6,
-          "category": "payment",
-          "platform": "shopee-vn",
-          "customer_role": "buyer",
-          "source": "article_01.md",
-          "doc_id": "shopee-payment-methods",
-          "cosine_score": 0.7204
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "* Phương thức thanh toán Apple Pay KHÔNG áp dụng cho các đơn hàng sau:\n    * Đơn hàng có sản phẩm thuộc nhóm Nạp thẻ & Dịch vụ",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "source_url": "https://help.shopee.vn/portal/4/article/79198",
-          "category": "payment",
-          "doc_id": "shopee-payment-methods",
-          "chunk_index": 7,
-          "type": "news",
-          "customer_role": "buyer",
-          "platform": "shopee-vn",
-          "crawled_at": "2026-08-04T11:34:34.494687+07:00",
-          "source": "article_01.md",
-          "cosine_score": 0.6606
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "6. Thẻ nội địa NAPAS\nBạn có thể sử dụng thẻ nội địa NAPAS có đăng ký dịch vụ Internet Banking để thanh toán các đơn hàng. Xem[hướng dẫn thanh toán đơn hàng bằng thẻ nội địa NAPAS](https://help.shopee.vn/vn/s/article/H%C6%B0%E1%BB%9Bng-d%E1%BA%ABn-thanh-to%C3%A1n-b%E1%BA%B1ng-Ibanking-internet-banking?previousPage=other%20articles&previousPage=other%20articles)\n⚠️Lưu ý: Chỉ áp dụng cho đơn hàng có giá trị thanh toán cuối cùng (gồm phí vận chuyển và các chi phí phát sinh khác) từ 10.000 VNĐ trở lên (*)\n(*) đơn hàng không bao gồm các sản phẩm thuộc nhóm Nạp thẻ & Dịch vụ\nXem thêm: Danh sách các ngân hàng phát hành Thẻ nội địa Napas[TẠI ĐÂY](https://shopee.vn/m/Napas-ctkmt62024dsnh?previousPage=other%20articles)\n7. Apple Pay",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "customer_role": "buyer",
-          "source": "article_01.md",
-          "crawled_at": "2026-08-04T11:34:34.494687+07:00",
-          "source_url": "https://help.shopee.vn/portal/4/article/79198",
-          "chunk_index": 5,
-          "doc_id": "shopee-payment-methods",
-          "type": "news",
-          "platform": "shopee-vn",
-          "category": "payment",
-          "cosine_score": 0.6272
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "8. Google Pay\nGoogle Pay (Google Wallet) là phương thức thanh toán cho đơn hàng mua trên ứng dụng Shopee, được hỗ trợ trên một số thiết bị sử dụng hệ điều hành Android tương thích (xem chi tiết[tại đây](https://support.google.com/wallet/answer/12059331?hl=vi&previousPage=other%20articles)). Để sử dụng được hình thức thanh toán này khi mua sắm trên ứng dụng Shopee, đơn hàng phải có giá trị thanh toán cuối cùng (đã bao gồm phí vận chuyển và các chi phí phát sinh khác - nếu có) từ 10.000 VNĐ đến 120.000.000 VNĐ.\n⚠️Lưu ý:",
-        "score": 0.015625,
-        "metadata": {
-          "platform": "shopee-vn",
-          "source_url": "https://help.shopee.vn/portal/4/article/79198",
-          "crawled_at": "2026-08-04T11:34:34.494687+07:00",
-          "doc_id": "shopee-payment-methods",
-          "category": "payment",
-          "type": "news",
-          "customer_role": "buyer",
-          "source": "article_01.md",
-          "chunk_index": 9,
-          "cosine_score": 0.6151
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "⚠️Lưu ý: \n  * Để sử dụng phương thức thanh toán này, bạn cần tải về ứng dụng Google Pay (Google Wallet) trên Play Store (Cửa hàng Play), sau đó hoàn tất thiết lập Google Pay bằng cách thêm thẻ ghi nợ hoặc thẻ tín dụng vào ứng dụng. Bạn có thể xem hướng dẫn chi tiết cách thiết lập[tại đây](https://support.google.com/wallet/answer/12058983?sjid=4639199773447354247-AP&previousPage=other%20articles)\n  * Phương thức thanh toán Google Pay KHÔNG áp dụng cho đơn hàng bao gồm các sản phẩm thuộc nhóm Nạp thẻ & Dịch vụ, đơn hàng ShopeeFood",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "source_url": "https://help.shopee.vn/portal/4/article/79198",
-          "category": "payment",
-          "type": "news",
-          "crawled_at": "2026-08-04T11:34:34.494687+07:00",
-          "platform": "shopee-vn",
-          "doc_id": "shopee-payment-methods",
-          "source": "article_01.md",
-          "customer_role": "buyer",
-          "chunk_index": 10,
-          "cosine_score": 0.5985
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Khi đơn ở trạng thái Chờ lấy hàng, người mua hủy đơn như thế nào?",
-    "expected_answer": "Người mua gửi yêu cầu và chờ phản hồi của Người bán. Nếu Người bán chấp nhận thì đơn được hủy ngay; nếu từ chối thì đơn tiếp tục được giao.",
-    "expected_context": "article_02.md — Bảng trạng thái đơn hàng và hủy đơn",
-    "answer": "Khi đơn hàng ở trạng thái Chờ lấy hàng, người mua có thể hủy đơn bằng cách thực hiện các bước sau:\n\n1. Vào mục \"Tôi\" > chọn mục \"Chờ lấy hàng\" > Chọn đơn hàng muốn hủy.\n2. Bấm \"Hủy đơn hàng\" > chọn lý do hủy đơn > bấm \"Đồng ý\".\n\nTuy nhiên, cần lưu ý rằng yêu cầu hủy sẽ phụ thuộc vào phản hồi từ Người bán. Nếu Người bán chấp nhận, đơn hàng sẽ được hủy ngay. Nếu Người bán từ chối, đơn hàng sẽ không hủy và sẽ tiếp tục giao đến Người mua [Document 1 | Source: article_02.md].",
-    "sources": [
-      {
-        "content": "| Trạng thái đơn hàng  | Gửi yêu cầu Hủy đơn  |  \n| --- | --- |  \n| Chờ xác nhận  | Hủy ngay  |  \n| Chờ lấy hàng  |  **·** Cần chờ phản hồi từ Người bán: **·** Chấp nhận: được hủy ngay **·** Từ chối: đơn hàng không hủy và sẽ tiếp tục giao đến Người mua  |  \n| Các trạng thái khác  | Không thể yêu cầu hủy đơn  |  \n(*) Trường hợp này chỉ áp dụng cho một số Người dùng nhất định. Nếu bạn không thuộc nhóm Người dùng được áp dụng, yêu cầu hủy của bạn sẽ được xử lý như đơn hàng giao bởi đơn vị vận chuyển khác\n2. Thực hiện thao tác hủy đơn trên trang Đơn hàng\n2.1 Hủy đơn khi đơn hàng ở trạng thái Chờ xác nhận hoặc Chờ lấy hàng (trước khi Đơn vị vận chuyển lấy hàng)\nBước 1: Vào mục Tôi > chọn mục Chờ xác nhận hoặc Chờ lấy hàng > Chọn đơn hàng muốn hủy",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "crawled_at": "2026-08-04T11:34:36.725099+07:00",
-          "source_url": "https://help.shopee.vn/portal/4/article/79182",
-          "platform": "shopee-vn",
-          "category": "order-management",
-          "type": "news",
-          "doc_id": "shopee-cancel-order",
-          "source": "article_02.md",
-          "customer_role": "buyer",
-          "chunk_index": 2,
-          "cosine_score": 0.828
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "Bước 1: Vào mục Tôi > chọn mục Chờ xác nhận hoặc Chờ lấy hàng > Chọn đơn hàng muốn hủy\n![6ca3870e5a6c4eda968f215d8ea5044f.gif](https://fileproxycdn.cs.susercontent.com/api/v5/service/download/permanent/helpcenter-fe/6ca3870e5a6c4eda968f215d8ea5044f.gif)\nBước 2: bấm Hủy đơn hàng > chọn lý do hủy đơn > bấm Đồng ý\n![14b147a8f5aa4070b9692bf0875f4579.gif](https://fileproxycdn.cs.susercontent.com/api/v5/service/download/permanent/helpcenter-fe/14b147a8f5aa4070b9692bf0875f4579.gif)\n2.2 Hủy đơn khi đơn hàng ở trạng thái Chờ giao hàng (sau khi Đơn vị vận chuyển lấy hàng)\n[Hướng dẫn hủy đơn khi đơn hàng đang ở trạng thái Chờ giao hàng](https://help.shopee.vn/portal/4/article/152663?previousPage=other%20articles&previousPage=other%20articles)",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "chunk_index": 3,
-          "source_url": "https://help.shopee.vn/portal/4/article/79182",
-          "customer_role": "buyer",
-          "category": "order-management",
-          "doc_id": "shopee-cancel-order",
-          "source": "article_02.md",
-          "crawled_at": "2026-08-04T11:34:36.725099+07:00",
-          "type": "news",
-          "platform": "shopee-vn",
-          "cosine_score": 0.7915
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "---\n\n# Xin chào, Shopee có thể giúp gì cho bạn?\n## [Đơn hàng] Tôi có thể hủy đơn hàng không?\n## [Đơn hàng] Tôi có thể hủy đơn hàng không?\n1. Người mua chỉ CÓ thể yêu cầu hủy đơn trong các trường hợp sau:\n  * Đơn hàng được giao bởi SPX Express (*): có thể hủy ngay khi Người mua nhấn Hủy đơn hàng nếu đơn hàng chưa đến trạm giao hàng (Xem chi tiết [tại đây](https://help.shopee.vn/portal/4/article/152663?previousPage=other%20articles&previousPage=other%20articles))\n  * Đơn hàng được giao bởi các đơn vị vận chuyển (ĐVVC) khác, tùy vào trạng thái đơn hàng hiện tại, cụ thể như sau:",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "platform": "shopee-vn",
-          "doc_id": "shopee-cancel-order",
-          "source": "article_02.md",
-          "type": "news",
-          "crawled_at": "2026-08-04T11:34:36.725099+07:00",
-          "customer_role": "buyer",
-          "source_url": "https://help.shopee.vn/portal/4/article/79182",
-          "chunk_index": 1,
-          "category": "order-management",
-          "cosine_score": 0.7223
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "* Sau khi đơn hàng được hủy thành công, tiền hàng sẽ được hoàn lại cho bạn theo[Chính sách của Shopee](https://help.shopee.vn/s/article/Sau-khi-huy-don-thanh-cong-tren-Shopee-sau-bao-lau-toi-se-nhan-duoc-tien-hoan-tra?previousPage=other%20articles&previousPage=other%20articles) tùy thuộc vào phương thức thanh toán mà bạn đã lựa chọn\n  * Nếu đơn hàng bị hủy chưa cập nhật đúng trạng thái, vui lòng chờ 5-7 ngày làm việc để đơn cập nhật hủy.",
-        "score": 0.015625,
-        "metadata": {
-          "chunk_index": 5,
-          "source_url": "https://help.shopee.vn/portal/4/article/79182",
-          "crawled_at": "2026-08-04T11:34:36.725099+07:00",
-          "source": "article_02.md",
-          "customer_role": "buyer",
-          "platform": "shopee-vn",
-          "category": "order-management",
-          "doc_id": "shopee-cancel-order",
-          "type": "news",
-          "cosine_score": 0.7181
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "a. Khiếu nại với đơn trả hàng hoàn tiền: Xem chi tiết tại[ _Chính sách Trả hàng và Hoàn tiền_](https://help.shopee.vn/portal/article/77251?previousPage=other%20articles&previousPage=other%20articles)\nb. Khiếu nại vận chuyển với đơn Giao không thành công (dành cho Người Bán):\ni. Đơn được cập nhật trạng thái chuyển hoàn thành công:\n- Hàng bị thất lạc khi hoàn trả: trong vòng 07 ngày sau khi đơn hàng được cập nhật trạng thái chuyển hoàn thành công. \n- Hàng bị hư hại/ không còn nguyên vẹn khi hoàn trả: trong vòng 03 ngày sau khi đơn hàng được cập nhật trạng thái chuyển hoàn thành công.",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "chunk_index": 25,
-          "platform": "shopee-vn",
-          "customer_role": "both",
-          "type": "news",
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "category": "shipping",
-          "source": "article_05.md",
-          "doc_id": "shopee-shipping-policy",
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "cosine_score": 0.622
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Một người mua có thể yêu cầu hủy cùng một đơn hàng bao nhiêu lần?",
-    "expected_answer": "Người mua chỉ có thể yêu cầu hủy một lần cho mỗi đơn hàng. Nếu yêu cầu bị từ chối thì không thể tiếp tục gửi yêu cầu hủy cho đơn đó.",
-    "expected_context": "article_02.md — Phần Lưu ý",
-    "answer": "Một người mua chỉ có thể hủy đơn hàng duy nhất 1 lần cho mỗi đơn hàng. Nếu yêu cầu hủy đơn hàng của bạn bị từ chối, bạn sẽ không thể tiếp tục đưa ra yêu cầu hủy đơn cho đơn hàng này [Document 5 | Source: article_02.md].",
-    "sources": [
-      {
-        "content": "---\n\n# Xin chào, Shopee có thể giúp gì cho bạn?\n## [Đơn hàng] Tôi có thể hủy đơn hàng không?\n## [Đơn hàng] Tôi có thể hủy đơn hàng không?\n1. Người mua chỉ CÓ thể yêu cầu hủy đơn trong các trường hợp sau:\n  * Đơn hàng được giao bởi SPX Express (*): có thể hủy ngay khi Người mua nhấn Hủy đơn hàng nếu đơn hàng chưa đến trạm giao hàng (Xem chi tiết [tại đây](https://help.shopee.vn/portal/4/article/152663?previousPage=other%20articles&previousPage=other%20articles))\n  * Đơn hàng được giao bởi các đơn vị vận chuyển (ĐVVC) khác, tùy vào trạng thái đơn hàng hiện tại, cụ thể như sau:",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "doc_id": "shopee-cancel-order",
-          "crawled_at": "2026-08-04T11:34:36.725099+07:00",
-          "source": "article_02.md",
-          "platform": "shopee-vn",
-          "chunk_index": 1,
-          "customer_role": "buyer",
-          "category": "order-management",
-          "source_url": "https://help.shopee.vn/portal/4/article/79182",
-          "type": "news",
-          "cosine_score": 0.6909
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "3. Thực hiện thao tác hủy đơn tại mục Trò chuyện cùng Shopee\nTruy cập ‘Trò Chuyện Với Shopee’, phía cuối trang tại mục ‘Nhập thông tin’, nhập từ khóa 'Hủy đơn' để xem các đơn hàng có thể hủy.\n![58f3fe8d957b4ac693b1be5be1347b1b.gif](https://fileproxycdn.cs.susercontent.com/api/v5/service/download/permanent/helpcenter-fe/58f3fe8d957b4ac693b1be5be1347b1b.gif)\n⚠️ Lưu ý:\n  * Người mua chỉ có thể hủy đơn hàng duy nhất 1 lần cho mỗi đơn hàng\n  * Nếu yêu cầu hủy đơn hàng của bạn bị từ chối, bạn sẽ không thể tiếp tục đưa ra yêu cầu hủy đơn cho đơn hàng này",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "source_url": "https://help.shopee.vn/portal/4/article/79182",
-          "type": "news",
-          "customer_role": "buyer",
-          "crawled_at": "2026-08-04T11:34:36.725099+07:00",
-          "platform": "shopee-vn",
-          "doc_id": "shopee-cancel-order",
-          "chunk_index": 4,
-          "category": "order-management",
-          "source": "article_02.md",
-          "cosine_score": 0.6584
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "| Trạng thái đơn hàng  | Gửi yêu cầu Hủy đơn  |  \n| --- | --- |  \n| Chờ xác nhận  | Hủy ngay  |  \n| Chờ lấy hàng  |  **·** Cần chờ phản hồi từ Người bán: **·** Chấp nhận: được hủy ngay **·** Từ chối: đơn hàng không hủy và sẽ tiếp tục giao đến Người mua  |  \n| Các trạng thái khác  | Không thể yêu cầu hủy đơn  |  \n(*) Trường hợp này chỉ áp dụng cho một số Người dùng nhất định. Nếu bạn không thuộc nhóm Người dùng được áp dụng, yêu cầu hủy của bạn sẽ được xử lý như đơn hàng giao bởi đơn vị vận chuyển khác\n2. Thực hiện thao tác hủy đơn trên trang Đơn hàng\n2.1 Hủy đơn khi đơn hàng ở trạng thái Chờ xác nhận hoặc Chờ lấy hàng (trước khi Đơn vị vận chuyển lấy hàng)\nBước 1: Vào mục Tôi > chọn mục Chờ xác nhận hoặc Chờ lấy hàng > Chọn đơn hàng muốn hủy",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "platform": "shopee-vn",
-          "source": "article_02.md",
-          "crawled_at": "2026-08-04T11:34:36.725099+07:00",
-          "category": "order-management",
-          "customer_role": "buyer",
-          "doc_id": "shopee-cancel-order",
-          "chunk_index": 2,
-          "source_url": "https://help.shopee.vn/portal/4/article/79182",
-          "type": "news",
-          "cosine_score": 0.6581
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "3.2.Người Mua có thể gửi yêu cầu trả hàng/hoàn tiền trong vòng 15 (mười lăm) ngày kể từ lúc đơn hàng được cập nhật giao hàng thành công. Riêng đối với các Sản Phẩm là thực phẩm tươi sống và đông lạnh, Người Mua cần gửi yêu cầu trả hàng/hoàn tiền trong vòng 24 giờ kể từ lúc đơn hàng được cập nhật giao hàng thành công. Một số trường hợp Người Mua có nhu cầu trả hàng/hoàn tiền sau thời hạn trên, Shopee sẽ xem xét và có thể hỗ trợ Người Mua được trả hàng/hoàn tiền trong phạm vi phù hợp với Chính Sách Shopee.",
-        "score": 0.015625,
-        "metadata": {
-          "doc_id": "shopee-return-refund-policy",
-          "category": "returns-refunds",
-          "customer_role": "both",
-          "source": "article_06.md",
-          "platform": "shopee-vn",
-          "chunk_index": 7,
-          "type": "news",
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "cosine_score": 0.6006
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "iii. Trong trường hợp giới hạn hạn mức này được áp dụng, Người Mua vẫn có thể thực hiện yêu cầu Trả hàng COM từ tài khoản Shopee của Người Mua; tuy nhiên, Shopee bảo lưu toàn quyền từ chối bất kỳ yêu cầu nào như vậy.\nb. Đối với Người Mua sử dụng Gói ShopeeVIP, hạn mức Trả hàng COM là 15 (mười lăm) lần trong mỗi tháng dương lịch được tính bắt đầu từ thời điểm Gói ShopeeVIP được Người Mua đăng ký thành công và Người Mua vẫn được hưởng quyền lợi này cho đến khi chấm dứt Gói ShopeeVIP (vì bất kỳ lý do gì), trừ trường hợp Người Mua thực hiện bất cứ hành vi nào vi phạm các Chính sách của Sàn TMĐT Shopee, bao gồm nhưng không giới hạn ở Điều khoản dịch vụ. Trong trường hợp đó, Người Mua mất quyền Trả hàng COM trong tháng phát sinh hành vi vi phạm.",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "source": "article_06.md",
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "category": "returns-refunds",
-          "doc_id": "shopee-return-refund-policy",
-          "customer_role": "both",
-          "type": "news",
-          "chunk_index": 12,
-          "platform": "shopee-vn",
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "cosine_score": 0.6001
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Khi gửi yêu cầu Trả hàng/Hoàn tiền, người mua cần nộp những bằng chứng gì?",
-    "expected_answer": "Người mua cần mô tả tình trạng hàng hóa, cung cấp bằng chứng như ảnh sản phẩm hoặc video mở hộp, và điền email liên hệ.",
-    "expected_context": "article_03.md — Hướng dẫn gửi yêu cầu, bước 7",
-    "answer": "Khi gửi yêu cầu Trả hàng/Hoàn tiền, người mua cần nộp những bằng chứng sau:\n\n1. Tình trạng bao bì gói hàng khi người bán gửi hàng đi.\n2. Video và biên bản đồng kiểm với đơn vị vận chuyển ghi nhận tình trạng đơn hàng hoàn trả, hoặc video quá trình người bán mở hàng hoàn thấy rõ. Video và biên bản đồng kiểm với đơn vị vận chuyển là bằng chứng mạnh nhất được khuyến khích cung cấp khi phát sinh khiếu nại.\n3. Thông tin đơn hàng, bao gồm mã vận đơn và mã đơn hàng [Document 3 | Source: article_06.md].",
-    "sources": [
-      {
-        "content": "3.2.Người Mua có thể gửi yêu cầu trả hàng/hoàn tiền trong vòng 15 (mười lăm) ngày kể từ lúc đơn hàng được cập nhật giao hàng thành công. Riêng đối với các Sản Phẩm là thực phẩm tươi sống và đông lạnh, Người Mua cần gửi yêu cầu trả hàng/hoàn tiền trong vòng 24 giờ kể từ lúc đơn hàng được cập nhật giao hàng thành công. Một số trường hợp Người Mua có nhu cầu trả hàng/hoàn tiền sau thời hạn trên, Shopee sẽ xem xét và có thể hỗ trợ Người Mua được trả hàng/hoàn tiền trong phạm vi phù hợp với Chính Sách Shopee.",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "customer_role": "both",
-          "doc_id": "shopee-return-refund-policy",
-          "category": "returns-refunds",
-          "type": "news",
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "chunk_index": 7,
-          "platform": "shopee-vn",
-          "source": "article_06.md",
-          "cosine_score": 0.6875
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "# [Trả hàng/ Hoàn tiền] Hướng dẫn gửi yêu cầu Trả hàng/ Hoàn tiền | Shopee Trung tâm trợ giúp\n\n**doc_id:** shopee-return-refund-request\n**customer_role:** buyer\n**category:** returns-refunds\n**platform:** shopee-vn\n**Source:** https://help.shopee.vn/portal/4/article/79233\n**Crawled:** 2026-08-04T11:34:38.873658+07:00\n\n---\n\n# Xin chào, Shopee có thể giúp gì cho bạn?\n## [Trả hàng/ Hoàn tiền] Hướng dẫn gửi yêu cầu Trả hàng/ Hoàn tiền\n### 1. Hướng dẫn gửi yêu cầu Trả hàng/Hoàn tiền\nKhi cần yêu cầu trả hàng hoặc hoàn tiền trên Shopee, bạn có thể thực hiện theo một trong hai cách sau.\nCách 1: Gửi yêu cầu trực tiếp tại trang đơn hàng\n  * Bước 1: Mở ứng dụng Shopee, vào mục Tôi> chọn thẻ Chờ giao hàng/Đã giao\n\n\n  * Bước 2:Tại đơn hàng bạn cần xử lý, bấm Trả hàng/Hoàn tiền.",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "chunk_index": 0,
-          "type": "news",
-          "source": "article_03.md",
-          "crawled_at": "2026-08-04T11:34:38.873658+07:00",
-          "doc_id": "shopee-return-refund-request",
-          "source_url": "https://help.shopee.vn/portal/4/article/79233",
-          "category": "returns-refunds",
-          "customer_role": "buyer",
-          "platform": "shopee-vn",
-          "cosine_score": 0.6776
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "Khi nhận được yêu cầu trả hàng và/hoặc hoàn tiền từ phía Người Mua, Shopee sẽ xem xét và quyết định cho Người Mua được trả hàng/hoàn tiền, đồng thời thông báo (i) về yêu cầu trả hàng/hoàn tiền của Người Mua hoặc (ii) quyết định xử lý yêu cầu trả hàng/hoàn tiền của Shopee cho Người Bán trên Ứng Dụng Shopee và/hoặc thư điện tử và/hoặc tin nhắn điện thoại. Người Bán cần gửi phản hồi trong vòng 02 ngày lịch (hoặc thời hạn khác được quy định bởi Shopee trong từng thời điểm) kể từ ngày nhận được thông báo của Shopee nếu không đồng ý với quyết định hoàn tiền của Shopee hoặc chưa nhận được Sản Phẩm Hoàn Trả/Sản Phẩm Hoàn Trả không thuộc các trường hợp mà Người Mua được hoàn hàng/trả tiền hoặc Sản Phẩm Hoàn Trả bị hư hỏng, mất mát trong quá trình hoàn trả",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "doc_id": "shopee-return-refund-policy",
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "chunk_index": 18,
-          "customer_role": "both",
-          "category": "returns-refunds",
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "type": "news",
-          "platform": "shopee-vn",
-          "source": "article_06.md",
-          "cosine_score": 0.6808
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "3. ĐIỀU KIỆN YÊU CẦU TRẢ HÀNG/HOÀN TIỀN\n3.1.Người Mua đồng ý rằng Người Mua chỉ có thể yêu cầu trả hàng/hoàn tiền trong các trường hợp sau:\n  1. Người Mua đã thanh toán bằng các phương thức thanh toán hợp lệ và trực tiếp trên Trang Shopee nhưng (i) không nhận được Sản Phẩm, hoặc (ii) không nhận được toàn bộ các Sản Phẩm đã đặt, hoặc (iii) nhận được Sản Phẩm là hàng giả, hàng nhái;\n  2. Sản Phẩm bị lỗi hoặc bị hư hại trong quá trình vận chuyển;\n  3. Người Bán giao sai Sản Phẩm cho Người Mua (ví dụ: sai kích cỡ, sai màu sắc, v.v);\n  4. Sản Phẩm mà Người Mua nhận được khác biệt một cách rõ rệt so với thông tin mà Người Bán cung cấp trong mục mô tả sản phẩm;\n  5. Sản Phẩm hết hạn sử dụng;",
-        "score": 0.015625,
-        "metadata": {
-          "chunk_index": 5,
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "doc_id": "shopee-return-refund-policy",
-          "customer_role": "both",
-          "type": "news",
-          "source": "article_06.md",
-          "category": "returns-refunds",
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "platform": "shopee-vn",
-          "cosine_score": 0.7093
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "- Tình trạng bao bì gói hàng khi Người Bán gửi hàng đi;\nii. Video và biên bản đồng kiểm với đơn vị vận chuyển (tham khảo mẫu Biên bản Shopee khuyên dùng[ _TẠI ĐÂY_](https://docs.google.com/document/d/1cy2jxPqg__Ui8Eon8eLVGRUnocErxl0d/view?previousPage=other%20articles&previousPage=other%20articles) hoặc[ _TẠI ĐÂY_](https://docs.google.com/document/d/16_Wk1w28nNBLdxFD7dD47WD37UfvPOHrUakuSW3EdCU/view?previousPage=other%20articles&previousPage=other%20articles)) ghi nhận tình trạng đơn hàng hoàn trả, hoặc Video quá trình Người Bán mở hàng hoàn thấy rõ (video & biên bản đồng kiểm với đơn vị vận chuyển là bằng chứng mạnh nhất được khuyến khích cung cấp khi phát sinh khiếu nại):\n- Thông tin đơn hàng (mã vận đơn, mã đơn hàng);",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "chunk_index": 30,
-          "doc_id": "shopee-shipping-policy",
-          "platform": "shopee-vn",
-          "category": "shipping",
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "source": "article_05.md",
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "type": "news",
-          "customer_role": "both",
-          "cosine_score": 0.695
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Yêu cầu Trả hàng/Hoàn tiền thường được xử lý trong bao lâu?",
-    "expected_answer": "Yêu cầu thường được xử lý trong khoảng 3 đến 5 ngày làm việc.",
-    "expected_context": "article_03.md — Mục Lưu ý, thời gian xử lý",
-    "answer": "Yêu cầu Trả hàng/Hoàn tiền thường được xử lý trong khoảng 3 - 5 ngày làm việc [Document 1].",
-    "sources": [
-      {
-        "content": "2. Lưu ý  \n| Thời gian xử lý  | Yêu cầu của bạn thường được xử lý trong khoảng 3 - 5 ngày làm việc.  |  \n| --- | --- |  \n| Kết quả xử lý  | Shopee sẽ thông báo kết quả qua mục Thông báo > Cập nhật đơn hàng và/hoặc Email của bạn.  |  \n| Thời gian hoàn tiền  | Nếu yêu cầu được chấp nhận, tiền sẽ được hoàn trong 1 - 14 ngày làm việc, tùy thuộc vào phương thức thanh toán. Để tìm hiểu thêm về thời gian hoàn tiền theo từng phương thức, vui lòng truy cập [[Trả hàng/Hoàn tiền] Thời gian nhận tiền hoàn và cách kiểm tra tiền hoàn](https://help.shopee.vn/portal/4/article/189473?previousPage=other%20articles)  |  \n| Trường hợp Trả lại & Hoàn tiền  | Bạn cần trả lại sản phẩm bằng cách yêu cầu bưu tá đến lấy hoặc tự ra bưu cục gửi. Sản phẩm sẽ được Người bán/Shopee xem xét khi nhận lại.  |",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "customer_role": "buyer",
-          "source": "article_03.md",
-          "doc_id": "shopee-return-refund-request",
-          "category": "returns-refunds",
-          "chunk_index": 3,
-          "type": "news",
-          "crawled_at": "2026-08-04T11:34:38.873658+07:00",
-          "platform": "shopee-vn",
-          "source_url": "https://help.shopee.vn/portal/4/article/79233",
-          "cosine_score": 0.7941
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "Khi nhận được yêu cầu trả hàng và/hoặc hoàn tiền từ phía Người Mua, Shopee sẽ xem xét và quyết định cho Người Mua được trả hàng/hoàn tiền, đồng thời thông báo (i) về yêu cầu trả hàng/hoàn tiền của Người Mua hoặc (ii) quyết định xử lý yêu cầu trả hàng/hoàn tiền của Shopee cho Người Bán trên Ứng Dụng Shopee và/hoặc thư điện tử và/hoặc tin nhắn điện thoại. Người Bán cần gửi phản hồi trong vòng 02 ngày lịch (hoặc thời hạn khác được quy định bởi Shopee trong từng thời điểm) kể từ ngày nhận được thông báo của Shopee nếu không đồng ý với quyết định hoàn tiền của Shopee hoặc chưa nhận được Sản Phẩm Hoàn Trả/Sản Phẩm Hoàn Trả không thuộc các trường hợp mà Người Mua được hoàn hàng/trả tiền hoặc Sản Phẩm Hoàn Trả bị hư hỏng, mất mát trong quá trình hoàn trả",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "category": "returns-refunds",
-          "type": "news",
-          "platform": "shopee-vn",
-          "chunk_index": 18,
-          "source": "article_06.md",
-          "doc_id": "shopee-return-refund-policy",
-          "customer_role": "both",
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "cosine_score": 0.7541
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "ii. Đơn được cập nhật trạng thái chuyển hoàn không thành công: Đơn sẽ được lưu tại kho của đơn vị vận chuyển và xử lý theo quy định. Nếu quá hạn 30 ngày (riêng đối với kênh Hỏa tốc là 21 ngày) mà Người Bán không liên hệ với Shopee để xử lý đơn hàng, Shopee miễn trừ trách nhiệm, và sẽ không giải quyết bất kỳ khiếu nại, yêu cầu bồi thường nào phát sinh sau thời hạn này.\nc. Khiếu nại sai phí vận chuyển dẫn đến tiền hàng nhận được bị thiếu: trong vòng 7 ngày kể từ ngày khoản tiền hàng của đơn hàng được chuyển vào Số dư Tài khoản Shopee.\n**_2. Thời gian xử lý khiếu nại:_**",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "source": "article_05.md",
-          "chunk_index": 26,
-          "customer_role": "both",
-          "doc_id": "shopee-shipping-policy",
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "type": "news",
-          "category": "shipping",
-          "platform": "shopee-vn",
-          "cosine_score": 0.6996
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "# [Trả hàng/ Hoàn tiền] Hướng dẫn gửi yêu cầu Trả hàng/ Hoàn tiền | Shopee Trung tâm trợ giúp\n\n**doc_id:** shopee-return-refund-request\n**customer_role:** buyer\n**category:** returns-refunds\n**platform:** shopee-vn\n**Source:** https://help.shopee.vn/portal/4/article/79233\n**Crawled:** 2026-08-04T11:34:38.873658+07:00\n\n---\n\n# Xin chào, Shopee có thể giúp gì cho bạn?\n## [Trả hàng/ Hoàn tiền] Hướng dẫn gửi yêu cầu Trả hàng/ Hoàn tiền\n### 1. Hướng dẫn gửi yêu cầu Trả hàng/Hoàn tiền\nKhi cần yêu cầu trả hàng hoặc hoàn tiền trên Shopee, bạn có thể thực hiện theo một trong hai cách sau.\nCách 1: Gửi yêu cầu trực tiếp tại trang đơn hàng\n  * Bước 1: Mở ứng dụng Shopee, vào mục Tôi> chọn thẻ Chờ giao hàng/Đã giao\n\n\n  * Bước 2:Tại đơn hàng bạn cần xử lý, bấm Trả hàng/Hoàn tiền.",
-        "score": 0.015625,
-        "metadata": {
-          "crawled_at": "2026-08-04T11:34:38.873658+07:00",
-          "customer_role": "buyer",
-          "chunk_index": 0,
-          "source": "article_03.md",
-          "platform": "shopee-vn",
-          "source_url": "https://help.shopee.vn/portal/4/article/79233",
-          "doc_id": "shopee-return-refund-request",
-          "type": "news",
-          "category": "returns-refunds",
-          "cosine_score": 0.6858
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "3.2.Người Mua có thể gửi yêu cầu trả hàng/hoàn tiền trong vòng 15 (mười lăm) ngày kể từ lúc đơn hàng được cập nhật giao hàng thành công. Riêng đối với các Sản Phẩm là thực phẩm tươi sống và đông lạnh, Người Mua cần gửi yêu cầu trả hàng/hoàn tiền trong vòng 24 giờ kể từ lúc đơn hàng được cập nhật giao hàng thành công. Một số trường hợp Người Mua có nhu cầu trả hàng/hoàn tiền sau thời hạn trên, Shopee sẽ xem xét và có thể hỗ trợ Người Mua được trả hàng/hoàn tiền trong phạm vi phù hợp với Chính Sách Shopee.",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "source": "article_06.md",
-          "chunk_index": 7,
-          "type": "news",
-          "doc_id": "shopee-return-refund-policy",
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "platform": "shopee-vn",
-          "customer_role": "both",
-          "category": "returns-refunds",
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "cosine_score": 0.785
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Người mua có bao lâu để yêu cầu trả hàng hoặc hoàn tiền sau khi đơn giao thành công?",
-    "expected_answer": "Thời hạn thông thường là 15 ngày kể từ khi đơn được cập nhật giao thành công. Với thực phẩm tươi sống hoặc đông lạnh, thời hạn là 24 giờ.",
-    "expected_context": "article_06.md — Điều 3.2 Chính sách Trả hàng và Hoàn tiền",
-    "answer": "Người mua có thể gửi yêu cầu trả hàng/hoàn tiền trong vòng 15 (mười lăm) ngày kể từ lúc đơn hàng được cập nhật giao hàng thành công. Đối với các sản phẩm là thực phẩm tươi sống và đông lạnh, người mua cần gửi yêu cầu trong vòng 24 giờ kể từ lúc đơn hàng được cập nhật giao hàng thành công [Document 1 | Source: article_06.md].",
-    "sources": [
-      {
-        "content": "3.2.Người Mua có thể gửi yêu cầu trả hàng/hoàn tiền trong vòng 15 (mười lăm) ngày kể từ lúc đơn hàng được cập nhật giao hàng thành công. Riêng đối với các Sản Phẩm là thực phẩm tươi sống và đông lạnh, Người Mua cần gửi yêu cầu trả hàng/hoàn tiền trong vòng 24 giờ kể từ lúc đơn hàng được cập nhật giao hàng thành công. Một số trường hợp Người Mua có nhu cầu trả hàng/hoàn tiền sau thời hạn trên, Shopee sẽ xem xét và có thể hỗ trợ Người Mua được trả hàng/hoàn tiền trong phạm vi phù hợp với Chính Sách Shopee.",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "category": "returns-refunds",
-          "doc_id": "shopee-return-refund-policy",
-          "source": "article_06.md",
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "type": "news",
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "platform": "shopee-vn",
-          "chunk_index": 7,
-          "customer_role": "both",
-          "cosine_score": 0.7824
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "a. Khiếu nại với đơn trả hàng hoàn tiền: Xem chi tiết tại[ _Chính sách Trả hàng và Hoàn tiền_](https://help.shopee.vn/portal/article/77251?previousPage=other%20articles&previousPage=other%20articles)\nb. Khiếu nại vận chuyển với đơn Giao không thành công (dành cho Người Bán):\ni. Đơn được cập nhật trạng thái chuyển hoàn thành công:\n- Hàng bị thất lạc khi hoàn trả: trong vòng 07 ngày sau khi đơn hàng được cập nhật trạng thái chuyển hoàn thành công. \n- Hàng bị hư hại/ không còn nguyên vẹn khi hoàn trả: trong vòng 03 ngày sau khi đơn hàng được cập nhật trạng thái chuyển hoàn thành công.",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "doc_id": "shopee-shipping-policy",
-          "platform": "shopee-vn",
-          "type": "news",
-          "source": "article_05.md",
-          "customer_role": "both",
-          "chunk_index": 25,
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "category": "shipping",
-          "cosine_score": 0.7023
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "1.2.Phạm Vi Áp Dụng\nChính Sách Trả Hàng và Hoàn Tiền này quy định về quyền và nghĩa vụ của Người Mua được yêu cầu trả hàng, hoàn tiền; cũng như quyền và nghĩa vụ của Shopee, Người Bán, đơn vị vận chuyển và/hoặc các bên có liên quan trong quá trình giải quyết yêu cầu của Người Mua.\n2. ĐIỀU KIỆN ÁP DỤNG\n2.1.Theo các điều khoản và điều kiện được quy định trong Chính Sách Trả Hàng và Hoàn Tiền này và tạo thành một phần của Điều Khoản Dịch Vụ, Shopee đảm bảo quyền lợi của Người Mua bằng cách cho phép Người Mua gửi yêu cầu hoàn trả sản phẩm đã mua (“Sản Phẩm Hoàn Trả”) và/hoặc hoàn tiền trước hoặc sau khi hết Thời Gian Shopee Đảm Bảo. Thời Gian Shopee Đảm Bảo đã được quy định trong Điều Khoản Dịch Vụ.",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "chunk_index": 3,
-          "category": "returns-refunds",
-          "doc_id": "shopee-return-refund-policy",
-          "type": "news",
-          "platform": "shopee-vn",
-          "source": "article_06.md",
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "customer_role": "both",
-          "cosine_score": 0.6997
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "Khi nhận được yêu cầu trả hàng và/hoặc hoàn tiền từ phía Người Mua, Shopee sẽ xem xét và quyết định cho Người Mua được trả hàng/hoàn tiền, đồng thời thông báo (i) về yêu cầu trả hàng/hoàn tiền của Người Mua hoặc (ii) quyết định xử lý yêu cầu trả hàng/hoàn tiền của Shopee cho Người Bán trên Ứng Dụng Shopee và/hoặc thư điện tử và/hoặc tin nhắn điện thoại. Người Bán cần gửi phản hồi trong vòng 02 ngày lịch (hoặc thời hạn khác được quy định bởi Shopee trong từng thời điểm) kể từ ngày nhận được thông báo của Shopee nếu không đồng ý với quyết định hoàn tiền của Shopee hoặc chưa nhận được Sản Phẩm Hoàn Trả/Sản Phẩm Hoàn Trả không thuộc các trường hợp mà Người Mua được hoàn hàng/trả tiền hoặc Sản Phẩm Hoàn Trả bị hư hỏng, mất mát trong quá trình hoàn trả",
-        "score": 0.015625,
-        "metadata": {
-          "platform": "shopee-vn",
-          "category": "returns-refunds",
-          "customer_role": "both",
-          "source": "article_06.md",
-          "chunk_index": 18,
-          "doc_id": "shopee-return-refund-policy",
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "type": "news",
-          "cosine_score": 0.7536
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "7.2. Người Bán sẽ không phải chịu bất kỳ chi phí vận chuyển cho việc trả hàng chiều hoàn trả sản phẩm đối với: \n  1. đơn yêu cầu trả hàng/hoàn tiền một phần (Người Mua chỉ nhấn yêu cầu trả hàng/hoàn tiền cho một hoặc một số sản phẩm trong đơn hàng, không phải tất cả sản phẩm), hoặc Người Mua nhấn yêu cầu trả hàng/hoàn tiền với lý do Chưa nhận được hàng (được Shopee chấp thuận theo quyết định riêng của Shopee),\n  2. đơn yêu cầu trả hàng/hoàn tiền trong trường hợp Shopee chấp thuận (theo quyết định riêng của Shopee) hoặc đơn giao không thành công do lỗi của đơn vị vận chuyển,\n  3. đơn yêu cầu trả hàng/hoàn tiền được Shopee chấp nhận hoàn tiền ngay (không trả hàng) (theo quyết định riêng của Shopee),\n  4. đơn giao không thành công thuộc kênh Người bán tự vận chuyển, và",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "source": "article_06.md",
-          "type": "news",
-          "doc_id": "shopee-return-refund-policy",
-          "customer_role": "both",
-          "category": "returns-refunds",
-          "platform": "shopee-vn",
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "chunk_index": 23,
-          "cosine_score": 0.0
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Điều kiện nhận hoàn tiền đối với đơn thanh toán COD hoặc chuyển khoản ngân hàng là gì?",
-    "expected_answer": "Trước khi gửi yêu cầu, tài khoản Shopee của Người mua phải liên kết thành công một phương thức nhận hoàn tiền hợp lệ, như tài khoản ngân hàng hoặc Ví ShopeePay.",
-    "expected_context": "article_06.md — Điều 3.3 Chính sách Trả hàng và Hoàn tiền",
-    "answer": "Điều kiện nhận hoàn tiền đối với đơn thanh toán COD hoặc chuyển khoản ngân hàng là tài khoản Shopee của Người Mua phải liên kết với các phương thức nhận hoàn tiền hợp lệ theo quy định của Shopee, chẳng hạn như Tài Khoản Ngân Hàng hoặc các ví điện tử hợp lệ như Ví ShopeePay. Nếu tài khoản Shopee không liên kết thành công với các phương thức này, Người Mua sẽ không thể thực hiện yêu cầu Trả hàng/Hoàn tiền [Document 1].",
-    "sources": [
-      {
-        "content": "3.3. Đối với các đơn hàng được thanh toán bằng hình thức Thanh toán khi nhận hàng (COD) và/hoặc Chuyển khoản ngân hàng, tài khoản Shopee của Người Mua phải liên kết với các phương thức nhận hoàn tiền hợp lệ theo quy định áp dụng của Shopee (ví dụ như Tài Khoản Ngân Hàng và/hoặc các ví điện tử hợp lệ như Ví ShopeePay) trước khi thực hiện yêu cầu Trả hàng / Hoàn tiền. Để làm rõ, Người Mua sẽ không thể thực hiện yêu cầu Trả hàng/ Hoàn tiền trong trường hợp tài khoản Shopee của Người Mua không liên kết thành công với các phương thức nhận hoàn tiền theo quy định tại Điều 3.3 này.\n3.4. Tất cả các yêu cầu trả hàng hoàn tiền phải được thực hiện trên tài khoản Shopee của chính Người Mua đã đặt đơn hàng.",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "type": "news",
-          "customer_role": "both",
-          "source": "article_06.md",
-          "platform": "shopee-vn",
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "chunk_index": 8,
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "doc_id": "shopee-return-refund-policy",
-          "category": "returns-refunds",
-          "cosine_score": 0.7545
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "* Đối với hình thức trả hàng “Tự sắp xếp”, Phí trả hàng sẽ được hoàn lại cho bạn theo[Chính sách hỗ trợ phí trả hàng](https://help.shopee.vn/portal/article/79061?previousPage=other%20articles&previousPage=other%20articles&previousPage=other%20articles)\n  * Đối với đơn hàng thanh toán bằng Thẻ Tín dụng/Ghi nợ, Shopee chỉ hỗ trợ hoàn tiền về đúng tài khoản Tín dụng/Ghi nợ đã sử dụng khi thanh toán đơn hàng.\n  * Đối với hình thức hoàn tiền về Tài khoản Ngân hàng, bạn cần đảm bảo nhập đúng thông tin chủ tài khoản, số tài khoản và tên ngân hàng để được xử lý hoàn tiền thành công trong 24h.\n  * Đối với các hình thức hoàn tiền về Ví Shopee Pay, tại thời điểm xử lý hoàn tiền, ví cần ở trạng thái bình thường và còn liên kết với tài khoản Shopee để việc hoàn tiền thành công trong 24h.",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "doc_id": "shopee-refund-timeline",
-          "customer_role": "buyer",
-          "chunk_index": 9,
-          "category": "returns-refunds",
-          "source_url": "https://help.shopee.vn/portal/4/article/189473",
-          "source": "article_04.md",
-          "type": "news",
-          "crawled_at": "2026-08-04T11:34:41.144117+07:00",
-          "platform": "shopee-vn",
-          "cosine_score": 0.6792
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "* Đối với các đơn hàng thanh toán bằng hình thức Thanh toán khi nhận hàng hoặc Thanh toán QR/Ứng dụng ngân hàng, kênh hoàn tiền sẽ tùy theo phương thức hoàn tiền khi bạn gửi yêu cầu Trả hàng Hoàn tiền. Trong trường hợp thông tin tài khoản Ngân hàng không chính xác/Ví ShopeePay của bạn không ở trạng thái hoạt động bình thường ở thời điểm xử lý hoàn tiền, bạn cần cập nhật lại thông tin tài khoản Ngân hàng/Ví ShopeePay của bạn để được nhận tiền hoàn.\n  * Đối với các đơn hàng thanh toán bằng SPayLater kết hợp với các phương thức thanh toán khác:\n    * Số tiền đã thanh toán bằng SPayLater: hoàn về Số dư khả dụng SPayLater trong 24 giờ hoặc Hóa đơn SPayLater trong 3 - 5 ngày làm việc tiếp theo (chi tiết xem tại Bảng bên trên)",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "crawled_at": "2026-08-04T11:34:41.144117+07:00",
-          "customer_role": "buyer",
-          "source_url": "https://help.shopee.vn/portal/4/article/189473",
-          "source": "article_04.md",
-          "category": "returns-refunds",
-          "doc_id": "shopee-refund-timeline",
-          "type": "news",
-          "chunk_index": 10,
-          "platform": "shopee-vn",
-          "cosine_score": 0.6709
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "3. ĐIỀU KIỆN YÊU CẦU TRẢ HÀNG/HOÀN TIỀN\n3.1.Người Mua đồng ý rằng Người Mua chỉ có thể yêu cầu trả hàng/hoàn tiền trong các trường hợp sau:\n  1. Người Mua đã thanh toán bằng các phương thức thanh toán hợp lệ và trực tiếp trên Trang Shopee nhưng (i) không nhận được Sản Phẩm, hoặc (ii) không nhận được toàn bộ các Sản Phẩm đã đặt, hoặc (iii) nhận được Sản Phẩm là hàng giả, hàng nhái;\n  2. Sản Phẩm bị lỗi hoặc bị hư hại trong quá trình vận chuyển;\n  3. Người Bán giao sai Sản Phẩm cho Người Mua (ví dụ: sai kích cỡ, sai màu sắc, v.v);\n  4. Sản Phẩm mà Người Mua nhận được khác biệt một cách rõ rệt so với thông tin mà Người Bán cung cấp trong mục mô tả sản phẩm;\n  5. Sản Phẩm hết hạn sử dụng;",
-        "score": 0.015625,
-        "metadata": {
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "type": "news",
-          "customer_role": "both",
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "doc_id": "shopee-return-refund-policy",
-          "category": "returns-refunds",
-          "chunk_index": 5,
-          "source": "article_06.md",
-          "platform": "shopee-vn",
-          "cosine_score": 0.6775
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "# Xin chào, Shopee có thể giúp gì cho bạn?\n## [Trả hàng/ Hoàn tiền] Thời gian nhận tiền hoàn và cách kiểm tra tiền hoàn\nSau khi gửi trả hàng, bạn sẽ nhận được thông báo xác nhận hoàn tiền qua mục Thông báo > Cập nhật đơn hàng trên ứng dụng Shopee, sau đó tiền sẽ được hoàn theo các phương thức thanh toán sau:   \n| Phương thức thanh toán  | Tiền hoàn trả được gửi qua  | Thời gian nhận được tiền hoàn sau khi Shopee chấp nhận hoàn tiền  |  \n| --- | --- | --- |",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "source_url": "https://help.shopee.vn/portal/4/article/189473",
-          "category": "returns-refunds",
-          "crawled_at": "2026-08-04T11:34:41.144117+07:00",
-          "chunk_index": 1,
-          "type": "news",
-          "source": "article_04.md",
-          "platform": "shopee-vn",
-          "customer_role": "buyer",
-          "doc_id": "shopee-refund-timeline",
-          "cosine_score": 0.6681
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Tiền hoàn của đơn thanh toán bằng thẻ tín dụng hoặc ghi nợ được trả về đâu và mất bao lâu?",
-    "expected_answer": "Tiền được hoàn về đúng thẻ tín dụng hoặc ghi nợ đã dùng để thanh toán; thời gian là 7 đến 14 ngày làm việc tùy ngân hàng.",
-    "expected_context": "article_04.md — Bảng phương thức và thời gian hoàn tiền",
-    "answer": "Tiền hoàn của đơn thanh toán bằng thẻ tín dụng hoặc ghi nợ sẽ được hoàn về đúng tài khoản tín dụng hoặc ghi nợ đã sử dụng khi thanh toán đơn hàng. Thời gian hoàn tiền sẽ mất từ 7 đến 14 ngày làm việc, tùy theo ngân hàng [Document 1 | Source: article_04.md].",
-    "sources": [
-      {
-        "content": "* Đối với hình thức trả hàng “Tự sắp xếp”, Phí trả hàng sẽ được hoàn lại cho bạn theo[Chính sách hỗ trợ phí trả hàng](https://help.shopee.vn/portal/article/79061?previousPage=other%20articles&previousPage=other%20articles&previousPage=other%20articles)\n  * Đối với đơn hàng thanh toán bằng Thẻ Tín dụng/Ghi nợ, Shopee chỉ hỗ trợ hoàn tiền về đúng tài khoản Tín dụng/Ghi nợ đã sử dụng khi thanh toán đơn hàng.\n  * Đối với hình thức hoàn tiền về Tài khoản Ngân hàng, bạn cần đảm bảo nhập đúng thông tin chủ tài khoản, số tài khoản và tên ngân hàng để được xử lý hoàn tiền thành công trong 24h.\n  * Đối với các hình thức hoàn tiền về Ví Shopee Pay, tại thời điểm xử lý hoàn tiền, ví cần ở trạng thái bình thường và còn liên kết với tài khoản Shopee để việc hoàn tiền thành công trong 24h.",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "crawled_at": "2026-08-04T11:34:41.144117+07:00",
-          "source_url": "https://help.shopee.vn/portal/4/article/189473",
-          "chunk_index": 9,
-          "doc_id": "shopee-refund-timeline",
-          "platform": "shopee-vn",
-          "type": "news",
-          "source": "article_04.md",
-          "category": "returns-refunds",
-          "customer_role": "buyer",
-          "cosine_score": 0.702
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "9.4. Tùy từng trường hợp, tiền hoàn trả sẽ được chuyển vào Ví ShopeePay, SPayLater, Thẻ nội địa Napas, Tài Khoản Ngân Hàng, Thẻ thẻ tín dụng/ ghi nợ của Người Mua đã đăng ký với Shopee hoặc Số Dư Tài Khoản Shopee của Người Mua. Để biết thêm chi tiết về thời gian hoàn tiền, vui lòng tham khảo hướng dẫn tại[ĐÂY](https://help.shopee.vn/vn/s/article/Sau-khi-g%E1%BB%ADi-y%C3%AAu-c%E1%BA%A7u-tr%E1%BA%A3-h%C3%A0ng-trong-bao-l%C3%A2u-t%C3%B4i-s%E1%BA%BD-nh%E1%BA%ADn-%C4%91%C6%B0%E1%BB%A3c-ti%E1%BB%81n-ho%C3%A0n-tr%E1%BA%A3-1542942531227?previousPage=other%20articles&previousPage=other%20articles&previousPage=other%20articles)",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "platform": "shopee-vn",
-          "source": "article_06.md",
-          "doc_id": "shopee-return-refund-policy",
-          "category": "returns-refunds",
-          "type": "news",
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "customer_role": "both",
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "chunk_index": 31,
-          "cosine_score": 0.7057
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "| Thẻ nội địa Napas  | Thẻ nội địa Napas  | 2 - 5 ngày làm việc (tùy ngân hàng)  |  \n| Thẻ tín dụng/ghi nợ  | Thẻ tín dụng/ghi nợ  | 7 - 14 ngày làm việc (tùy theo ngân hàng)  |  \n| Apple Pay  | Thẻ tín dụng/ghi nợ liên kết với tài khoản Apple Pay  | 7 - 14 ngày làm việc (tùy theo ngân hàng)  |  \n| Google Pay  | Thẻ tín dụng/ghi nợ liên kết với tài khoản Google Pay (Google Wallet)  | 7 - 14 ngày làm việc (tùy theo ngân hàng)  |  \n| SPayLater  |  Mục Giao dịch trong SPayLater *Lưu ý: Nếu bạn gửi yêu cầu THHT sau khi đơn cập nhật trạng thái “Hoàn thành” - giao dịch trả góp đã được ghi nhận với ngân hàng:",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "source_url": "https://help.shopee.vn/portal/4/article/189473",
-          "type": "news",
-          "chunk_index": 7,
-          "source": "article_04.md",
-          "doc_id": "shopee-refund-timeline",
-          "category": "returns-refunds",
-          "customer_role": "buyer",
-          "crawled_at": "2026-08-04T11:34:41.144117+07:00",
-          "platform": "shopee-vn",
-          "cosine_score": 0.674
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "2. Thẻ Tín dụng/Ghi nợ\nBạn có thể sử dụng Thẻ tín dụng hoặc Thẻ ghi nợ thuộc các hệ thống thẻ Visa, thẻ Mastercard, thẻ JCB, và thẻ American Express (AMEX)[khi thanh toán đơn hàng trên Shopee](https://help.shopee.vn/vn/s/article/T%E1%BA%A1i-sao-t%C3%B4i-kh%C3%B4ng-th%E1%BB%83-thanh-to%C3%A1n-b%E1%BA%B1ng-th%E1%BA%BB-T%C3%ADn-d%E1%BB%A5ng-Ghi-n%E1%BB%A3-1542942315517?previousPage=other%20articles)\n⚠️Lưu ý:chỉ áp dụng cho đơn hàng có giá trị thanh toán (bao gồm phí vận chuyển và các chi phí phát sinh khác) từ 10.000 VNĐ trở lên\n3. Trả góp bằng Thẻ tín dụng",
-        "score": 0.015625,
-        "metadata": {
-          "source": "article_01.md",
-          "type": "news",
-          "doc_id": "shopee-payment-methods",
-          "customer_role": "buyer",
-          "category": "payment",
-          "platform": "shopee-vn",
-          "source_url": "https://help.shopee.vn/portal/4/article/79198",
-          "crawled_at": "2026-08-04T11:34:34.494687+07:00",
-          "chunk_index": 2,
-          "cosine_score": 0.0
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "2. Lưu ý  \n| Thời gian xử lý  | Yêu cầu của bạn thường được xử lý trong khoảng 3 - 5 ngày làm việc.  |  \n| --- | --- |  \n| Kết quả xử lý  | Shopee sẽ thông báo kết quả qua mục Thông báo > Cập nhật đơn hàng và/hoặc Email của bạn.  |  \n| Thời gian hoàn tiền  | Nếu yêu cầu được chấp nhận, tiền sẽ được hoàn trong 1 - 14 ngày làm việc, tùy thuộc vào phương thức thanh toán. Để tìm hiểu thêm về thời gian hoàn tiền theo từng phương thức, vui lòng truy cập [[Trả hàng/Hoàn tiền] Thời gian nhận tiền hoàn và cách kiểm tra tiền hoàn](https://help.shopee.vn/portal/4/article/189473?previousPage=other%20articles)  |  \n| Trường hợp Trả lại & Hoàn tiền  | Bạn cần trả lại sản phẩm bằng cách yêu cầu bưu tá đến lấy hoặc tự ra bưu cục gửi. Sản phẩm sẽ được Người bán/Shopee xem xét khi nhận lại.  |",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "category": "returns-refunds",
-          "source_url": "https://help.shopee.vn/portal/4/article/79233",
-          "crawled_at": "2026-08-04T11:34:38.873658+07:00",
-          "platform": "shopee-vn",
-          "type": "news",
-          "customer_role": "buyer",
-          "doc_id": "shopee-return-refund-request",
-          "source": "article_03.md",
-          "chunk_index": 3,
-          "cosine_score": 0.7004
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Khi tự sắp xếp trả hàng cho sản phẩm Shopee Mall, người mua nhận lại phí vận chuyển thế nào?",
-    "expected_answer": "Người mua thanh toán trước phí gửi trả. Khi yêu cầu được chấp nhận, Shopee hoàn số tiền phí vận chuyển đã trả vào Số dư Tài khoản Shopee trong 3 đến 5 ngày làm việc kể từ ngày gửi hàng cho đơn vị vận chuyển.",
-    "expected_context": "article_06.md — Điều 8.1 chi phí vận chuyển hoàn trả Shopee Mall",
-    "answer": "Khi tự sắp xếp trả hàng cho sản phẩm Shopee Mall, người mua cần thanh toán trước chi phí vận chuyển cho việc trả hàng. Sau đó, Shopee sẽ hoàn lại số tiền bằng với chi phí vận chuyển mà người mua đã thanh toán cho đơn vị vận chuyển thông qua “Số Dư Tài Khoản Shopee” trên Ứng Dụng Shopee trong thời hạn 03 – 05 ngày làm việc kể từ ngày người mua đã gửi sản phẩm hoàn trả và yêu cầu trả hàng/hoàn tiền được chấp nhận [Document 2 | Source: article_06.md].",
-    "sources": [
-      {
-        "content": "Vui lòng tham khảo chi tiết các thông tin về chi phí vận chuyển chiều hoàn trả sản phẩm của Người Bán tại [ĐÂY](https://banhang.shopee.vn/edu/article/3648?previousPage=other%20articles).\n8. TRÁCH NHIỆM VỀ CHI PHÍ HOÀN TRẢ SẢN PHẨM CỦA NGƯỜI MUA\n8.1. Với Sản Phẩm mua tại Shopee Mall, Người Mua có thể lựa chọn hoàn trả Sản Phẩm:\n  1. Theo hình thức “Lấy hàng hoàn trả tại nhà” hoặc “Gửi hàng tại bưu cục”: Người Mua không phải thanh toán bất cứ chi phí vận chuyển nào cho việc trả hàng;",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "category": "returns-refunds",
-          "type": "news",
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "platform": "shopee-vn",
-          "customer_role": "both",
-          "doc_id": "shopee-return-refund-policy",
-          "source": "article_06.md",
-          "chunk_index": 25,
-          "cosine_score": 0.7576
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "8.2. Với Sản Phẩm không thuộc Shopee Mall, Người Mua có thể lựa chọn hoàn trả Sản Phẩm:\n  1. Theo hình thức “Lấy hàng hoàn trả tại nhà” hoặc “Gửi trả hàng tại bưu cục”: Người Mua không phải thanh toán bất cứ chi phí vận chuyển nào cho việc trả hàng.\n  2. Theo hình thức “Tự sắp xếp”: Người Mua cần thanh toán trước chi phí vận chuyển cho việc trả hàng. Shopee sẽ hỗ trợ hoàn lại một phần chi phí vận chuyển cho việc trả hàng dưới hình thức Shopee Xu theo chính sách của Shopee khi Người Mua đáp ứng được các điều kiện để được hỗ trợ trả hàng trong thời hạn 03 – 05 ngày làm việc kể từ ngày Người Mua đã gửi Sản Phẩm Hoàn Trả cho đơn vị vận chuyển và yêu cầu trả hàng/hoàn tiền của Người Mua được chấp nhận.",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "source": "article_06.md",
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "doc_id": "shopee-return-refund-policy",
-          "type": "news",
-          "customer_role": "both",
-          "category": "returns-refunds",
-          "chunk_index": 27,
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "platform": "shopee-vn",
-          "cosine_score": 0.7464
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "2. Theo hình thức “Tự sắp xếp”: Người Mua cần thanh toán trước chi phí vận chuyển cho việc trả hàng. Shopee sẽ hoàn lại số tiền bằng với chi phí vận chuyển mà Người Mua đã thanh toán cho đơn vị vận chuyển thông qua “Số Dư Tài Khoản Shopee” trên Ứng Dụng Shopee trong thời hạn 03 – 05 ngày làm việc kể từ ngày Người Mua đã gửi Sản Phẩm Hoàn Trả cho đơn vị vận chuyển và yêu cầu trả hàng/hoàn tiền của Người Mua được chấp nhận.",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "chunk_index": 26,
-          "customer_role": "both",
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "doc_id": "shopee-return-refund-policy",
-          "platform": "shopee-vn",
-          "source": "article_06.md",
-          "category": "returns-refunds",
-          "type": "news",
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "cosine_score": 0.7572
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "7.2. Người Bán sẽ không phải chịu bất kỳ chi phí vận chuyển cho việc trả hàng chiều hoàn trả sản phẩm đối với: \n  1. đơn yêu cầu trả hàng/hoàn tiền một phần (Người Mua chỉ nhấn yêu cầu trả hàng/hoàn tiền cho một hoặc một số sản phẩm trong đơn hàng, không phải tất cả sản phẩm), hoặc Người Mua nhấn yêu cầu trả hàng/hoàn tiền với lý do Chưa nhận được hàng (được Shopee chấp thuận theo quyết định riêng của Shopee),\n  2. đơn yêu cầu trả hàng/hoàn tiền trong trường hợp Shopee chấp thuận (theo quyết định riêng của Shopee) hoặc đơn giao không thành công do lỗi của đơn vị vận chuyển,\n  3. đơn yêu cầu trả hàng/hoàn tiền được Shopee chấp nhận hoàn tiền ngay (không trả hàng) (theo quyết định riêng của Shopee),\n  4. đơn giao không thành công thuộc kênh Người bán tự vận chuyển, và",
-        "score": 0.015625,
-        "metadata": {
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "platform": "shopee-vn",
-          "category": "returns-refunds",
-          "doc_id": "shopee-return-refund-policy",
-          "type": "news",
-          "source": "article_06.md",
-          "chunk_index": 23,
-          "customer_role": "both",
-          "cosine_score": 0.7222
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "* Đối với hình thức trả hàng “Tự sắp xếp”, Phí trả hàng sẽ được hoàn lại cho bạn theo[Chính sách hỗ trợ phí trả hàng](https://help.shopee.vn/portal/article/79061?previousPage=other%20articles&previousPage=other%20articles&previousPage=other%20articles)\n  * Đối với đơn hàng thanh toán bằng Thẻ Tín dụng/Ghi nợ, Shopee chỉ hỗ trợ hoàn tiền về đúng tài khoản Tín dụng/Ghi nợ đã sử dụng khi thanh toán đơn hàng.\n  * Đối với hình thức hoàn tiền về Tài khoản Ngân hàng, bạn cần đảm bảo nhập đúng thông tin chủ tài khoản, số tài khoản và tên ngân hàng để được xử lý hoàn tiền thành công trong 24h.\n  * Đối với các hình thức hoàn tiền về Ví Shopee Pay, tại thời điểm xử lý hoàn tiền, ví cần ở trạng thái bình thường và còn liên kết với tài khoản Shopee để việc hoàn tiền thành công trong 24h.",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "source": "article_04.md",
-          "source_url": "https://help.shopee.vn/portal/4/article/189473",
-          "category": "returns-refunds",
-          "crawled_at": "2026-08-04T11:34:41.144117+07:00",
-          "doc_id": "shopee-refund-timeline",
-          "chunk_index": 9,
-          "platform": "shopee-vn",
-          "type": "news",
-          "customer_role": "buyer",
-          "cosine_score": 0.7189
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Đơn hàng có giá trị hàng hóa lớn hơn 50 triệu đồng có được Shopee hỗ trợ vận chuyển không?",
-    "expected_answer": "Không. Đơn hàng có tổng giá trị hàng hóa lớn hơn 50.000.000 VNĐ thuộc nhóm không được hỗ trợ vận chuyển; giá trị này không gồm mã giảm giá, Shopee Xu và phí vận chuyển.",
-    "expected_context": "article_05.md — Mục hàng hóa không hỗ trợ vận chuyển",
-    "answer": "Đơn hàng có giá trị hàng hóa lớn hơn 50 triệu đồng sẽ không được Shopee hỗ trợ vận chuyển. Cụ thể, đơn hàng này sẽ bị từ chối nếu tổng giá trị hàng hóa (bao gồm cả giá khuyến mãi, không bao gồm mã giảm giá của Shopee, mã giảm giá của Người Bán, xu và phí vận chuyển) vượt quá 50 triệu đồng [Document 1 | Source: article_05.md].",
-    "sources": [
-      {
-        "content": "a. Hàng hóa thuộc danh mục cấm/hạn chế trên Sàn Shopee. Xem chi tiết tại[ _TẠI ĐÂY_](https://help.shopee.vn/portal/article/77247?previousPage=other%20articles&previousPage=other%20articles&previousPage=other%20articles) ;\nb. Các vật phẩm làm bằng vàng, bạc, đá quý hoặc các loại kim khí quý khác;\nc. Hóa chất tẩy rửa đậm đặc, dung dịch/ bột dùng pha chế sản xuất công nghiệp;\nd. Đơn hàng có giá trị hàng hóa lớn hơn 50.000.000VNĐ (Tổng giá trị hàng hóa với giá khuyến mãi nếu có, không bao gồm mã giảm giá của Shopee, mã giảm giá của Người Bán, xu và phí vận chuyển);\ne. Đơn hàng có dấu hiệu gian lận, lợi dụng các Chính Sách, hỗ trợ của Shopee;\nf. Người Mua/Người Bán không tuân theo các hướng dẫn, quy định và khuyến cáo về vận chuyển của Shopee được nêu ra trong Chính Sách Vận Chuyển;",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "platform": "shopee-vn",
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "type": "news",
-          "doc_id": "shopee-shipping-policy",
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "chunk_index": 4,
-          "category": "shipping",
-          "customer_role": "both",
-          "source": "article_05.md",
-          "cosine_score": 0.6893
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "b. Khái niệm Người Mua sẽ được dùng để chỉ Người Mua hoặc Người Nhận Hàng trong từng trường hợp; Khái niệm Người Bán sẽ được dùng để chỉ Người Bán hoặc Người Gửi Hàng trong từng trường hợp. Bằng cách sử dụng dịch vụ vận chuyển được hỗ trợ trên Sàn Shopee, Người Mua/ Người Bán đã thừa nhận và đồng ý với các yêu cầu, và/hoặc các điều khoản và điều kiện, thực tiễn áp dụng nêu trong Chính Sách Vận Chuyển này. Shopee bảo lưu quyền sửa đổi Chính Sách Vận Chuyển này vào bất cứ thời điểm nào.\n**_2. Phạm vi áp dụng_**\na. Chính Sách Vận Chuyển này quy định về các loại hàng hóa không hỗ trợ vận chuyển, vận chuyển có điều kiện, quy định về đóng gói hàng hóa, các quyền, nghĩa vụ của các Bên liên quan đến việc vận chuyển hàng hóa mà Sàn Shopee hỗ trợ vận chuyển.",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "doc_id": "shopee-shipping-policy",
-          "customer_role": "both",
-          "category": "shipping",
-          "type": "news",
-          "chunk_index": 2,
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "source": "article_05.md",
-          "platform": "shopee-vn",
-          "cosine_score": 0.6573
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "| 6  | Mất hàng, bưu gửi thất lạc hoàn toàn  |  (i) Số tiền mà đơn vị vận chuyển đồng ý bồi thường theo quy trình bồi thường được thỏa thuận giữa Shopee và đơn vị vận chuyển; hoặc (ii) 70% Giá bán của sản phẩm trong trường hợp đơn vị vận chuyển không bồi thường hoặc bồi thường với mức thấp hơn tỷ lệ này. Tỷ lệ bồi thường này sẽ không áp dụng đối với trường hợp bất khả kháng. Người Bán được quyền chọn mức bồi thường tương ứng cho từng trường hợp nếu quy trình bồi thường giữa Shopee và đơn vị vận chuyển kéo dài. Trong trường hợp bất khả kháng theo quy định của pháp luật và đơn vị vận chuyển không bồi thường cho các đơn hàng thuộc trường hợp này, Người Bán sẽ được Shopee hỗ trợ lên đến 70% Giá bán của sản phẩm hoặc theo tỷ lệ khác cao hơn theo quyết định của Shopee trong từng thời điểm.  |",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "source": "article_05.md",
-          "platform": "shopee-vn",
-          "doc_id": "shopee-shipping-policy",
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "chunk_index": 34,
-          "customer_role": "both",
-          "type": "news",
-          "category": "shipping",
-          "cosine_score": 0.6432
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "j. Các loại hàng hóa không hỗ trợ vận chuyển khác theo thông báo của Shopee trong từng thời điểm.\n1.2. Miễn trừ trách nhiệm cho Shopee và các bên có liên quan: Với các mặt hàng thuộc danh mục Shopee không hỗ trợ vận chuyển kể trên, Shopee cũng như các bên có liên quan trong quá trình vận chuyển hàng hóa sẽ không chịu trách nhiệm nếu hàng hóa bị thu giữ, tiêu hủy hay hư hỏng, mất mát trong quá trình vận chuyển. Người Bán chịu hoàn toàn trách nhiệm trước Shopee và pháp luật (nếu có) khi gửi hàng vi phạm Chính Sách Vận Chuyển của Shopee và pháp luật Việt Nam.",
-        "score": 0.015625,
-        "metadata": {
-          "doc_id": "shopee-shipping-policy",
-          "source": "article_05.md",
-          "type": "news",
-          "category": "shipping",
-          "chunk_index": 6,
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "customer_role": "both",
-          "platform": "shopee-vn",
-          "cosine_score": 0.644
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "1.3. Trong trường hợp Người Bán cố tình vi phạm các quy định về hàng hóa không hỗ trợ vận chuyển trên Sàn Shopee, Người Bán phải bồi thường đầy đủ và toàn bộ các thiệt hại phát sinh mà Shopee và/hoặc các bên có liên Quan trong quá trình vận chuyển phải gánh chịu.\n**_2. Quy định về các loại hàng hóa vận chuyển có điều kiện_**\nNhóm hàng hóa đặc biệt sau đây chỉ được chấp nhận vận chuyển với điều kiện bắt buộc:\na. Các sản phẩm cây cảnh \ni. Người Bán chỉ được hỗ trợ kênh vận chuyển Hỏa Tốc và Nhanh.",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "type": "news",
-          "platform": "shopee-vn",
-          "category": "shipping",
-          "chunk_index": 7,
-          "source": "article_05.md",
-          "doc_id": "shopee-shipping-policy",
-          "customer_role": "both",
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "cosine_score": 0.6726
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Thực phẩm tươi sống hoặc hàng cần bảo quản đặc biệt nên giao bằng hình thức nào?",
-    "expected_answer": "Người bán chỉ nên kích hoạt và giao qua đơn vị vận chuyển Hỏa Tốc. Nếu chọn kênh khác, Người bán chịu trách nhiệm khi hàng bị hư hỏng hoặc tổn thất.",
-    "expected_context": "article_05.md — Mục hàng hóa vận chuyển có điều kiện",
-    "answer": "Thực phẩm tươi sống hoặc hàng hóa cần bảo quản đặc biệt nên được giao bằng hình thức vận chuyển Hỏa Tốc để đảm bảo duy trì chất lượng sản phẩm và tránh các trường hợp hư hỏng ngoài ý muốn. Nếu Người Bán lựa chọn các kênh vận chuyển khác không phải Hỏa Tốc, Người Bán sẽ hoàn toàn chịu trách nhiệm nếu có hư hỏng, tổn thất khi vận chuyển [Document 5 | Source: article_05.md].",
-    "sources": [
-      {
-        "content": "a. Các sản phẩm cây cảnh \ni. Người Bán chỉ được hỗ trợ kênh vận chuyển Hỏa Tốc và Nhanh.\nii. Do đặc tính của sản phẩm thuộc nhóm này, đơn vị vận chuyển chỉ hỗ trợ khi sản phẩm được đóng gói đúng quy cách nhưng Người Bán sẽ hoàn toàn chịu trách nhiệm nếu có hư hỏng, tổn thất khi vận chuyển. Shopee được miễn trừ mọi trách nhiệm, và sẽ không giải quyết bất kỳ khiếu nại, yêu cầu bồi thường nào phát sinh.\niii. Xem chi tiết hướng dẫn đối với nhóm mặt hàng này[ _TẠI ĐÂY_](https://banhang.shopee.vn/edu/article/12618?previousPage=other%20articles&previousPage=other%20articles).\nb. Thực phẩm tươi sống hoặc hàng hóa còn hạn sử dụng dưới 30 ngày, hàng hóa cần bảo quản đặc biệt (lạnh, nóng, v.v...)",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "customer_role": "both",
-          "type": "news",
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "platform": "shopee-vn",
-          "category": "shipping",
-          "chunk_index": 8,
-          "source": "article_05.md",
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "doc_id": "shopee-shipping-policy",
-          "cosine_score": 0.6276
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "i. Để đảm bảo duy trì chất lượng sản phẩm và tránh các trường hợp hư hỏng ngoài ý muốn, Người Bán chỉ nên kích hoạt và tiến hành giao hàng qua đơn vị vận chuyển Hỏa tốc.\nii. Trường hợp nếu Người Bán lựa chọn các kênh vận chuyển khác không phải Hỏa Tốc, Người Bán sẽ hoàn toàn chịu trách nhiệm nếu có hư hỏng, tổn thất khi vận chuyển. Shopee được miễn trừ mọi trách trách nhiệm, và sẽ không giải quyết bất kỳ khiếu nại, yêu cầu bồi thường nào phát sinh.\niii. Xem chi tiết[ _TẠI ĐÂY_](https://banhang.shopee.vn/edu/article/8327/Huong-dan-dang-ban-thuc-pham-tuoi-sang-dong-lanh?previousPage=other%20articles&previousPage=other%20articles)\n**_3. Quy định về vận chuyển đối với những loại hàng hóa đặc thù khác_**\na. Hàng dễ hư hại/ tổn thất do đặc tính sản phẩm",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "chunk_index": 9,
-          "source": "article_05.md",
-          "category": "shipping",
-          "doc_id": "shopee-shipping-policy",
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "type": "news",
-          "platform": "shopee-vn",
-          "customer_role": "both",
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "cosine_score": 0.5862
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "- Nên có ít nhất một hình ảnh thật của sản phẩm để khách hàng dễ dàng lựa chọn và tránh những sự nhầm\nlẫn không đáng có.\n\n3.5. Nhà cửa & Đời sống\n\nĐăng sản phẩm theo đúng định dạng tại đây.\n\n3.6. Bách hóa Online\n\n- Thực phẩm khô: Đăng đầy đủ thông tin nguồn gốc, xuất xứ, hạn sử dụng. Riêng đối với các mặt hàng dễ hư\nhỏng, cần lưu ý cách sử dụng, bảo quản thích hợp.\n\n- Đồ uống có cồn:\n\n-  Người  Bán  phải  tuân  thủ  quy  định  tại  Điều  16  của  Luật  Phòng,  chống  tác  hại  của  rượu,  bia  số\n44/2019/QH14 về điều kiện bán rượu, bia theo hình thức thương mại điện tử; Nghị định số 24/2020/NĐ-CP\ncủa  Chính  phủ  quy  định  chi  tiết  một  số  điều  của  Luật  phòng,  chống  tác  hại  của  rượu,  bia  và  các  quy  định\npháp luật liên quan tới hoạt động kinh doanh rượu, bia;",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "retrieved_at": "2026-08-03",
-          "platform": "shopee-vn",
-          "category": "listing-policy",
-          "customer_role": "seller",
-          "source_url": "https://help.shopee.vn/portal/4/article/77246",
-          "type": "legal",
-          "chunk_index": 13,
-          "document_version": "2024-08-14",
-          "source": "seller-listing-rules-shopee.md",
-          "doc_id": "seller-listing-rules-shopee",
-          "cosine_score": 0.5447
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "1.3. Trong trường hợp Người Bán cố tình vi phạm các quy định về hàng hóa không hỗ trợ vận chuyển trên Sàn Shopee, Người Bán phải bồi thường đầy đủ và toàn bộ các thiệt hại phát sinh mà Shopee và/hoặc các bên có liên Quan trong quá trình vận chuyển phải gánh chịu.\n**_2. Quy định về các loại hàng hóa vận chuyển có điều kiện_**\nNhóm hàng hóa đặc biệt sau đây chỉ được chấp nhận vận chuyển với điều kiện bắt buộc:\na. Các sản phẩm cây cảnh \ni. Người Bán chỉ được hỗ trợ kênh vận chuyển Hỏa Tốc và Nhanh.",
-        "score": 0.015625,
-        "metadata": {
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "platform": "shopee-vn",
-          "source": "article_05.md",
-          "chunk_index": 7,
-          "category": "shipping",
-          "customer_role": "both",
-          "type": "news",
-          "doc_id": "shopee-shipping-policy",
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "cosine_score": 0.5472
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "3.2.Người Mua có thể gửi yêu cầu trả hàng/hoàn tiền trong vòng 15 (mười lăm) ngày kể từ lúc đơn hàng được cập nhật giao hàng thành công. Riêng đối với các Sản Phẩm là thực phẩm tươi sống và đông lạnh, Người Mua cần gửi yêu cầu trả hàng/hoàn tiền trong vòng 24 giờ kể từ lúc đơn hàng được cập nhật giao hàng thành công. Một số trường hợp Người Mua có nhu cầu trả hàng/hoàn tiền sau thời hạn trên, Shopee sẽ xem xét và có thể hỗ trợ Người Mua được trả hàng/hoàn tiền trong phạm vi phù hợp với Chính Sách Shopee.",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "source": "article_06.md",
-          "type": "news",
-          "doc_id": "shopee-return-refund-policy",
-          "customer_role": "both",
-          "category": "returns-refunds",
-          "platform": "shopee-vn",
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "chunk_index": 7,
-          "cosine_score": 0.0
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Khối lượng quy đổi để tính phí vận chuyển được tính theo công thức nào?",
-    "expected_answer": "Khối lượng quy đổi bằng chiều rộng nhân chiều dài nhân chiều cao rồi chia cho 6.000, đơn vị kg. Phí được tính theo giá trị lớn hơn giữa cân nặng thực tế và khối lượng quy đổi.",
-    "expected_context": "article_05.md — Quy định về khối lượng và kích thước đóng gói",
-    "answer": "Khối lượng quy đổi để tính phí vận chuyển được tính theo công thức: Chiều rộng x Chiều dài x Chiều cao / 6.000 (kg) [Document 5].",
-    "sources": [
-      {
-        "content": "Chiều rộng x Chiều dài x Chiều cao /6.000 (kg)\nVí dụ: Sản phẩm bàn phím máy tính có cân nặng sau đóng gói là 0,5kg, nhưng có kích thước đóng gói Chiều rộng = 30cm, Chiều dài = 50 cm, Chiều cao = 10 cm\nKhối lượng quy đổi = (30 x 50 x 10) / 6000 = 2,5 kg > 0,5 kg\nVậy, trong trường hợp này, khối lượng sử dụng để tính cước sẽ là khối lượng quy đổi = 2,5 kg\nd. Để hạn chế việc đơn hàng bị hủy, Người Bán phải nhập đầy đủ và chính xác khối lượng sau đóng gói và kích thước ba chiều của bưu kiện để hệ thống tính khối lượng quy đổi chính xác theo từng đơn vị vận chuyển.",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "customer_role": "both",
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "source": "article_05.md",
-          "doc_id": "shopee-shipping-policy",
-          "category": "shipping",
-          "platform": "shopee-vn",
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "type": "news",
-          "chunk_index": 21,
-          "cosine_score": 0.6892
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "| --- | --- | --- |  \n| **Giao hàng tận nơi**  |  **Hỏa Tốc** **_Instant_**  | 60 x 60 x 60  | 30  |  \n| **Hỏa Tốc - Ưu Tiên**  | 60 x 60 x 60  | 30  |  \n| **Trong ngày**  | 320 x 320 x 320  | 200  |  \n| **Nhanh**  | 200 x 200 x 200  | 10  |  \n| **Nhanh - Shopee Xử Lý**  | 320 x 320 x 320  | 200  |  \n| **Hàng Cồng Kềnh**  | 320 x 320 x 320  | 200  |  \n| **Chủ động nhận hàng**  | **Tủ Nhận Hàng**  | 8 x 32 x 26  | 10  |  \n| **Điểm Nhận Hàng**  | 60 x 60 x 60  | 10  |  \nb. Theo quy định của các đơn vị vận chuyển, khối lượng sử dụng để tính cước là mức khối lượng cao nhất khi so sánh giữa cân nặng và khối lượng quy đổi của kiện hàng sau đóng gói.\nc. Khối lượng quy đổi được các đơn vị vận chuyển tính như sau:\nChiều rộng x Chiều dài x Chiều cao /6.000 (kg)",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "source": "article_05.md",
-          "customer_role": "both",
-          "category": "shipping",
-          "doc_id": "shopee-shipping-policy",
-          "chunk_index": 20,
-          "type": "news",
-          "platform": "shopee-vn",
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "cosine_score": 0.5957
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "- Giá sản phẩm không được thấp hoặc cao hơn một cách bất hợp lý so với mặt bằng giá của sản phẩm cùng\nloại trên Sàn Shopee. Người bán lưu ý việc để giá bán bất hợp lý có thể bị coi là hành vi gian lận trong một số\ntrường hợp và sẽ bị Shopee xử lý theo chính sách xử lý hành vi gian lận của Shopee.\n\n## 7. Phí vận chuyển\n\n- Người Bán phải xác định chính xác khối lượng sản phẩm cần vận chuyển để ước lượng chi phí vận chuyển.\n\n- Khối lượng sản phẩm đăng ký phải là khối lượng sau khi đóng gói của hàng hóa để chuyển đi. Người Bán\nchịu trách nhiệm về tính chính xác đối với khối lượng sản phẩm đăng ký này.\n\n- Với các sản phẩm cồng kềnh, Người Bán nên tham khảo thêm Chính sách vận chuyển để biết chi tiết cách\nthức xác định khối lượng sản phẩm.",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "category": "listing-policy",
-          "platform": "shopee-vn",
-          "chunk_index": 25,
-          "document_version": "2024-08-14",
-          "retrieved_at": "2026-08-03",
-          "source_url": "https://help.shopee.vn/portal/4/article/77246",
-          "customer_role": "seller",
-          "type": "legal",
-          "doc_id": "seller-listing-rules-shopee",
-          "source": "seller-listing-rules-shopee.md",
-          "cosine_score": 0.5498
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "**_2. Quy định về khối lượng và kích thước đóng gói hàng_**\na. Trong quy định về khối lượng và kích thước đóng gói hàng, các đơn vị vận chuyển sẽ chỉ nhận các bưu kiện có khối lượng hoặc kích thước thuộc các giới hạn cho phép (như được thể hiện trong bảng dưới đây, và có thể bị thay đổi theo quyết định đơn phương của các đơn vị vận chuyển trong từng thời điểm). Giới hạn về khối lượng và kích thước đóng gói áp dụng cho tất cả các chiều (dài, rộng, cao) của bưu kiện. Nếu một trong các chiều (dài, rộng, cao) vượt quá giới hạn cho phép, đơn vị vận chuyển sẽ từ chối hỗ trợ vận chuyển.  \n| **Phương thức vận chuyển**  |  **Giới hạn tối đa mỗi cạnh (cm)** **(Cao x Dài x Rộng)**  | **Giới hạn cân nặng (kg)**  |  \n| --- | --- | --- |",
-        "score": 0.015625,
-        "metadata": {
-          "category": "shipping",
-          "source": "article_05.md",
-          "customer_role": "both",
-          "chunk_index": 19,
-          "doc_id": "shopee-shipping-policy",
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "type": "news",
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "platform": "shopee-vn",
-          "cosine_score": 0.5745
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "e. Người Bán hoàn toàn chịu trách nhiệm về tính chính xác của khối lượng, kích thước của gói hàng. Với đơn hàng có khối lượng nhập chênh lệch với thực tế, đơn vị vận chuyển có quyền từ chối vận chuyển đơn hàng hoặc Người Bán sẽ chịu trách nhiệm chi trả phần phí vận chuyển phát sinh thêm. Shopee sẽ có quyền tự động cấn trừ phần phí vận chuyển phát sinh thêm được tính bởi đơn vị vận chuyển này vào doanh thu đơn hàng của Người Bán.\nf. Xem chi tiết quy định khối lượng và kích thước đóng gói đơn hàng Shopee[ _TẠI ĐÂY_](https://banhang.shopee.vn/edu/article/3639/Quy-dinh-ve-kich-thuoc-dong-goi-hang-Shopee?previousPage=other%20articles&previousPage=other%20articles).\n**_3. Quy định đóng gói_**",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "chunk_index": 22,
-          "type": "news",
-          "platform": "shopee-vn",
-          "doc_id": "shopee-shipping-policy",
-          "source": "article_05.md",
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "category": "shipping",
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "customer_role": "both",
-          "cosine_score": 0.5443
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Ảnh sản phẩm do người bán tự chụp phải đáp ứng yêu cầu tối thiểu nào?",
-    "expected_answer": "Tin đăng phải có ít nhất một ảnh thật do chính Người bán tự chụp, trong đó sản phẩm thật chiếm ít nhất 40% diện tích toàn ảnh.",
-    "expected_context": "seller-listing-rules-shopee.md — Mục Hình ảnh sản phẩm",
-    "answer": "Ảnh sản phẩm do người bán tự chụp phải có ít nhất một hình ảnh thật của sản phẩm, trong đó diện tích sản phẩm thật phải chiếm ít nhất 40% diện tích toàn ảnh. [Document 1 | Source: seller-listing-rules-shopee.md]",
-    "sources": [
-      {
-        "content": "- Tạo giá bán sản phẩm quá cao hoặc quá thấp so với mặt bằng giá trị thị trường.\n\n## C. HƯỚNG DẪN ĐĂNG BÁN SẢN PHẨM TRÊN SHOPEE\n\nTiêu đề, hình ảnh, giá cả, mô tả sản phẩm và các thông tin liên quan phải thống nhất, đúng chính tả, đúng\nquy định về đăng tin của Shopee. Cụ thể như sau:\n\n## 1. Hình ảnh sản phẩm\n\n- Hình ảnh sản phẩm phải là ảnh chụp rõ, chi tiết tình trạng sản phẩm. Không được để những hình ảnh hoặc\nthông  tin  không  liên  quan  đến  sản  phẩm  này  như  thông  tin  giới  thiệu  shop,  thông  tin  liên  hệ  hay  thông  tin\nthanh toán.\n\n- Phải có ít nhất một hình ảnh thật của sản phẩm do chính Người Bán tự chụp. Trong ảnh này, diện tích sản\nphẩm thật phải chiếm ít nhất 40% diện tích toàn ảnh.\n\n- Ngôn ngữ trên phông nền hình ảnh là tiếng Việt, không dùng ngôn ngữ nước ngoài.",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "chunk_index": 7,
-          "platform": "shopee-vn",
-          "source_url": "https://help.shopee.vn/portal/4/article/77246",
-          "type": "legal",
-          "category": "listing-policy",
-          "source": "seller-listing-rules-shopee.md",
-          "doc_id": "seller-listing-rules-shopee",
-          "customer_role": "seller",
-          "retrieved_at": "2026-08-03",
-          "document_version": "2024-08-14",
-          "cosine_score": 0.6501
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "- Không đăng bán sản phẩm thực phẩm chức năng xách tay.\n\n3.3. Thời trang/Đồ lót nữ - Đồ lót nam\n\n- Ảnh đại diện sản phẩm nên là ảnh thực, chụp riêng sản phẩm;\n\n\f- Trong các ảnh do người mẫu mặc, phần ảnh sản phẩm thực phải chiếm ít nhất 40-50% diện tích toàn ảnh;\n\n- Người mẫu tạo hình không gây phản cảm, ảnh không mang nội dung khiêu dâm, trái với đạo đức xã hội,\nthuần phong mỹ tục.\n\n3.4. Thời trang/Giày dép/Phụ kiện\n\n- Nêu rõ chất liệu và kích thước của sản phẩm. Riêng đối với sản phẩm thuộc ngành hàng Thời trang phải có\nbảng quy đổi kích thước.\n\n- Đối với các sản phẩm thời trang hoặc phụ kiện làm bằng lụa tơ tằm, Người Bán phải đăng kèm chứng nhận\nnhãn hiệu ở phần hình ảnh sản phẩm.",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "retrieved_at": "2026-08-03",
-          "doc_id": "seller-listing-rules-shopee",
-          "chunk_index": 12,
-          "category": "listing-policy",
-          "customer_role": "seller",
-          "source_url": "https://help.shopee.vn/portal/4/article/77246",
-          "document_version": "2024-08-14",
-          "platform": "shopee-vn",
-          "source": "seller-listing-rules-shopee.md",
-          "type": "legal",
-          "cosine_score": 0.6054
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "- Ngôn ngữ trên phông nền hình ảnh là tiếng Việt, không dùng ngôn ngữ nước ngoài.\n\n- Hình ảnh không chứa yếu tố ghê rợn gây khó chịu cho người xem.\n\n- Tuyệt đối không được đăng các hình ảnh khỏa thân, khiêu gợi, phản cảm, không phù hợp với thuần phong\nmỹ tục.\n\n## 2. Tên sản phẩm\n\n- Tên sản phẩm phải mô tả đúng hàng hóa, dịch vụ được đăng bán và phải là tiếng Việt có dấu, đủ ký tự, rõ\nnghĩa, không dùng các ký tự đặc biệt, không viết tắt.\n\n- Tên gọi của sản phẩm phải trùng khớp với thông tin trên hình ảnh sản phẩm.\n\n- Tên sản phẩm không sử dụng lời lẽ có nội dung dung tục, bạo lực; các nội dung có tính chất kỳ thị dân tộc,\nvùng miền, xúc phạm tôn giáo, gây định kiến về giới, người khuyết tật.",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "type": "legal",
-          "category": "listing-policy",
-          "document_version": "2024-08-14",
-          "source_url": "https://help.shopee.vn/portal/4/article/77246",
-          "chunk_index": 8,
-          "doc_id": "seller-listing-rules-shopee",
-          "platform": "shopee-vn",
-          "retrieved_at": "2026-08-03",
-          "customer_role": "seller",
-          "source": "seller-listing-rules-shopee.md",
-          "cosine_score": 0.6013
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "Để hạn chế các rủi ro phát sinh liên quan đến việc hoàn trả Sản Phẩm, Người Mua lưu ý cần phải đóng gói Sản Phẩm Hoàn Trả theo quy định về đóng gói hàng hóa được quy định tại [Chính Sách Vận Chuyển](https://help.shopee.vn/portal/article/77250?previousPage=other%20articles&previousPage=other%20articles&previousPage=other%20articles) Shopee và gửi trả Sản Phẩm bao gồm toàn bộ phụ kiện đi kèm, hóa đơn thuế GTGT, tem phiếu bảo hành (nếu có) và Sản Phẩm phải trong tình trạng nguyên vẹn như khi nhận hàng. Người Mua bắt buộc phải quay video và/hoặc chụp lại ảnh Sản Phẩm ngay khi nhận được và trong lúc đóng gói Sản Phẩm Hoàn Trả về để làm bằng chứng đối chiếu/khiếu nại về sau. Shopee sẽ thông báo cho Người Mua về việc phải cung cấp video hay ảnh chụp trong từng trường hợp cụ thể.\n**  \n**",
-        "score": 0.015625,
-        "metadata": {
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "customer_role": "both",
-          "category": "returns-refunds",
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "doc_id": "shopee-return-refund-policy",
-          "chunk_index": 21,
-          "source": "article_06.md",
-          "type": "news",
-          "platform": "shopee-vn",
-          "cosine_score": 0.5329
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "iii. Các sản phẩm có đặc tính trong danh sách trên hoặc có đặc tính tương tự, khả năng xảy ra rủi ro hư hại, tổn thất, cháy nổ trong quá trình vận chuyển rất lớn nếu không có chế độ cảnh báo và vận chuyển riêng. Do vậy, đơn vị vận chuyển, shipper có quyền từ chối hỗ trợ vận chuyển nếu đánh giá đơn hàng có rủi ro lớn khi vận chuyển hoặc do đơn vị vận chuyển không đáp ứng được điều kiện để vận chuyển bưu kiện.\niv. Shopee có thể vẫn hỗ trợ nếu có yêu cầu từ Người Bán theo quyết định của riêng Shopee nhưng Người Bán sẽ hoàn toàn chịu trách nhiệm nếu hàng hóa bị hư hỏng, tổn thất khi vận chuyển, hàng hóa bị thu giữ, tiêu hủy, vận chuyển chậm hoặc không thể vận chuyển được. Shopee được miễn trừ mọi trách nhiệm, và sẽ không giải quyết bất kỳ khiếu nại, yêu cầu bồi thường nào phát sinh.",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "source": "article_05.md",
-          "type": "news",
-          "doc_id": "shopee-shipping-policy",
-          "customer_role": "both",
-          "category": "shipping",
-          "platform": "shopee-vn",
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "chunk_index": 13,
-          "cosine_score": 0.0
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Tên sản phẩm đăng bán trên Shopee phải tuân thủ những yêu cầu cơ bản nào?",
-    "expected_answer": "Tên sản phẩm phải mô tả đúng hàng hóa hoặc dịch vụ, viết bằng tiếng Việt có dấu, đủ ký tự và rõ nghĩa; không dùng ký tự đặc biệt hoặc viết tắt.",
-    "expected_context": "seller-listing-rules-shopee.md — Mục Tên sản phẩm",
-    "answer": "Tên sản phẩm đăng bán trên Shopee phải tuân thủ các quy định tại Điều 117, Điều 120.4, Điều 121 của Luật Thương Mại và các văn bản quy phạm pháp luật có liên quan đến hoạt động trưng bày, giới thiệu hàng hóa, dịch vụ. Người Bán cũng cần đảm bảo rằng tất cả chứng từ cung cấp cho Shopee đều được scan từ chứng từ gốc, không được làm giả, chỉnh sửa, tẩy xóa [Document 1 | Source: seller-listing-rules-shopee.md].",
-    "sources": [
-      {
-        "content": "- Khi đăng bán sản phẩm trên Shopee, Người Bán có trách nhiệm tuân thủ các quy định tại Điều 117, Điều\n120.4, Điều 121 của Luật Thương Mại và các văn bản quy phạm pháp luật có liên quan đến hoạt động trưng\nbày, giới thiệu hàng hóa, dịch vụ. Đối với Người Bán là pháp nhân có vốn đầu tư nước ngoài, Người Bán cần\ncó Giấy phép kinh doanh phù hợp với quy định của pháp luật hiện hành.\n\n- Tất cả chứng từ mà Người Bán được yêu cầu cung cấp thì Người Bán phải đảm bảo và cam kết tất cả các\nchứng từ mà Người Bán cung cấp cho Shopee đều được scan từ chứng từ gốc, không được làm giả, chỉnh\nsửa, tẩy xóa.\n\n## 2. Các nội dung không được phép đăng bán",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "doc_id": "seller-listing-rules-shopee",
-          "customer_role": "seller",
-          "type": "legal",
-          "source_url": "https://help.shopee.vn/portal/4/article/77246",
-          "retrieved_at": "2026-08-03",
-          "platform": "shopee-vn",
-          "category": "listing-policy",
-          "chunk_index": 1,
-          "document_version": "2024-08-14",
-          "source": "seller-listing-rules-shopee.md",
-          "cosine_score": 0.6863
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "pháp của Shopee và các bên có liên quan, v.v...hoặc các biện pháp khác theo chính sách có hiệu lực tại thời\nđiểm diễn ra hành vi vi phạm trên Sàn Shopee.\n\nKhuyến cáo: Người Bán vui lòng tôn trọng và tuân thủ quy định đăng bán sản phẩm của Shopee và các quy\nđịnh của pháp luật hiện hành. Mọi sản phẩm không tuân thủ theo các quy định, hướng dẫn trên hoặc các văn\nbản quy phạm pháp luật sẽ bị khóa/xóa mà không cần thông báo trước.\n\nNgười Bán sẽ chịu hoàn toàn trách nhiệm trước Pháp luật nếu cố tình đăng tải các nội dung mà pháp luật\nViệt Nam không cho phép./.\n\nBản Cập Nhật và công bố ngày 14/8/2024.\n\nPhiên bản này có hiệu lực sau 07 ngày kể từ ngày công bố. Để tham khảo phiên bản trước của Quy định, vui\nlòng bấm vào ĐÂY.",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "document_version": "2024-08-14",
-          "type": "legal",
-          "chunk_index": 31,
-          "source": "seller-listing-rules-shopee.md",
-          "category": "listing-policy",
-          "source_url": "https://help.shopee.vn/portal/4/article/77246",
-          "retrieved_at": "2026-08-03",
-          "platform": "shopee-vn",
-          "customer_role": "seller",
-          "doc_id": "seller-listing-rules-shopee",
-          "cosine_score": 0.6468
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "- Shopee nghiêm cấm bán sách & ấn phẩm đã qua sử dụng.\n\n3.12. Băng đĩa phim, ca múa nhạc/sân khấu\n\nCác mặt hàng là băng đĩa phim, ca múa nhạc/sân khấu khi đăng bán cần có: giấy phép phê duyệt nội dung +\ndán nhãn kiểm soát + giấy tờ về nguồn gốc sản phẩm (chứng từ nhập khẩu/hóa đơn thuế).\n\n3.13. Sản phẩm thuốc không kê đơn (trừ thuốc không kê đơn nhưng được cơ quan nhà nước có thẩm quyền\n\n\fkhuyến cáo hạn chế sử dụng hoặc sử dụng có sự giám sát của thầy thuốc)\n\n- Nội dung giới thiệu sản phẩm: Phải đảm bảo tuân thủ các quy định của Luật Dược và các văn bản hướng\ndẫn thi hành Luật Dược. NGHIÊM CẤM Người Bán lợi dụng việc đăng bán thuốc không kê đơn trên Shopee\nđể thực hiện hoạt động quảng cáo thuốc trái pháp luật.\n\n- Người Bán khi đăng bán sản phẩm thuốc không kê đơn cần có các giấy tờ sau:",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "document_version": "2024-08-14",
-          "platform": "shopee-vn",
-          "type": "legal",
-          "doc_id": "seller-listing-rules-shopee",
-          "chunk_index": 17,
-          "category": "listing-policy",
-          "source": "seller-listing-rules-shopee.md",
-          "source_url": "https://help.shopee.vn/portal/4/article/77246",
-          "customer_role": "seller",
-          "retrieved_at": "2026-08-03",
-          "cosine_score": 0.6298
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "Chính sách cấm/hạn chế sản phẩm\n\nSource URL: https://help.shopee.vn/portal/4/article/77247\nRetrieved at: 2026-08-03\nDocument version: 2025-04-28\nCustomer role: seller\nCategory: prohibited-products\nPlatform: shopee-vn\n\n# Chính sách cấm/hạn chế sản phẩm\n\n## 1. ĐỐI TƯỢNG ÁP DỤNG\n\nChính sách này áp dụng đối với tất cả Người Bán trên Sàn TMĐT Shopee (“Sàn Shopee”).\n\n## 2. PHẠM VI ÁP DỤNG\n\nChính sách này áp dụng đối với việc đăng bán sản phẩm, hàng hóa, dịch vụ trên Sàn Shopee. Mỗi khi đăng\nbán sản phẩm, Người Bán có trách nhiệm đảm bảo hàng hóa của mình tuân thủ Luật pháp hiện hành đồng\nthời không vi phạm các Điều Khoản Sử Dụng và Chính Sách Shopee. Vui lòng đọc kỹ các hướng dẫn dưới\nđây về Chính Sách Cấm/Hạn Chế Sản Phẩm mua bán trên Shopee.",
-        "score": 0.015625,
-        "metadata": {
-          "document_version": "2025-04-28",
-          "type": "legal",
-          "category": "prohibited-products",
-          "customer_role": "seller",
-          "chunk_index": 0,
-          "platform": "shopee-vn",
-          "doc_id": "prohibited-products-policy-shopee",
-          "retrieved_at": "2026-08-03",
-          "source": "prohibited-products-policy-shopee.md",
-          "source_url": "https://help.shopee.vn/portal/4/article/77247",
-          "cosine_score": 0.634
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "Quy định đăng bán sản phẩm\n\nSource URL: https://help.shopee.vn/portal/4/article/77246\nRetrieved at: 2026-08-03\nDocument version: 2024-08-14\nCustomer role: seller\nCategory: listing-policy\nPlatform: shopee-vn\n\n# Quy định đăng bán sản phẩm\n\nQUY ĐỊNH VỀ ĐĂNG BÁN SẢN PHẨM TRÊN SHOPEE\n\n## A. PHẠM VI VÀ ĐỐI TƯỢNG ÁP DỤNG\n\n## 1. Đối tượng áp dụng\n\nQuy định này áp dụng đối với tất cả Người Bán trên Sàn TMĐT Shopee (“Sàn Shopee”)\n\n## 2. Phạm vi áp dụng\n\nQuy định này quy định về việc đăng bán các sản phẩm trên Sàn Shopee.\n\n## B. QUY ĐỊNH CHUNG:\n\n## 1. Nguyên tắc chung\n\n- Đăng bán sản phẩm trên Shopee là hoạt động của Người Bán dùng hàng hóa, dịch vụ và tài liệu về hàng\nhóa, dịch vụ để giới thiệu với khách hàng về hàng hóa, dịch vụ đó.",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "retrieved_at": "2026-08-03",
-          "platform": "shopee-vn",
-          "category": "listing-policy",
-          "doc_id": "seller-listing-rules-shopee",
-          "source_url": "https://help.shopee.vn/portal/4/article/77246",
-          "document_version": "2024-08-14",
-          "customer_role": "seller",
-          "chunk_index": 0,
-          "type": "legal",
-          "source": "seller-listing-rules-shopee.md",
-          "cosine_score": 0.6854
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Sản phẩm có hạn sử dụng phải còn bao lâu mới được phép giao bán?",
-    "expected_answer": "Khi giao đi, sản phẩm phải còn ít nhất 30% thời hạn sử dụng và còn ít nhất 30 ngày tính từ thời điểm hiện tại đến ngày hết hạn.",
-    "expected_context": "seller-listing-rules-shopee.md — Quy định hạn sử dụng của sản phẩm chính",
-    "answer": "Sản phẩm có hạn sử dụng phải còn ít nhất 30% thời hạn sử dụng và còn ít nhất 30 ngày, tính từ thời điểm hiện tại đến ngày hết hạn mới được phép giao bán [Document 1 | Source: seller-listing-rules-shopee.md].",
-    "sources": [
-      {
-        "content": "- Mỹ phẩm\n\n- Nước hoa\n\n- Tã, băng vệ sinh\n\n- Thực phẩm\n\n- Thực phẩm chức năng;\n\n- Các sản phẩm khác bắt buộc phải có hạn sử dụng theo quy định của Nghị định số 43/2017/NĐ-CP và các\nvăn bản quy phạm pháp luật có liên quan về ghi nhãn hàng hóa.\n\n## 2. Quy định về hạn sử dụng của sản phẩm chính\n\n- Người Bán chỉ được phép bán các loại hàng hóa mà khi giao đi phải còn ít nhất 30% thời hạn sử dụng và\ncòn ít nhất 30 ngày, tính từ thời điểm hiện tại đến ngày hết hạn.",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "type": "legal",
-          "platform": "shopee-vn",
-          "document_version": "2024-08-14",
-          "doc_id": "seller-listing-rules-shopee",
-          "retrieved_at": "2026-08-03",
-          "customer_role": "seller",
-          "source": "seller-listing-rules-shopee.md",
-          "category": "listing-policy",
-          "source_url": "https://help.shopee.vn/portal/4/article/77246",
-          "chunk_index": 27,
-          "cosine_score": 0.7023
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "- Đối với mặt hàng thực phẩm, đặc biệt là thực phẩm có hạn sử dụng dưới 30 ngày, Người Bán cần ghi rõ hạn\nsử dụng trên mô tả sản phẩm và tự sắp xếp vận chuyển khi có đơn hàng phát sinh. Mọi trường hợp Người\nMua nhận được sản phẩm thực phẩm đã hết hạn sử dụng do Người Bán không nêu rõ hạn sử dụng trong mô\ntả sản phẩm được xem như Người Bán đăng bán hàng hết hạn sử dụng, và sẽ bị xử lý theo quy định của\nShopee.\n\n- Hạn sử dụng của sản phẩm được ghi dưới dạng \"sử dụng trước tháng/năm\" sẽ được hiểu ngày hết hạn là\nngày 1 của tháng đó.Hạn sử dụng của sản phẩm được ghi dưới dạng \"hạn sử dụng: tháng/năm\" sẽ được hiểu\nngày hết hạn là ngày cuối cùng của tháng đó.\n\n- Trường hợp Người Bán thực hiện giảm giá do sản phẩm sắp hết hạn, thông tin về ngày hết hạn phải được\nnêu rõ trong mô tả sản phẩm.",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "retrieved_at": "2026-08-03",
-          "source_url": "https://help.shopee.vn/portal/4/article/77246",
-          "category": "listing-policy",
-          "doc_id": "seller-listing-rules-shopee",
-          "chunk_index": 28,
-          "type": "legal",
-          "customer_role": "seller",
-          "source": "seller-listing-rules-shopee.md",
-          "document_version": "2024-08-14",
-          "platform": "shopee-vn",
-          "cosine_score": 0.6904
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "Tham khảo Cách tính phí vận chuyển Shopee cho Người bán tại đây.\n\n## 8. Chất lượng sản phẩm\n\nNgười Bán cần đảm bảo chất lượng sản phẩm phải đúng như mô tả. Sản phẩm đăng bán trên Sàn Shopee\ncần có chất lượng tốt theo các tiêu chuẩn hiện hành, phản ánh đúng kỳ vọng Người mua. Trong trường hợp\nNgười bán bị nhiều Người mua tố cáo, đánh giá tiêu cực về chất lượng sản phẩm, Shopee có quyền áp dụng\ncác biện pháp phù hợp lên sản phẩm/tài khoản của Người Bán.\n\nTham khảo quy định về chất lượng sản phẩm tại đây.\n\n## D. QUY ĐỊNH VỀ HẠN SỬ DỤNG CỦA SẢN PHẨM\n\n## 1. Danh sách các sản phẩm bắt buộc phải có hạn sử dụng trên bao bì\n\n- Dược phẩm\n\n- Hóa chất tẩy rửa, vệ sinh\n\n\f- Mỹ phẩm\n\n- Nước hoa\n\n- Tã, băng vệ sinh\n\n- Thực phẩm\n\n- Thực phẩm chức năng;",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "document_version": "2024-08-14",
-          "category": "listing-policy",
-          "doc_id": "seller-listing-rules-shopee",
-          "platform": "shopee-vn",
-          "type": "legal",
-          "source_url": "https://help.shopee.vn/portal/4/article/77246",
-          "chunk_index": 26,
-          "retrieved_at": "2026-08-03",
-          "customer_role": "seller",
-          "source": "seller-listing-rules-shopee.md",
-          "cosine_score": 0.6192
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "- Chất ô xy hóa\n- Sản phẩm có từ trường (Nam châm)\n- Thiết bị điện tử có tích điện: Pin, pin sạc dự phòng, điện thoại di động, máy cạo râu dùng pin, v.v..\n- Các loại hàng hóa khác theo quy định của ngành hàng không trong từng thời điểm.\nii. Thời gian vận chuyển các đơn hàng có chứa các sản phẩm này sẽ lâu hơn thông thường từ 2-4 ngày do đơn vị vận chuyển phải sử dụng các phương tiện đường bộ như ô tô, tàu hỏa để vận chuyển hàng hóa. Người Bán có trách nhiệm ghi chú rõ ràng thông tin \"Hàng không vận chuyển hàng không\" lên trên gói hàng.",
-        "score": 0.015625,
-        "metadata": {
-          "source_url": "https://help.shopee.vn/portal/4/article/77250",
-          "crawled_at": "2026-08-04T11:34:43.435632+07:00",
-          "doc_id": "shopee-shipping-policy",
-          "customer_role": "both",
-          "platform": "shopee-vn",
-          "type": "news",
-          "category": "shipping",
-          "chunk_index": 12,
-          "source": "article_05.md",
-          "cosine_score": 0.5859
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "5. Sản Phẩm hết hạn sử dụng;\n  6. Người Bán đã tự thỏa thuận và đồng ý cho Người Mua trả hàng (tuy nhiên Shopee sẽ cần Người Bán xác nhận lại những thỏa thuận này).\n  7. Sản Phẩm ở trạng thái nguyên vẹn và nguyên bao bì nhưng Người Mua không còn nhu cầu (\"Trả hàng COM\"), theo yêu cầu tại Điều 4 dưới đây.",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "doc_id": "shopee-return-refund-policy",
-          "category": "returns-refunds",
-          "source": "article_06.md",
-          "chunk_index": 6,
-          "platform": "shopee-vn",
-          "crawled_at": "2026-08-04T11:34:45.733306+07:00",
-          "type": "news",
-          "source_url": "https://help.shopee.vn/portal/4/article/77251",
-          "customer_role": "both",
-          "cosine_score": 0.5828
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Phí Xử lý Giao dịch của Người bán là bao nhiêu cho các phương thức thanh toán được liệt kê?",
-    "expected_answer": "Mức Phí Xử lý Giao dịch được liệt kê là 6% cho các phương thức thanh toán trong bảng, gồm thẻ, COD, NAPAS hoặc Internet Banking, SPayLater, ShopeePay, Apple Pay, Google Pay và chuyển khoản ngân hàng.",
-    "expected_context": "seller-responsibilities-fees-shopee.md — Điều 16.3 Phí Xử lý Giao dịch",
-    "answer": "Phí Xử lý Giao dịch của Người bán cho các phương thức thanh toán được liệt kê là 6% cho tất cả các phương thức, bao gồm:\n\n- Thẻ tín dụng / ghi nợ hoặc Trả góp thẻ tín dụng\n- Thanh toán khi nhận hàng (COD)\n- Thẻ ATM nội địa / Internet Banking\n- SPayLater\n- ShopeePay\n- Apple Pay\n- Google Pay\n- Chuyển khoản ngân hàng\n- Khác\n\nMức phí này được áp dụng cho mỗi đơn hàng thành công trên sàn giao dịch Thương Mại Điện Tử Shopee hoặc đơn có phát sinh yêu cầu Trả hàng/hoàn tiền được chấp nhận \"Hoàn tiền ngay\" (trừ lý do Chưa nhận được hàng) [Document 1 | Source: seller-responsibilities-fees-shopee.md].",
-    "sources": [
-      {
-        "content": "### Phí xử lý giao dịch theo phương thức thanh toán\n\n| Phương thức thanh toán | Mức phí xử lý giao dịch |\n| --- | ---: |\n| Thẻ tín dụng / ghi nợ hoặc Trả góp thẻ tín dụng | 6% |\n| Thanh toán khi nhận hàng (COD) | 6% |\n| Thẻ ATM nội địa / Internet Banking | 6% |\n| SPayLater | 6% |\n| ShopeePay | 6% |\n| Apple Pay | 6% |\n| Google Pay | 6% |\n| Chuyển khoản ngân hàng | 6% |\n| Khác | 6% |\n\nCách tính:\n\nPhí Xử lý Giao Dịch = (Giá sản phẩm trước Shopee trợ giá + Phí vận chuyển Người mua trả - Khuyến mãi\nNgười bán đã áp dụng - Khuyến mãi từ Ngân hàng (nếu có)) x Mức Phí Xử lý giao dịch (đã bao gồm thuế\nGTGT).\n\n16.4. Phí Cố Định",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "platform": "shopee-vn",
-          "customer_role": "seller",
-          "chunk_index": 7,
-          "doc_id": "seller-responsibilities-fees-shopee",
-          "retrieved_at": "2026-08-03",
-          "source": "seller-responsibilities-fees-shopee.md",
-          "type": "legal",
-          "source_url": "https://help.shopee.vn/portal/4/article/77243",
-          "document_version": "2026-05-01",
-          "category": "seller-responsibilities-fees",
-          "cosine_score": 0.75
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "16.3. Phí Xử Lý Giao Dịch:\n\nPhí Xử Lý Giao Dịch được áp dụng cho mỗi đơn hàng thành công trên sàn giao dịch Thương Mại Điện Tử\nShopee (nằm ở mục \"Đã giao\") hoặc đơn có phát sinh yêu cầu Trả hàng/hoàn tiền được Người bán/Shopee\nchấp nhận \"Hoàn tiền ngay\" (trừ lý do Chưa nhận được hàng). Trong mọi trường hợp, Người Bán chịu trách\nnhiệm chi trả Phí Xử Lý Giao Dịch.\n\nPhí Xử Lý Giao Dịch được cấn trừ trực tiếp trên từng đơn hàng trước khi Khoản Tiền Thanh Toán từ Người\nMua được ghi nhận vào Số Dư Tài Khoản Shopee của Người Bán.\n\nMức Phí Xử Lý Giao Dịch được áp dụng cho mỗi đơn hàng tùy vào phương thức thanh toán mà Người Mua\nđã chọn như sau:\n\n### Phí xử lý giao dịch theo phương thức thanh toán",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "doc_id": "seller-responsibilities-fees-shopee",
-          "customer_role": "seller",
-          "type": "legal",
-          "source": "seller-responsibilities-fees-shopee.md",
-          "platform": "shopee-vn",
-          "source_url": "https://help.shopee.vn/portal/4/article/77243",
-          "document_version": "2026-05-01",
-          "chunk_index": 6,
-          "retrieved_at": "2026-08-03",
-          "category": "seller-responsibilities-fees",
-          "cosine_score": 0.7494
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "Người Mua không phải thanh toán bất kỳ khoản phí nào khi sử dụng dịch vụ trên Trang Shopee.\n\n16.2. Người Bán thừa nhận và đồng ý rằng Shopee có thể khấu trừ các khoản phí phải trả cho Shopee và\ncác khoản thuế theo quy định của pháp luật (nếu có) áp dụng đối với Khoản Tiền Thanh Toán từ Người Mua.\nShopee sẽ xuất hóa đơn tài chính cho khoản phí và khoản thuế do Người Bán chi trả. Vui lòng tham khảo\ncách thức nhận hóa đơn tài chính tại ĐÂY.\n\n16.3. Phí Xử Lý Giao Dịch:",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "source_url": "https://help.shopee.vn/portal/4/article/77243",
-          "type": "legal",
-          "doc_id": "seller-responsibilities-fees-shopee",
-          "retrieved_at": "2026-08-03",
-          "chunk_index": 5,
-          "customer_role": "seller",
-          "document_version": "2026-05-01",
-          "source": "seller-responsibilities-fees-shopee.md",
-          "category": "seller-responsibilities-fees",
-          "platform": "shopee-vn",
-          "cosine_score": 0.6782
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "Lưu ý:\n\nPhí Cố Định được cấn trừ trực tiếp trên từng đơn hàng trước khi Khoản Tiền Thanh Toán từ Người Mua được\nchuyển vào Số dư Tài Khoản Shopee của Người Bán.\n\nPhí Cố Định được quy định tại Điều này không áp dụng cho Người Bán tại Shopee Mall.\n\n16.5. Phí Dịch Vụ\n\n(i) Dành cho Người Mua\n\nPhí Dịch Vụ là khoản phí mà Người Mua phải thanh toán khi sử dụng thẻ tín dụng/ghi nợ thực hiện thanh toán\nđối với các sản phẩm, dịch vụ tại mục “Nạp thẻ và Dịch vụ” (trừ ShopeePay gần bạn, Khách sạn, Vé tham\nquan, Bảo hiểm), được tính trên giá trị đơn hàng của Người Mua trừ đi giá trị các ưu đãi (nếu có).\n\nCách tính:\n\nPhí Dịch Vụ = (Giá sản phẩm – Mã ưu đãi (nếu có)) x 2% + 1.800 VND\n\nPhí Dịch Vụ trên đã bao gồm thuế GTGT.\n\n(ii) Dành cho Người Bán",
-        "score": 0.015625,
-        "metadata": {
-          "type": "legal",
-          "doc_id": "seller-responsibilities-fees-shopee",
-          "platform": "shopee-vn",
-          "customer_role": "seller",
-          "category": "seller-responsibilities-fees",
-          "chunk_index": 9,
-          "retrieved_at": "2026-08-03",
-          "source": "seller-responsibilities-fees-shopee.md",
-          "source_url": "https://help.shopee.vn/portal/4/article/77243",
-          "document_version": "2026-05-01",
-          "cosine_score": 0.6348
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "9. Thanh toán khi nhận hàng (COD)\nBên cạnh những hình thức thanh toán trên, bạn cũng có thể lựa chọn hình thức[thanh toán khi nhận hàng](https://help.shopee.vn/vn/s/article/V%C3%AC-sao-t%C3%B4i-kh%C3%B4ng-th%E1%BB%83-l%E1%BB%B1a-ch%E1%BB%8Dn-h%C3%ACnh-th%E1%BB%A9c-thanh-to%C3%A1n-khi-nh%E1%BA%ADn-h%C3%A0ng-1542942315512?previousPage=other%20articles). Tuy nhiên, cần chú ý rằng không phải tất cả các Shop trên Shopee đều cho phép sử dụng hình thức thanh toán trên\n⚠️Lưu ý:\n  * Shopee tuyệt đối không hỗ trợ cho những giao dịch sử dụng các hình thức thanh toán khác không được liệt kê ở trên hoặc giao dịch ngoài Shopee, như chuyển khoản hoặc đặt cọc,..v..v. Shopee sẽ có biện pháp xử lý nếu phát hiện hành vi gian lận hoặc giao dịch ngoài làm ảnh hưởng đến quyền lợi Người dùng trên Shopee",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "source": "article_01.md",
-          "type": "news",
-          "doc_id": "shopee-payment-methods",
-          "customer_role": "buyer",
-          "category": "payment",
-          "platform": "shopee-vn",
-          "source_url": "https://help.shopee.vn/portal/4/article/79198",
-          "crawled_at": "2026-08-04T11:34:34.494687+07:00",
-          "chunk_index": 11,
-          "cosine_score": 0.0
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Shopee có thể xử lý Người bán tạo đơn hàng ảo để tăng lượt bán như thế nào?",
-    "expected_answer": "Shopee có thể cảnh báo, hủy đơn vi phạm, tạm khóa số dư, thu hồi tiền hoặc lợi ích liên quan, ngừng hỗ trợ ưu đãi, khóa tài khoản vĩnh viễn hoặc báo cơ quan chức năng. Mỗi đơn vi phạm có thể phải bồi thường đến 10.000.000 VNĐ.",
-    "expected_context": "seller-antifraud-policy-shopee.md — Hành vi gian lận và biện pháp xử lý",
-    "answer": "Shopee có thể xử lý Người bán tạo đơn hàng ảo để tăng lượt bán bằng cách áp dụng các biện pháp như sau:\n\n1. Gửi thông tin cảnh báo vi phạm tới tài khoản Người Bán Vi Phạm.\n2. Hủy tất cả đơn hàng vi phạm.\n3. Tạm khóa Số dư Tài khoản Shopee của Người Bán Vi Phạm để cấn trừ đối với các đơn hàng vi phạm.\n4. Thu hồi tiền, tài sản, các chi phí có liên quan như chi phí vận chuyển của đơn hàng, phí thanh toán, và bất kỳ lợi ích vật chất nào mà Người Bán Vi Phạm nhận được do hành vi vi phạm Chính Sách.\n5. Ngưng hỗ trợ mã giảm giá/mã ưu đãi cho Người Bán Vi Phạm.\n6. Khóa tài khoản Người Bán Vi Phạm vĩnh viễn [Biện Pháp Xử Lý Đối Với Người Bán Vi Phạm, Document 2].",
-    "sources": [
-      {
-        "content": "(a) Tăng lượt đánh giá Shop bằng các phương thức vi phạm chính sách hiện hành của Shopee;\n\n(b)  Tạo  đơn  hàng  ảo  để  tăng  lượt  bán,  hiển  thị,  tương  tác  cho  Sản  Phẩm.  Đơn  hàng  ảo  bao  gồm  nhưng\nkhông giới hạn đơn hàng được đặt bởi Người Mua nhưng không được gửi đến Người Mua trên thực tế; hoặc\nđơn hàng có sự thông đồng giữa Người Bán và Người Mua và/hoặc bên thứ ba; hoặc đơn hàng không có Sản\nPhẩm thực tế bên trong hoặc Sản Phẩm khác biệt một cách rõ ràng với thông tin và mô tả đơn hàng trên hệ\nthống Shopee; có sự bất thường trong địa chỉ nhận hàng của nhiều Người Mua khi mua hàng trên cùng một\nhoặc một số Shop của Người Bán;",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "type": "legal",
-          "retrieved_at": "2026-08-03",
-          "customer_role": "seller",
-          "document_version": "2023-12-28",
-          "chunk_index": 1,
-          "source_url": "https://help.shopee.vn/portal/4/article/140097",
-          "doc_id": "seller-antifraud-policy-shopee",
-          "category": "seller-compliance",
-          "source": "seller-antifraud-policy-shopee.md",
-          "platform": "shopee-vn",
-          "cosine_score": 0.8267
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "Chính sách chống hành vi gian lận\n\nSource URL: https://help.shopee.vn/portal/4/article/140097\nRetrieved at: 2026-08-03\nDocument version: 2023-12-28\nCustomer role: seller\nCategory: seller-compliance\nPlatform: shopee-vn\n\n# CHÍNH SÁCH CHỐNG HÀNH VI GIAN LẬN TRÊN SÀN SHOPEE VÀ CÁC BIỆN PHÁP XỬ LÝ ĐỐI VỚI\nNGƯỜI BÁN VI PHẠM\n\n## 1. Hành Vi Gian Lận Trên Sàn Shopee\n\nNgười  Bán  được  xem  là  có  hành  vi  gian  lận  đối  với  hoạt  động  bán  hàng  trên  Sàn  Thương  Mại  Điện  Tử\nShopee (“Sàn Shopee”) nếu Người Bán thực hiện, có dấu hiệu thực hiện một trong các hành vi sau (“Người\nBán Vi Phạm”):\n\n(a) Tăng lượt đánh giá Shop bằng các phương thức vi phạm chính sách hiện hành của Shopee;",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "retrieved_at": "2026-08-03",
-          "document_version": "2023-12-28",
-          "chunk_index": 0,
-          "doc_id": "seller-antifraud-policy-shopee",
-          "type": "legal",
-          "customer_role": "seller",
-          "source_url": "https://help.shopee.vn/portal/4/article/140097",
-          "source": "seller-antifraud-policy-shopee.md",
-          "platform": "shopee-vn",
-          "category": "seller-compliance",
-          "cosine_score": 0.6045
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "## 3. Biện Pháp Xử Lý Đối Với Người Bán Vi Phạm:\n\n- Shopee có quyền áp dụng riêng lẻ hoặc đồng thời các biện pháp bao gồm nhưng không giới hạn các biện\npháp sau đối với Người Bán Vi Phạm:\n\n(i) Gửi thông tin cảnh báo vi phạm tới tài khoản Người Bán Vi Phạm;\n\n(ii) Hủy tất cả đơn hàng vi phạm;\n\n(iii) Tạm khóa Số dư Tài khoản Shopee của Người Bán Vi Phạm để cấn trừ đối với các đơn hàng vi phạm;\n\n(iv) Thu hồi tiền, tài sản, các chi phí có liên quan như chi phí vận chuyển của đơn hàng, phí thanh toán, và\nbất kỳ lợi ích vật chất nào mà Người Bán Vi Phạm nhận được được do hành vi vi phạm Chính Sách;\n\n(v) Ngưng hỗ trợ mã giảm giá/mã ưu đãi cho Người Bán Vi Phạm;\n\n(vi) Khóa tài khoản Người Bán Vi Phạm vĩnh viễn;",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "platform": "shopee-vn",
-          "chunk_index": 5,
-          "customer_role": "seller",
-          "type": "legal",
-          "document_version": "2023-12-28",
-          "source": "seller-antifraud-policy-shopee.md",
-          "retrieved_at": "2026-08-03",
-          "source_url": "https://help.shopee.vn/portal/4/article/140097",
-          "category": "seller-compliance",
-          "doc_id": "seller-antifraud-policy-shopee",
-          "cosine_score": 0.6155
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "(c) Tạo đơn hàng ảo để lừa đảo, chiếm dụng tiền, lợi ích vật chất của Sàn Shopee, bao gồm nhưng không\ngiới hạn các mã ưu đãi, mã giảm giá do Shopee và/hoặc Đối Tác của Shopee tài trợ;\n\n(d) Lạm dụng các chương trình khuyến mại của Shopee và/hoặc Đối Tác của Shopee tổ chức trong từng thời\nkỳ nhằm mục đích lừa đảo, chiếm dụng tiền, các lợi ích vật chất từ những chương trình này;\n\n(e) Lạm dụng các chương trình ưu đãi miễn phí vận chuyển, mã giảm giá, Shopee Xu do Shopee và/hoặc Đối\nTác của Shopee tài trợ;\n\n(f) Thực hiện các giao dịch hoặc kêu gọi, hướng dẫn Người Mua thực hiện các giao dịch mua hàng ngoài Sàn\nShopee, bao gồm các giao dịch ngoại tuyến.",
-        "score": 0.015625,
-        "metadata": {
-          "source_url": "https://help.shopee.vn/portal/4/article/140097",
-          "platform": "shopee-vn",
-          "chunk_index": 2,
-          "type": "legal",
-          "customer_role": "seller",
-          "category": "seller-compliance",
-          "document_version": "2023-12-28",
-          "source": "seller-antifraud-policy-shopee.md",
-          "doc_id": "seller-antifraud-policy-shopee",
-          "retrieved_at": "2026-08-03",
-          "cosine_score": 0.6559
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "- Có nội dung cạnh tranh không lành mạnh theo quy định của pháp luật về cạnh tranh.\n\n- Quảng cáo cho các doanh nghiệp khác. Ví dụ như sản phẩm có chứa hình ảnh, logo, địa chỉ, hotline, đường\nlink của doanh nghiệp hoặc website mua bán khác.\n\n- Đăng bán một sản phẩm lặp đi lặp lại (spam) trên cùng một danh mục hoặc các danh mục khác nhau.\n\n\f- Thay đổi nội dung tin đăng để gian lận đánh giá hoặc tạo đơn ảo để gian lận tăng số lượng đơn hàng và\nđánh giá.\n\n-  Đăng  bán  không  đúng  ngành  hàng,  sử  dụng  hình  ảnh  minh  họa  không  đúng  về  hàng  hóa,  dịch  vụ  được\nđăng bán nhằm mục đích gian lận và/hoặc thực hiện các hành vi vi phạm pháp luật.\n\n- Tăng giá bán một cách bất hợp lý trước khuyến mãi.\n\n- Tạo giá bán sản phẩm quá cao hoặc quá thấp so với mặt bằng giá trị thị trường.",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "source": "seller-listing-rules-shopee.md",
-          "type": "legal",
-          "doc_id": "seller-listing-rules-shopee",
-          "customer_role": "seller",
-          "category": "listing-policy",
-          "platform": "shopee-vn",
-          "source_url": "https://help.shopee.vn/portal/4/article/77246",
-          "retrieved_at": "2026-08-03",
-          "document_version": "2024-08-14",
-          "chunk_index": 6,
-          "cosine_score": 0.0
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  },
-  {
-    "question": "Người bán vi phạm Chính sách Cấm/Hạn chế Sản phẩm có thể chịu những chế tài nào?",
-    "expected_answer": "Sản phẩm có thể bị xóa; tài khoản có thể bị giới hạn, đình chỉ hoặc xóa; số dư có thể bị cấn trừ và quyền rút tiền bị phong tỏa. Người bán cũng có thể chịu chế tài theo chính sách hoặc pháp luật, như phạt hành chính, xử lý hình sự hoặc bồi thường thiệt hại.",
-    "expected_context": "prohibited-products-policy-shopee.md — Hành vi vi phạm và biện pháp xử lý",
-    "answer": "Người bán vi phạm Chính sách Cấm/Hạn chế Sản phẩm có thể chịu một loạt các chế tài, bao gồm nhưng không giới hạn các chế tài sau:\n\n1. Sản phẩm bị xóa.\n2. Tài khoản bị giới hạn quyền.\n3. Tài khoản bị đình chỉ hoạt động hoặc bị xóa.\n4. Cấn trừ số dư tài khoản Shopee, phong tỏa quyền rút tiền từ số dư tài khoản Shopee.\n5. Các chế tài khác theo chính sách của Shopee hoặc theo quy định của pháp luật, bao gồm nhưng không giới hạn phạt hành chính, xử lý hình sự và/hoặc bồi thường thiệt hại [Document 1 | Source: prohibited-products-policy-shopee.md].",
-    "sources": [
-      {
-        "content": "Danh sách có thể sẽ thay đổi dựa theo tình hình thực tế, vui lòng cập nhật thường xuyên để đảm bảo hàng\nhóa của bạn không vi phạm Chính Sách Shopee.\n\n## 3. HÀNH VI VI PHẠM VÀ BIỆN PHÁP XỬ LÝ\n\nViệc vi phạm Chính Sách Cấm/Hạn Chế Sản Phẩm có thể dẫn đến việc Người Bán phải chịu một loạt các\nchế tài, bao gồm nhưng không giới hạn các chế tài sau:\n\n(i) Sản phẩm bị xóa;\n\n(ii) Tài khoản bị giới hạn quyền;\n\n(iii) Tài khoản bị đình chỉ hoạt động hoặc bị xóa;\n\n(iv) Cấn trừ số dư tài khoản Shopee, phong tỏa quyền rút tiền từ số dư tài khoản Shopee;\n\n(v) Các chế tài khác theo chính sách của Shopee hoặc theo quy định của pháp luật bao gồm nhưng không\ngiới hạn phạt hành chính, xử lý hình sự và/hoặc bồi thường thiệt hại.",
-        "score": 0.01639344262295082,
-        "metadata": {
-          "doc_id": "prohibited-products-policy-shopee",
-          "source": "prohibited-products-policy-shopee.md",
-          "category": "prohibited-products",
-          "retrieved_at": "2026-08-03",
-          "platform": "shopee-vn",
-          "document_version": "2025-04-28",
-          "source_url": "https://help.shopee.vn/portal/4/article/77247",
-          "chunk_index": 1,
-          "customer_role": "seller",
-          "type": "legal",
-          "cosine_score": 0.7037
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "Chính sách cấm/hạn chế sản phẩm\n\nSource URL: https://help.shopee.vn/portal/4/article/77247\nRetrieved at: 2026-08-03\nDocument version: 2025-04-28\nCustomer role: seller\nCategory: prohibited-products\nPlatform: shopee-vn\n\n# Chính sách cấm/hạn chế sản phẩm\n\n## 1. ĐỐI TƯỢNG ÁP DỤNG\n\nChính sách này áp dụng đối với tất cả Người Bán trên Sàn TMĐT Shopee (“Sàn Shopee”).\n\n## 2. PHẠM VI ÁP DỤNG\n\nChính sách này áp dụng đối với việc đăng bán sản phẩm, hàng hóa, dịch vụ trên Sàn Shopee. Mỗi khi đăng\nbán sản phẩm, Người Bán có trách nhiệm đảm bảo hàng hóa của mình tuân thủ Luật pháp hiện hành đồng\nthời không vi phạm các Điều Khoản Sử Dụng và Chính Sách Shopee. Vui lòng đọc kỹ các hướng dẫn dưới\nđây về Chính Sách Cấm/Hạn Chế Sản Phẩm mua bán trên Shopee.",
-        "score": 0.016129032258064516,
-        "metadata": {
-          "customer_role": "seller",
-          "source_url": "https://help.shopee.vn/portal/4/article/77247",
-          "platform": "shopee-vn",
-          "category": "prohibited-products",
-          "type": "legal",
-          "chunk_index": 0,
-          "doc_id": "prohibited-products-policy-shopee",
-          "document_version": "2025-04-28",
-          "retrieved_at": "2026-08-03",
-          "source": "prohibited-products-policy-shopee.md",
-          "cosine_score": 0.6825
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "Việc  áp  dụng  các  biện  pháp  chế  tài  cụ  thể  khác  sẽ  thuộc  toàn  quyền  quyết  định  của  Shopee  theo  Chính\nSách Xử Lý Gian Lận/Vi Phạm có hiệu lực trong từng thời điểm trên Sàn Shopee.\n\n## 4. DANH SÁCH SẢN PHẨM BỊ CẤM/HẠN CHẾ MUA BÁN TRÊN SHOPEE\n\n4.1. Hàng vi phạm bản quyền: Hàng nhái, hàng giả, bản sao trái phép của một sản phẩm hay hiện vật mà có\nthể vi phạm quyền tác giả, quyền thương hiệu, hoặc các quyền sở hữu trí tuệ khác của các bên thứ ba.\n\n\f4.2. Thiết bị, trang phục quân đội, lực lượng thi hành pháp luật và chính phủ\n\n- Các vật phẩm và thiết bị được cấp bởi chính phủ, công an hoặc quân đội.\n\n- Các thiết bị, trang phục, vật dụng có chứa hình ảnh quốc huy.\n\n4.3. Tài liệu phản động & Thông tin xâm phạm đến An ninh quốc gia",
-        "score": 0.015873015873015872,
-        "metadata": {
-          "type": "legal",
-          "category": "prohibited-products",
-          "source": "prohibited-products-policy-shopee.md",
-          "retrieved_at": "2026-08-03",
-          "doc_id": "prohibited-products-policy-shopee",
-          "source_url": "https://help.shopee.vn/portal/4/article/77247",
-          "platform": "shopee-vn",
-          "document_version": "2025-04-28",
-          "chunk_index": 2,
-          "customer_role": "seller",
-          "cosine_score": 0.6259
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "- Khuyến khích, quảng cáo cho việc sử dụng các sản phẩm độc hại (VD: thuốc lá, rượu, cần sa);\n\n- Các sản phẩm văn hóa đồi trụy (băng đĩa, sách báo, vật phẩm);\n\n- Tài liệu bí mật quốc gia, bí mật nhà nước, bí mật kinh doanh, bí mật cá nhân;\n\n- Con người và/hoặc các bộ phận của cơ thể con người;\n\n- Động vật và chế phẩm từ động vật (bao gồm động vật hoang dã) như: chó, mèo, cá, ốc, chuột, nhím, ốc\nmượn hồn, hamster, ngà voi, sừng tê giác, cao hổ, da/ lông động vật,...)\n\n- Những sản phẩm có tính chất phân biệt chủng tộc, xúc phạm đến dân tộc hoặc quốc gia nào đó;\n\n- Hạn chế tối đa những sản phẩm mang tính cá nhân (như hình cá nhân, hình ảnh của gia đình, hình ảnh của\ncon cái);\n\n- Vi phạm quyền sở hữu trí tuệ và/hoặc bất kỳ nhãn hiệu hàng hóa nào của bất kỳ bên thứ ba nào;",
-        "score": 0.015625,
-        "metadata": {
-          "source": "seller-listing-rules-shopee.md",
-          "retrieved_at": "2026-08-03",
-          "type": "legal",
-          "platform": "shopee-vn",
-          "category": "listing-policy",
-          "chunk_index": 3,
-          "source_url": "https://help.shopee.vn/portal/4/article/77246",
-          "doc_id": "seller-listing-rules-shopee",
-          "customer_role": "seller",
-          "document_version": "2024-08-14",
-          "cosine_score": 0.6203
-        },
-        "source": "hybrid"
-      },
-      {
-        "content": "## 3. Biện Pháp Xử Lý Đối Với Người Bán Vi Phạm:\n\n- Shopee có quyền áp dụng riêng lẻ hoặc đồng thời các biện pháp bao gồm nhưng không giới hạn các biện\npháp sau đối với Người Bán Vi Phạm:\n\n(i) Gửi thông tin cảnh báo vi phạm tới tài khoản Người Bán Vi Phạm;\n\n(ii) Hủy tất cả đơn hàng vi phạm;\n\n(iii) Tạm khóa Số dư Tài khoản Shopee của Người Bán Vi Phạm để cấn trừ đối với các đơn hàng vi phạm;\n\n(iv) Thu hồi tiền, tài sản, các chi phí có liên quan như chi phí vận chuyển của đơn hàng, phí thanh toán, và\nbất kỳ lợi ích vật chất nào mà Người Bán Vi Phạm nhận được được do hành vi vi phạm Chính Sách;\n\n(v) Ngưng hỗ trợ mã giảm giá/mã ưu đãi cho Người Bán Vi Phạm;\n\n(vi) Khóa tài khoản Người Bán Vi Phạm vĩnh viễn;",
-        "score": 0.015384615384615385,
-        "metadata": {
-          "type": "legal",
-          "category": "seller-compliance",
-          "platform": "shopee-vn",
-          "doc_id": "seller-antifraud-policy-shopee",
-          "document_version": "2023-12-28",
-          "retrieved_at": "2026-08-03",
-          "customer_role": "seller",
-          "chunk_index": 5,
-          "source_url": "https://help.shopee.vn/portal/4/article/140097",
-          "source": "seller-antifraud-policy-shopee.md",
-          "cosine_score": 0.6311
-        },
-        "source": "hybrid"
-      }
-    ],
-    "retrieval_source": "hybrid"
-  }
-]
+  "golden_dataset": [
+    {
+      "question": "Shopee hỗ trợ những phương thức thanh toán nào?",
+      "expected_answer": "Shopee hỗ trợ Ví ShopeePay, thẻ tín dụng hoặc ghi nợ, trả góp bằng thẻ tín dụng, thanh toán QR, ứng dụng ngân hàng, thẻ nội địa NAPAS, Apple Pay, Google Pay, COD và SPayLater."
+    },
+    {
+      "question": "Apple Pay được áp dụng cho đơn hàng có giá trị trong khoảng nào?",
+      "expected_answer": "Đơn hàng phải có giá trị thanh toán cuối cùng từ 10.000 VNĐ đến 25.000.000 VNĐ, đã gồm phí vận chuyển và chi phí phát sinh nếu có."
+    },
+    {
+      "question": "Khi đơn ở trạng thái Chờ lấy hàng, người mua hủy đơn như thế nào?",
+      "expected_answer": "Người mua gửi yêu cầu và chờ phản hồi của Người bán. Nếu Người bán chấp nhận thì đơn được hủy ngay; nếu từ chối thì đơn tiếp tục được giao."
+    },
+    {
+      "question": "Một người mua có thể yêu cầu hủy cùng một đơn hàng bao nhiêu lần?",
+      "expected_answer": "Người mua chỉ có thể yêu cầu hủy một lần cho mỗi đơn hàng. Nếu yêu cầu bị từ chối thì không thể tiếp tục gửi yêu cầu hủy cho đơn đó."
+    },
+    {
+      "question": "Khi gửi yêu cầu Trả hàng/Hoàn tiền, người mua cần nộp những bằng chứng gì?",
+      "expected_answer": "Người mua cần mô tả tình trạng hàng hóa, cung cấp bằng chứng như ảnh sản phẩm hoặc video mở hộp, và điền email liên hệ."
+    },
+    {
+      "question": "Yêu cầu Trả hàng/Hoàn tiền thường được xử lý trong bao lâu?",
+      "expected_answer": "Yêu cầu thường được xử lý trong khoảng 3 đến 5 ngày làm việc."
+    },
+    {
+      "question": "Tiền hoàn của đơn thanh toán bằng thẻ tín dụng hoặc ghi nợ được trả về đâu và mất bao lâu?",
+      "expected_answer": "Tiền được hoàn về đúng thẻ tín dụng hoặc ghi nợ đã dùng để thanh toán; thời gian là 7 đến 14 ngày làm việc tùy ngân hàng."
+    },
+    {
+      "question": "Đơn hàng thanh toán bằng COD khi hoàn tiền sẽ nhận tiền hoàn về đâu và trong bao lâu?",
+      "expected_answer": "Tiền hoàn được gửi về Ví ShopeePay trong 24 giờ nếu ví còn hoạt động, hoặc về tài khoản ngân hàng liên kết trong 2 ngày làm việc."
+    },
+    {
+      "question": "Đơn hàng có giá trị hàng hóa lớn hơn 50 triệu đồng có được Shopee hỗ trợ vận chuyển không?",
+      "expected_answer": "Không. Đơn hàng có tổng giá trị hàng hóa lớn hơn 50.000.000 VNĐ thuộc nhóm không được hỗ trợ vận chuyển; giá trị này không gồm mã giảm giá, Shopee Xu và phí vận chuyển."
+    },
+    {
+      "question": "Thực phẩm tươi sống hoặc hàng cần bảo quản đặc biệt nên giao bằng hình thức nào?",
+      "expected_answer": "Người bán chỉ nên kích hoạt và giao qua đơn vị vận chuyển Hỏa Tốc. Nếu chọn kênh khác, Người bán chịu trách nhiệm khi hàng bị hư hỏng hoặc tổn thất."
+    },
+    {
+      "question": "Khối lượng quy đổi để tính phí vận chuyển được tính theo công thức nào?",
+      "expected_answer": "Khối lượng quy đổi bằng chiều rộng nhân chiều dài nhân chiều cao rồi chia cho 6.000, đơn vị kg. Phí được tính theo giá trị lớn hơn giữa cân nặng thực tế và khối lượng quy đổi."
+    },
+    {
+      "question": "Người mua có bao lâu để yêu cầu trả hàng hoặc hoàn tiền sau khi đơn giao thành công?",
+      "expected_answer": "Thời hạn thông thường là 15 ngày kể từ khi đơn được cập nhật giao thành công. Với thực phẩm tươi sống hoặc đông lạnh, thời hạn là 24 giờ."
+    },
+    {
+      "question": "Điều kiện nhận hoàn tiền đối với đơn thanh toán COD hoặc chuyển khoản ngân hàng là gì?",
+      "expected_answer": "Trước khi gửi yêu cầu, tài khoản Shopee của Người mua phải liên kết thành công một phương thức nhận hoàn tiền hợp lệ, như tài khoản ngân hàng hoặc Ví ShopeePay."
+    },
+    {
+      "question": "Khi tự sắp xếp trả hàng cho sản phẩm Shopee Mall, người mua nhận lại phí vận chuyển thế nào?",
+      "expected_answer": "Người mua thanh toán trước phí gửi trả. Khi yêu cầu được chấp nhận, Shopee hoàn số tiền phí vận chuyển đã trả vào Số dư Tài khoản Shopee trong 3 đến 5 ngày làm việc kể từ ngày gửi hàng cho đơn vị vận chuyển."
+    },
+    {
+      "question": "Shopee cấm những loại sản phẩm nào liên quan đến vũ khí và chất nổ?",
+      "expected_answer": "Shopee cấm bán súng, vũ khí, đồ chơi có hình dáng giống vũ khí, kiếm, dao găm, hơi cay, dùi cui, đạn dược, linh kiện súng. Ngoài ra cấm các loại pháo nổ, hóa chất chế tạo chất nổ như Natri Clora, Kali Clorat, xăng, dầu, gas, bật lửa và thuốc trừ sâu."
+    },
+    {
+      "question": "Thực phẩm cần đáp ứng những điều kiện gì để được đăng bán trên Shopee?",
+      "expected_answer": "Thực phẩm phải có hạn sử dụng rõ ràng trên bao bì, không được bán hàng đã hết hạn hoặc cận hạn dưới 30 ngày hoặc dưới 30% thời hạn sử dụng. Thực phẩm dễ bị hỏng phải được đóng gói hợp lý và người bán cung cấp thông tin đầy đủ trong mô tả."
+    },
+    {
+      "question": "Ảnh sản phẩm do người bán tự chụp phải đáp ứng yêu cầu tối thiểu nào?",
+      "expected_answer": "Tin đăng phải có ít nhất một ảnh thật do chính Người bán tự chụp, trong đó sản phẩm thật chiếm ít nhất 40% diện tích toàn ảnh. Ngôn ngữ trên phông nền phải là tiếng Việt."
+    },
+    {
+      "question": "Người bán không được phép thực hiện những hành vi nào khi đăng bán sản phẩm?",
+      "expected_answer": "Người bán không được spam sản phẩm, thay đổi nội dung để gian lận đánh giá, tạo đơn ảo, đăng sai ngành hàng, tăng giá bất hợp lý trước khuyến mãi, so sánh trực tiếp với đối thủ, quảng cáo cho doanh nghiệp khác."
+    },
+    {
+      "question": "Mức phí xử lý giao dịch trên Shopee là bao nhiêu cho các phương thức thanh toán?",
+      "expected_answer": "Phí xử lý giao dịch là 6% cho tất cả phương thức thanh toán (thẻ tín dụng/ghi nợ, COD, ATM nội địa, SPayLater, ShopeePay, Apple Pay, Google Pay, chuyển khoản ngân hàng)."
+    },
+    {
+      "question": "Những hành vi nào được coi là gian lận trên sàn Shopee?",
+      "expected_answer": "Các hành vi gian lận bao gồm: tăng lượt đánh giá-shop bằng phương thức vi phạm, tạo đơn hàng ảo, lạm dụng mã giảm giá và chương trình khuyến mại, kêu gọi giao dịch ngoài sàn Shopee."
+    }
+  ]
+}

@@ -23,7 +23,7 @@ Reciprocal Rank Fusion (RRF), PageIndex fallback và LLM generation có citation
 - PageIndex vectorless fallback khi cosine similarity tốt nhất nhỏ hơn `0.48`.
 - Sinh câu trả lời tiếng Việt có citation và hiển thị các source chunks đã dùng.
 - Reorder context để giảm hiện tượng “lost in the middle”.
-- Golden dataset 15 câu và pipeline RAGAS với 4 metrics, so sánh A/B hai cấu hình.
+- Golden dataset 20 câu và pipeline RAGAS với 4 metrics, so sánh A/B hai cấu hình.
 
 ## Kiến trúc hệ thống
 
@@ -69,7 +69,7 @@ src/task8_pageindex_vectorless.py       Upload/query PageIndex
 src/task9_retrieval_pipeline.py         Pipeline retrieval hoàn chỉnh
 src/task10_generation.py                Generation, memory và citation
 group_project/evaluation/
-  golden_dataset.json                   15 câu hỏi và đáp án chuẩn
+  golden_dataset.json                   20 câu hỏi và đáp án chuẩn
   eval_pipeline.py                      RAGAS evaluation + A/B comparison
   results.md                            Báo cáo điểm và phân tích
 ```
@@ -186,7 +186,7 @@ $env:JINA_API_KEY=""
 python -m group_project.evaluation.eval_pipeline --limit 2
 ```
 
-Chạy đủ 15 câu cho cả hai cấu hình:
+Chạy đủ 20 câu cho cả hai cấu hình:
 
 ```powershell
 $env:PYTHONIOENCODING="utf-8"
@@ -200,25 +200,26 @@ trước khi chạy. Báo cáo được ghi vào [evaluation/results.md](evaluat
 
 ### Kết quả hiện có
 
-| Metric | `hybrid_rerank` | `dense_only` |
-|---|---:|---:|
-| Faithfulness | 0.893 | 0.887 |
-| Answer Relevance | 0.700 | 0.706 |
-| Context Recall | 1.000 | 1.000 |
-| Context Precision | 0.987 | 0.987 |
-| Average | 0.895 | 0.895 |
+| Metric | `hybrid_rerank` | `dense_only` | Δ |
+|---|---:|---:|---:|
+| Faithfulness | 0.879 | 0.913 | -0.034 |
+| Answer Relevance | 0.717 | 0.715 | 0.002 |
+| Context Recall | 1.000 | 1.000 | 0.000 |
+| Context Precision | 0.990 | 0.990 | -0.000 |
+| Average | 0.896 | 0.905 | -0.008 |
 
-Hai cấu hình hòa nhau ở average sau khi làm tròn ba chữ số. Xem báo cáo để biết
-phân tích worst performers, giới hạn của lần chạy và đề xuất cải tiến.
+Dense-only chiếm ưu thế trên bộ kiểm thử. Nguyên nhân chính: BM25 gây ra noise
+cho văn bản tiếng Việt, và fallback PageIndex thêm context ít liên quan. Chi tiết
+xem [group_project/evaluation/results.md](group_project/evaluation/results.md).
 
 ## Deliverables
 
-- [x] `evaluation/golden_dataset.json` — 15 cặp question/expected answer/context.
+- [x] `evaluation/golden_dataset.json` — 20 cặp question/expected answer/context đa dạng.
 - [x] `evaluation/eval_pipeline.py` — pipeline RAGAS bốn metrics.
 - [x] So sánh A/B `hybrid_rerank` và `dense_only`.
 - [x] `evaluation/results.md` — bảng điểm, worst performers và recommendations.
 - [x] Streamlit chatbot có citation, source display và conversation memory.
-- [ ] Xác nhận lại full RAGAS run sau khi bảo đảm OpenRouter quota.
+- [x] Xác nhận lại full RAGAS run — kết quả mới tại `evaluation/results.md`.
 - [ ] Xác nhận PageIndex upload/query end-to-end với cache tài liệu hiện hành.
 
 ## Phân công công việc
